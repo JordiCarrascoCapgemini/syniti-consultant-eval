@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business outcomes activation · Data journey map</title>
+<style>
+:root{
+  --navy:#1E2761; --blue:#2563CC; --violet:#8B5CF6; --teal:#0E9F6E; --amber:#E08A0B; --slate:#64748B;
+  --ink:#1E2440; --muted:#6B7492; --hair:rgba(255,255,255,.65); --glass:rgba(255,255,255,.55);
+  --shadow:0 24px 60px -34px rgba(30,40,90,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+  background:#F6F8FE;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;min-height:100vh;position:relative;overflow-x:hidden}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.blob.b1{width:640px;height:640px;top:-220px;left:-160px;background:radial-gradient(circle at center,#DBEAFE 0%,rgba(219,234,254,0) 70%)}
+.blob.b2{width:720px;height:720px;top:-160px;right:-220px;background:radial-gradient(circle at center,#EDE7FD 0%,rgba(237,231,253,0) 70%)}
+.blob.b3{width:680px;height:680px;bottom:-260px;left:24%;background:radial-gradient(circle at center,#D6F2E6 0%,rgba(214,242,230,0) 70%)}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:34px 56px 60px}
+a{color:var(--blue)}
+
+/* top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:38px;flex-wrap:wrap}
+.brand .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.brand .ttl{font-size:15px;color:var(--navy);font-weight:600;margin-top:2px}
+.bar-center{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.segmented{display:flex;align-items:center;gap:2px;padding:5px;border-radius:14px;background:rgba(255,255,255,.5);
+  border:1px solid var(--hair);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 10px 30px -22px rgba(30,40,90,.5)}
+.seg{font-size:12.5px;letter-spacing:.03em;color:var(--muted);font-weight:500;padding:8px 15px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:.15s}
+.seg:hover{color:var(--navy)}
+.seg.active{color:var(--navy);font-weight:600;background:rgba(255,255,255,.85);box-shadow:0 6px 16px -10px rgba(30,40,90,.55)}
+.mode-toggle{display:flex;gap:2px;padding:5px;border-radius:14px;background:rgba(30,39,97,.06);border:1px solid rgba(30,39,97,.1)}
+.mbtn{font-size:12px;letter-spacing:.04em;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;color:var(--muted);white-space:nowrap;transition:.15s}
+.mbtn.active{color:#fff;background:linear-gradient(120deg,#2563CC,#8B5CF6);box-shadow:0 8px 20px -12px rgba(85,60,180,.6)}
+.bar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.client-sel{font-size:12.5px;color:var(--navy);font-weight:600;padding:8px 12px;border-radius:12px;cursor:pointer;
+  background:rgba(255,255,255,.55);border:1px solid var(--hair);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.btn-load{font-size:11.5px;color:var(--blue);font-weight:600;padding:8px 12px;border-radius:12px;cursor:pointer;
+  background:rgba(37,99,204,.08);border:1px solid rgba(37,99,204,.2)}
+.btn-load:hover{background:rgba(37,99,204,.14)}
+.context{text-align:right;font-size:12px;color:var(--slate);font-weight:500;padding:8px 14px;border-radius:12px;
+  background:rgba(255,255,255,.45);border:1px solid var(--hair);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+
+/* cards */
+.card{background:var(--glass);border:1px solid var(--hair);border-radius:22px;
+  -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);box-shadow:var(--shadow)}
+.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.screen{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* EXEC */
+.stage{display:grid;grid-template-columns:1.05fr 1.55fr;gap:26px;align-items:stretch}
+.hero{padding:40px 44px;display:flex;flex-direction:column;justify-content:center}
+.hero .kicker{margin-bottom:26px}
+.hero-body{display:flex;align-items:center;gap:34px}
+.ring{position:relative;width:132px;height:132px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:300;color:var(--navy)}
+.hero-num{font-size:clamp(48px,6vw,66px);font-weight:200;letter-spacing:-.03em;line-height:1;
+  background:linear-gradient(120deg,#2563CC,#8B5CF6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero-label{font-size:13.5px;color:var(--muted);margin-top:14px}
+.hero-sub{font-size:12px;color:var(--slate);margin-top:6px;font-weight:500;display:inline-flex;align-items:center;gap:7px}
+.hero-sub .dot{width:6px;height:6px;border-radius:50%;background:var(--violet);opacity:.65}
+.value{padding:34px 36px 30px;display:flex;flex-direction:column}
+.value .head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px}
+.value .head h2{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.metric{position:relative;padding:22px 22px 20px;border-radius:18px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.6);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);box-shadow:0 14px 34px -28px rgba(30,40,90,.5);overflow:hidden}
+.metric::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:var(--accent);opacity:.85}
+.metric .big{font-size:clamp(34px,3.4vw,44px);font-weight:200;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.metric .lbl{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.35}
+.metric .cat{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+.metric .cat .sq{width:7px;height:7px;border-radius:2px;background:var(--accent)}
+.allin{font-size:12px;color:var(--muted);font-weight:500;margin-top:22px}
+.allin b{color:var(--navy);font-weight:600}
+.allin .flag{display:inline-block;margin-left:8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);border:1px solid rgba(100,116,139,.3);border-radius:6px;padding:2px 7px}
+.potential{margin-top:26px;padding:22px 34px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.potential .plabel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);font-weight:600;display:flex;flex-direction:column;gap:3px}
+.potential .plabel span{font-size:11px;letter-spacing:.04em;text-transform:none;color:var(--muted);font-weight:500}
+.chips{display:flex;gap:12px;flex-wrap:wrap;flex:1}
+.pchip{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;color:var(--ink);font-weight:500;padding:10px 16px;border-radius:12px;
+  background:rgba(255,255,255,.5);border:1px solid rgba(139,92,246,.16);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.pchip .ring-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--violet);background:transparent}
+.foot{margin-top:28px;text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+
+/* TACTICAL */
+.sec-h{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);font-weight:600;margin:2px 0 16px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.cat-card{padding:22px 22px 18px;border-radius:18px}
+.cat-card .cn{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25}
+.cat-card .ccov{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500}
+.cat-card .cbar{height:5px;border-radius:3px;background:rgba(100,116,139,.15);margin:10px 0 14px;overflow:hidden}
+.cat-card .cbar i{display:block;height:100%;border-radius:3px}
+.lev-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:12px;padding:5px 0;border-top:1px solid rgba(100,116,139,.1)}
+.lev-row:first-of-type{border-top:none}
+.lev-row .ln{color:var(--ink)}
+.lev-row.absent .ln{color:var(--muted)}
+.lev-row .lv{font-weight:600;color:var(--navy);white-space:nowrap}
+.lev-row .lv.ab{font-weight:500;color:var(--slate);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px dashed rgba(100,116,139,.35);border-radius:6px;padding:1px 6px}
+.roadmap{margin-top:22px;padding:24px 28px}
+.rm-grid{display:grid;grid-template-columns:130px 1fr 1fr 1fr;gap:10px 14px;align-items:center}
+.rm-h{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:600;text-align:center}
+.rm-lab{font-size:12px;color:var(--muted);font-weight:600}
+.rm-cell{text-align:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.55)}
+.rm-cell .rv{font-size:17px;font-weight:300;color:var(--ink)}
+.rm-cell .rk{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* OPERATIONAL */
+.lev-pick{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.lchip{font-size:12px;color:var(--muted);font-weight:500;padding:8px 13px;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.45);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.lchip:hover{color:var(--navy)}
+.lchip.active{color:var(--navy);font-weight:600;background:rgba(255,255,255,.85);box-shadow:0 8px 20px -14px rgba(30,40,90,.5)}
+.lchip .rd{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--violet)}
+.lchip.ev .rd{background:var(--teal);border-color:var(--teal)}
+.op-detail{padding:30px 34px}
+.op-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.op-cat{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:4px 10px;border-radius:8px;color:#fff}
+.op-head{font-size:clamp(28px,3vw,38px);font-weight:200;letter-spacing:-.02em;color:var(--ink)}
+.op-head.ab{color:var(--slate);font-weight:300}
+.op-row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:11px 0;border-top:1px solid rgba(100,116,139,.12);font-size:13px}
+.op-row .ok{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:600;padding-top:2px}
+.op-row .ov{color:var(--ink)}
+.rule-line{font-size:12.5px;color:var(--ink);padding:8px 0;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;border-top:1px dashed rgba(100,116,139,.14)}
+.rule-line:first-child{border-top:none}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--navy);font-weight:600}
+.tag{font-size:10px;letter-spacing:.04em;border-radius:6px;padding:1px 7px;font-weight:600}
+.recs{font-family:ui-monospace,Menlo,monospace;color:var(--navy);font-weight:600}
+
+/* BUILD */
+.build-head{padding:26px 30px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.build-head .bh-l .bt{font-size:18px;font-weight:600;color:var(--navy)}
+.build-head .bh-l .bs{font-size:12.5px;color:var(--muted);margin-top:4px;max-width:520px;line-height:1.5}
+.build-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:12px;cursor:pointer;border:none;
+  background:linear-gradient(120deg,#2563CC,#8B5CF6);color:#fff;box-shadow:0 10px 24px -14px rgba(85,60,180,.6)}
+.btn.sec{background:rgba(255,255,255,.55);color:var(--blue);border:1px solid rgba(37,99,204,.25);box-shadow:none}
+.btn:hover{filter:brightness(1.05)}
+.tbl-card{padding:8px 12px 12px;overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:12px}
+table.tbl th{text-align:left;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:600;padding:10px 10px;border-bottom:1px solid rgba(100,116,139,.2)}
+table.tbl td{padding:9px 10px;border-bottom:1px solid rgba(100,116,139,.1);vertical-align:top;color:var(--ink)}
+table.tbl tr:hover td{background:rgba(255,255,255,.4)}
+.build-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:start}
+.imp{padding:22px 26px}
+.imp textarea{width:100%;min-height:150px;border:1px solid var(--hair);border-radius:14px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink);background:rgba(255,255,255,.5);resize:vertical}
+.imp .msg{font-size:12px;margin-top:8px;min-height:16px}
+.imp p{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+.disc{margin-top:20px;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.4);border:1px solid var(--hair);font-size:11.5px;color:var(--muted);line-height:1.55}
+.disc b{color:var(--ink);font-weight:600}
+
+/* exec top-3 */
+.exec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px;flex-wrap:wrap}
+.exec-sub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.cov-chip{font-size:12px;color:var(--slate);font-weight:500;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.5);border:1px solid var(--hair);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.cov-chip b{color:var(--navy);font-weight:700}
+.top3-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}
+.top3{padding:26px 26px 22px;position:relative;overflow:hidden}
+.top3::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--accent);opacity:.85}
+.t3-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;min-height:24px}
+.t3-rank{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;background:linear-gradient(120deg,#2563CC,#8B5CF6)}
+.t3-big{font-size:clamp(38px,4vw,50px);font-weight:200;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.t3-lever{font-size:14.5px;font-weight:600;color:var(--ink);margin-top:12px;line-height:1.25}
+.t3-why{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+.t3-org{font-size:11px;color:var(--slate);margin-top:10px;font-family:ui-monospace,Menlo,monospace;line-height:1.35}
+.t3-cat{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--slate)}
+.t3-cat .sq{width:7px;height:7px;border-radius:2px}
+.excl{font-size:10.5px;color:var(--slate);border:1px solid rgba(100,116,139,.3);background:rgba(255,255,255,.5);border-radius:8px;padding:3px 9px;cursor:pointer}
+.excl:hover{color:#C0392B;border-color:rgba(192,57,43,.35)}
+.more-row,.pot-row{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.more-lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.mchips{display:flex;gap:10px;flex-wrap:wrap;flex:1}
+.mchip{font-size:12px;color:var(--ink);padding:8px 13px;border-radius:11px;background:rgba(255,255,255,.5);border:1px solid var(--hair);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.mchip b{color:var(--navy);font-weight:600}
+.pchip2{font-size:12px;color:var(--muted);padding:8px 13px;border-radius:11px;background:rgba(255,255,255,.42);border:1px solid rgba(139,92,246,.16);display:inline-flex;align-items:center;gap:8px}
+.pchip2 .rd{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--violet)}
+.allin2{margin-top:22px;font-size:12.5px;color:var(--muted)}
+.allin2 b{color:var(--navy);font-weight:600}
+.allin2 .flag{display:inline-block;margin-left:8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);border:1px solid rgba(100,116,139,.3);border-radius:6px;padding:2px 7px}
+.stage-panel{margin-top:22px;padding:22px 26px}
+.stage-panel textarea{width:100%;min-height:70px;border:1px solid var(--hair);border-radius:12px;padding:11px;font-family:inherit;font-size:13px;color:var(--ink);background:rgba(255,255,255,.5);resize:vertical}
+.stage-hint{font-size:11.5px;color:var(--slate);margin-top:10px;line-height:1.5}
+.excl-list{margin-top:12px;font-size:12px;color:var(--slate)}
+.reinc{font-size:11px;color:var(--slate);border:1px dashed rgba(100,116,139,.35);background:transparent;border-radius:8px;padding:3px 9px;margin:0 6px 6px 0;cursor:pointer}
+.mini{font-size:11.5px;font-weight:600;color:var(--slate);padding:8px 12px;border-radius:11px;cursor:pointer;background:rgba(255,255,255,.5);border:1px solid var(--hair);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.mini:hover{color:var(--navy)}
+.mini.on{color:var(--navy);background:rgba(255,255,255,.85);box-shadow:0 6px 16px -10px rgba(30,40,90,.5)}
+.mini.pub{color:#fff;background:linear-gradient(120deg,#2563CC,#8B5CF6);border:none;box-shadow:0 8px 20px -12px rgba(85,60,180,.6)}
+.dc-card{margin-top:22px;padding:24px 28px}
+.dc-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.dc-tbl th{text-align:left;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:600;padding:8px 10px;border-bottom:1px solid rgba(100,116,139,.2)}
+.dc-tbl th span{display:block;font-size:9px;letter-spacing:.02em;text-transform:none;color:var(--muted);font-weight:500;margin-top:2px}
+.dc-tbl td{padding:10px 10px;border-bottom:1px solid rgba(100,116,139,.1);color:var(--ink);vertical-align:top}
+.dot2{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:7px;vertical-align:middle}
+.src-line{font-size:12.5px;color:var(--slate);margin-top:6px}
+.src-line b{color:var(--navy);font-weight:600}
+.tpl-btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.tpl{font-size:11.5px;color:var(--blue);font-weight:600;padding:8px 12px;border-radius:11px;cursor:pointer;background:rgba(37,99,204,.08);border:1px solid rgba(37,99,204,.2)}
+.tpl:hover{background:rgba(37,99,204,.14)}
+@media (max-width:900px){.stage,.build-grid{grid-template-columns:1fr}.cat-grid{grid-template-columns:1fr}.rm-grid{grid-template-columns:110px 1fr 1fr 1fr}.wrap{padding:26px 22px 48px}.top3-grid{grid-template-columns:1fr}.dc-tbl{font-size:11.5px}}
+.clickable{cursor:pointer}
+.lev-row.clickable:hover .ln{color:var(--navy)}
+.dc-tbl tr.clickable{cursor:pointer}
+.dc-tbl tr.clickable:hover td{background:rgba(255,255,255,.5)}
+.top3.clickable{transition:transform .15s}.top3.clickable:hover{transform:translateY(-2px)}
+.mchip.clickable{cursor:pointer}.mchip.clickable:hover{border-color:var(--blue)}
+.stage-fields{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.stage-row{display:flex;flex-direction:column;gap:4px}
+.stage-row label{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.stage-row input{border:1px solid var(--hair);border-radius:10px;padding:8px 11px;font-size:12.5px;color:var(--ink);background:rgba(255,255,255,.5);min-width:220px}
+.modal-wrap{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:32px;background:rgba(20,26,54,.30);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.modal-card{width:min(920px,96vw);max-height:90vh;overflow:auto;background:rgba(255,255,255,.74);border:1px solid var(--hair);border-radius:24px;-webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%);box-shadow:0 40px 90px -40px rgba(30,40,90,.6);padding:28px 30px}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
+.modal-kick{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.modal-ttl{font-size:22px;font-weight:300;color:var(--navy);margin-top:4px}
+.modal-sub{font-size:12.5px;color:var(--muted);margin-top:3px}
+.modal-x{border:none;background:rgba(255,255,255,.6);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:13px;color:var(--slate)}
+.modal-x:hover{color:var(--navy)}
+.dc4{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dcp{border-radius:18px;padding:20px 22px;border:1px solid rgba(255,255,255,.6)}
+.dcp.org{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(255,255,255,.35))}
+.dcp.val{background:linear-gradient(135deg,rgba(37,99,204,.12),rgba(255,255,255,.35))}
+.dcp.act{background:linear-gradient(135deg,rgba(14,159,110,.12),rgba(255,255,255,.35))}
+.dcp.str{background:linear-gradient(135deg,rgba(224,138,11,.12),rgba(255,255,255,.35))}
+.dcp-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:600;margin-bottom:16px}
+.dcp-h span{text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted);font-weight:500;margin-left:6px}
+.dcp-metrics{display:flex;gap:22px;flex-wrap:wrap}
+.dcp-big{font-size:30px;font-weight:200;letter-spacing:-.02em;color:var(--ink);line-height:1}
+.dcp-l{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.35}
+.dcp-bars{margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.dcp-bar{display:flex;align-items:center;gap:8px;font-size:11px}
+.dcp-bn{width:130px;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dcp-bt{flex:1;height:7px;border-radius:4px;background:rgba(100,116,139,.15);overflow:hidden}
+.dcp-bt i{display:block;height:100%;background:var(--violet);border-radius:4px}
+.dcp-bv{font-family:ui-monospace,Menlo,monospace;color:var(--navy);font-weight:600}
+.dcp-note{font-size:11.5px;color:var(--slate);margin-top:14px;line-height:1.45}
+.dcp-strat{font-size:14.5px;color:var(--ink);margin-bottom:16px;line-height:1.4}
+.modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:22px}
+@media (max-width:760px){.dc4{grid-template-columns:1fr}}
+.imp-chips{display:flex;gap:8px;flex-wrap:wrap}
+.imp-chip{font-size:12px;color:var(--ink);background:rgba(224,138,11,.10);border:1px solid rgba(224,138,11,.22);border-radius:10px;padding:6px 11px}
+.compute .cp-h{font-size:22px;font-weight:300;color:var(--slate)}
+.compute .cp-need{font-size:11.5px;color:var(--slate);margin-top:12px;line-height:1.5}
+.compute .cp-need b{color:var(--navy)}
+.compute code{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--muted)}
+.guide-head{margin-bottom:24px}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g-card{padding:24px 26px}
+.g-card h3{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.g-num{width:24px;height:24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff;background:linear-gradient(120deg,#2563CC,#8B5CF6);flex:none}
+.g-card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.g-card b{color:var(--ink);font-weight:600}
+.g-dims{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.g-dim{font-size:11.5px;color:var(--slate);border:1px solid var(--hair);border-radius:10px;padding:8px 10px;background:rgba(255,255,255,.4)}
+.g-dim b{color:var(--navy)}
+@media (max-width:820px){.guide-grid{grid-template-columns:1fr}}
+.gterm{border-bottom:1px dashed rgba(37,99,204,.5);cursor:help}
+.gterm:hover{color:var(--blue)}
+#gtip{position:absolute;z-index:60;display:none;width:300px;max-width:88vw;background:rgba(255,255,255,.9);border:1px solid var(--hair);border-radius:14px;-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);box-shadow:0 24px 60px -30px rgba(30,40,90,.55);padding:14px 16px}
+#gtip .gtip-t{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:5px}
+#gtip .gtip-d{font-size:12px;color:var(--muted);line-height:1.5}
+.gloss-full{grid-column:1/-1}
+.gloss-list{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;margin-top:6px}
+.gloss-item{font-size:12px;line-height:1.5}
+.gloss-item b{color:var(--navy);font-weight:600;display:block}
+.gloss-item span{color:var(--muted)}
+@media (max-width:820px){.gloss-list{grid-template-columns:1fr}}
+.synmark{display:flex;align-items:center;gap:8px}
+.synmark svg{display:block}
+.capg{font-size:9px;color:var(--slate);letter-spacing:.03em}
+.custlogo{max-height:30px;max-width:120px;object-fit:contain;border-radius:6px;background:rgba(255,255,255,.4);padding:2px 4px}
+.stage-banner{display:flex;align-items:flex-start;gap:12px;background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.2);border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:12.5px;color:var(--slate);line-height:1.5}
+.stage-banner b{color:var(--ink);font-weight:600}
+.stage-banner .sb-i{color:var(--violet);font-size:15px;line-height:1.2}
+.sb-auth{color:var(--violet);font-weight:600}
+.authoring{border:1px dashed rgba(139,92,246,.5)!important;background:rgba(139,92,246,.05)!important;position:relative;margin-top:14px}
+.auth-tag{position:absolute;top:-10px;left:18px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:linear-gradient(120deg,#8B5CF6,#6D28D9);padding:2px 9px;border-radius:6px;font-weight:600}
+.src-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.src-list{list-style:none;padding:0;margin:6px 0 0}
+.src-list li{font-size:12.5px;color:var(--muted);padding:8px 0;border-top:1px solid rgba(100,116,139,.12);line-height:1.5}
+.src-list li:first-child{border-top:none}
+.src-list a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(37,99,204,.3)}
+.src-list a:hover{border-bottom-color:var(--blue)}
+.src-list.bm li span{color:var(--ink)}
+.src-list b{color:var(--navy);font-weight:600}
+@media (max-width:760px){.src-cols{grid-template-columns:1fr}}
+.pub-badge{font-size:11px;font-weight:600;color:var(--teal);background:rgba(14,159,110,.1);border:1px solid rgba(14,159,110,.25);border-radius:11px;padding:7px 12px}
+.dc-tbl tr.dc-hidden{display:none}
+.dc-tbl.expanded tr.dc-hidden{display:table-row}
+.dc-toggle{margin-top:10px}
+.stage-banner{padding:10px 14px;margin-bottom:16px;font-size:12px}
+@media print{
+  .aurora{display:none!important}
+  .bar-right,.mode-toggle,.bar-center .segmented,.chip-mode,.stage-banner,.authoring,.lev-pick,.tpl-btns,.build-actions,.pub-badge,.dc-toggle,.excl,.reinc{display:none!important}
+  body{background:#fff!important}
+  .card,.metric,.top3,.dcp,.rm-cell,.cat-card{box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:#fff!important;border:1px solid #E1E8F2!important}
+  .wrap{padding:16px 22px!important;max-width:100%!important}
+}
+.mchips .mchip-hidden{display:none}
+.mchips.mexp .mchip-hidden{display:inline-flex}
+.more-toggle{cursor:pointer;color:var(--blue);border-color:rgba(37,99,204,.35)!important;font-weight:600}
+.more-toggle:hover{background:rgba(37,99,204,.08)}
+.client-static{font-size:12.5px;color:var(--navy);font-weight:600;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.5);border:1px solid var(--hair)}
+.rmtl{padding:4px 6px 2px}
+.rmtl-caps{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:600;margin:0 6px 8px}
+.rc-r{color:var(--teal)}
+.rmtl-body{position:relative;padding-top:6px}
+.rmtl-line{position:absolute;top:14px;left:16%;right:16%;height:3px;border-radius:3px;background:linear-gradient(90deg,#0E9F6E,#2563CC,#8B5CF6);overflow:hidden}
+.rmtl-flow{position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.85) 50%,transparent 100%);background-size:35% 100%;background-repeat:no-repeat;animation:rmflow 3.2s linear infinite}
+@keyframes rmflow{0%{background-position:-35% 0}100%{background-position:135% 0}}
+@media (prefers-reduced-motion:reduce){.rmtl-flow{animation:none}}
+.rmtl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;position:relative;z-index:1}
+.rmtl-col{text-align:center}
+.rmtl-node{width:16px;height:16px;border-radius:50%;margin:6px auto 16px;border:3px solid #F6F8FE;box-shadow:0 2px 6px rgba(30,40,90,.25);position:relative;z-index:2}
+.rmtl-c{padding:16px 18px;text-align:left}
+.rmtl-when{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:600}
+.rmtl-ph{font-size:14px;font-weight:600;color:var(--ink);margin-top:3px}
+.rmtl-tot{font-size:24px;font-weight:200;color:var(--navy);margin:10px 0 12px}
+.rmtl-tot span{font-size:11px;color:var(--muted);font-weight:400;margin-left:5px}
+.rmtl-bars{display:flex;flex-direction:column;gap:6px}
+.rmtl-bar{display:flex;align-items:center;gap:8px;font-size:10.5px}
+.rb-l{width:64px;color:var(--slate);text-align:right}
+.rb-t{flex:1;height:6px;border-radius:3px;background:rgba(100,116,139,.15);overflow:hidden}
+.rb-t i{display:block;height:100%;border-radius:3px}
+@media (max-width:820px){.rmtl-grid{grid-template-columns:1fr}.rmtl-line{display:none}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="wrap">
+  <div class="topbar" id="topbar"></div>
+  <div id="scr-exec" class="screen"></div>
+  <div id="scr-tactical" class="screen" style="display:none"></div>
+  <div id="scr-operational" class="screen" style="display:none"></div>
+  <div id="scr-build" class="screen" style="display:none"></div>
+  <div id="scr-guide" class="screen" style="display:none"></div>
+</div>
+<input type="file" id="logoIn" accept="image/*" style="display:none">
+<div id="gtip"></div>
+<div id="dcModal" class="modal-wrap" style="display:none"></div>
+<input type="file" id="fileIn" accept=".json,application/json" style="display:none">
+
+<script>
+const CATS = ["Working Capital & Cash Flow", "Procurement Effectiveness & Spend Control", "P&L Accuracy & Financial Close", "Operational Efficiency & Asset Productivity", "Compliance, Audit & Risk", "Program / Migration Economics"];
+const LEVERS = [{"name": "Obsolete inventory release", "outcome_category": "Working Capital & Cash Flow", "financial_impact_type": "Working capital release", "kpi": "Inventory turns · carrying cost", "default_intent": "Obsolete", "formula": "addressable = COUNT(dead / no-movement stock records); value ≈ inventory_value_of_dead_stock × carrying_rate", "inputs": ["dead_stock_count", "dead_stock_value (optional)", "carrying_rate"], "benchmark": "carrying cost ~20–30% / yr (industry)", "default_confidence": "Directional"}, {"name": "Aged PO / commitment release", "outcome_category": "Working Capital & Cash Flow", "financial_impact_type": "Working capital release", "kpi": "Open PO commitment · PO cycle time", "default_intent": "Obsolete", "formula": "addressable = SUM(open PO commitment value aged beyond N); value = that committed-but-unused budget released on closure", "inputs": ["open_po_commitment_value", "aging_threshold"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Aged AR recovery", "outcome_category": "Working Capital & Cash Flow", "financial_impact_type": "Working capital release", "kpi": "DSO", "default_intent": "Enrich", "formula": "addressable = SUM(AR balance aged > N months); value = cash freed / DSO improvement on collection", "inputs": ["ar_aged_balance", "aging_threshold"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Overdue AP penalty avoidance", "outcome_category": "Working Capital & Cash Flow", "financial_impact_type": "Cost avoidance", "kpi": "DPO · late-fee rate", "default_intent": "Enrich", "formula": "addressable = SUM(overdue AP); value ≈ overdue_AP × penalty_rate avoided", "inputs": ["overdue_ap_value", "penalty_rate"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Vendor consolidation", "outcome_category": "Procurement Effectiveness & Spend Control", "financial_impact_type": "Cost avoidance", "kpi": "Spend under management · savings %", "default_intent": "Harmonize", "formula": "addressable = SUM(spend fragmented across duplicate vendor IDs); value ≈ duplicate_spend × savings_rate on category leverage", "inputs": ["duplicate_vendor_spend", "savings_rate"], "benchmark": "3–5% procurement savings on addressable spend (typical)", "default_confidence": "Benchmarked"}, {"name": "Maverick / non-compliant spend reduction", "outcome_category": "Procurement Effectiveness & Spend Control", "financial_impact_type": "Cost avoidance", "kpi": "Maverick-spend %", "default_intent": "Enrich", "formula": "addressable = SUM(PO value on non-standard / non-compliant terms); value ≈ non_compliant_value × leakage_rate", "inputs": ["non_compliant_po_value", "leakage_rate"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Procurement master completeness", "outcome_category": "Procurement Effectiveness & Spend Control", "financial_impact_type": "Productivity", "kpi": "PO exception rate · cycle time", "default_intent": "Enrich", "formula": "addressable = COUNT(PO / PR records with missing or invalid critical fields); value = fewer exceptions, faster cycle", "inputs": ["defect_count"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Vendor master enrichment", "outcome_category": "Operational Efficiency & Asset Productivity", "financial_impact_type": "Productivity", "kpi": "Master-data completeness %", "default_intent": "Enrich", "formula": "addressable = COUNT(active vendors with missing / dummy mandatory attributes); value = process reliability, fewer blocks", "inputs": ["defect_count"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Master-data harmonization", "outcome_category": "Operational Efficiency & Asset Productivity", "financial_impact_type": "Productivity", "kpi": "Duplicate rate · findability", "default_intent": "Harmonize", "formula": "addressable = COUNT(non-unique / variant master records); value = one trusted record, reliable search & reporting", "inputs": ["defect_count"], "benchmark": "world-class duplicate rate <0.5%; mid-market 5–7%", "default_confidence": "Directional"}, {"name": "Asset hierarchy completeness", "outcome_category": "Operational Efficiency & Asset Productivity", "financial_impact_type": "Productivity", "kpi": "Cost-flow accuracy · asset findability", "default_intent": "Enrich", "formula": "addressable = COUNT(functional locations / assets with hierarchy or classification gaps); value = accurate cost flow, findable assets", "inputs": ["defect_count"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Cost-centre variance control", "outcome_category": "P&L Accuracy & Financial Close", "financial_impact_type": "Risk / compliance avoidance", "kpi": "Plan-vs-actual variance", "default_intent": "Enrich", "formula": "addressable = SUM(absolute plan-vs-actual variance on mis-assigned cost objects); value = budget reliability, reporting accuracy", "inputs": ["absolute_variance"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Vendor control & duplicate-payment risk", "outcome_category": "Compliance, Audit & Risk", "financial_impact_type": "Risk / compliance avoidance", "kpi": "Duplicate-payment risk · SOX pass rate", "default_intent": "Harmonize", "formula": "addressable = SUM(spend to vendors sharing bank accounts / control gaps); value = payment-accuracy & audit-defensibility", "inputs": ["at_risk_spend"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Project / WBS closure", "outcome_category": "P&L Accuracy & Financial Close", "financial_impact_type": "Risk / compliance avoidance", "kpi": "Open-commitment accuracy", "default_intent": "Obsolete", "formula": "addressable = COUNT(closed WBS / orders still carrying settlement or commitment); value = clean cost objects, correct close", "inputs": ["defect_count"], "benchmark": null, "default_confidence": "Directional"}, {"name": "Migration volume reduction", "outcome_category": "Program / Migration Economics", "financial_impact_type": "Cost avoidance", "kpi": "Migration effort % · time-to-value", "default_intent": "Obsolete", "formula": "addressable = COUNT(obsolete + duplicate records removed from the load); value = lower cutover cost & risk, faster S/4 value", "inputs": ["removable_record_count"], "benchmark": "SAP best practice: 20–30% of migration effort on data prep", "default_confidence": "Benchmarked"}, {"name": "Attribute relevancy & target-model simplification", "outcome_category": "Program / Migration Economics", "financial_impact_type": "Cost avoidance", "kpi": "Fields de-scoped/defaulted % · mapping & test effort reduction", "default_intent": "Obsolete", "formula": "addressable = COUNT(fields classified empty/de-scope + constant/default across profiled master-data tables); value = analysis/mapping/build/test effort removed before the migration starts (field-level, not record-level)", "benchmark": null, "default_confidence": "Directional", "why": "AUA measures RELEVANCE at the FIELD/attribute level, not defective RECORDS. 'Migration volume reduction' counts removable records; nothing in the library captures 'we can drop or default 66% of the columns before touching a single record.' Danone's headline value (170 of 256 fields collapse before the build starts) has no home in the existing record-centric levers, so a field-relevancy lever is genuinely new value mechanics for target-model scoping.", "inputs": []}, {"name": "Payment-terms rationalization (DSO & cash-flow)", "outcome_category": "Working Capital & Cash Flow", "financial_impact_type": "Working capital release", "kpi": "DSO · distinct payment-term count · standard-term adoption %", "default_intent": "Harmonize", "formula": "addressable = COUNT(distinct/redundant payment-term codes collapsed to canonical set) and SUM(AR exposure on non-standard long terms); value = DSO reduction / working-capital release from standardized terms and faster collection", "benchmark": null, "default_confidence": "Directional", "why": "The library's harmonization levers ('Master-data harmonization', 'Vendor consolidation') capture duplicate-record cleanup as a PRODUCTIVITY outcome, but Danone frames payment-terms fragmentation explicitly as a WORKING-CAPITAL / DSO / cash-flow-predictability outcome (the 'DSO Optimization Opportunity' deck). That value mechanic - term standardization driving DSO - is distinct from generic duplicate reduction and belongs in Working Capital & Cash Flow. No existing lever combines the harmonize action with the DSO/cash-flow financial impact.", "inputs": []}, {"name": "MRP / planning-attribute completeness", "outcome_category": "Operational Efficiency & Asset Productivity", "financial_impact_type": "Productivity", "kpi": "% materials with MRP controller · unplanned material-flow % · forecast reliability", "default_intent": "Enrich", "formula": "addressable = COUNT(active materials missing MRP Controller / planning attributes); value = planned material flow restored, fewer stockouts/dead-stock, reliable demand planning", "benchmark": null, "default_confidence": "Directional", "why": "Existing enrichment levers are vendor/procurement-master oriented ('Vendor master enrichment', 'Procurement master completeness'). Danone's 2.56M-material MRP-Controller gap is a MATERIAL/planning-master completeness issue driving unplanned inventory, demand-planning blind spots and key-person risk - an operational-efficiency mechanic the library has no material-side enrichment lever for.", "inputs": []}];
+
+/* ---------- (2) CLIENTS — engagement instances (overlays on the shared library) ---------- */
+/* Each client supplies ONLY its measured rules (keyed on DQOps id, or a provisional
+   ref where the client has no catalog id yet), its ruleErrs, and any measured lever
+   headline values. Switch clients from the header dropdown, or load a client JSON.  */
+const CLIENTS = {
+  "PDO": {"name": "PDO", "program": "S/4HANA RISE", "asOf": "April 2026", "disclaimer": "Indicative, not a target or KPI. Figures are the addressable population; recoverable value depends on business validation. Financial figures are directional (source data + FX at extraction), not audited. Values are distinct financial lenses that overlap and MUST NOT be summed. Every number is evidenced by a low-level DQ rule keyed on its DQOps ID.", "rules": [{"dqops_id": 1212, "statement": "Active vendors with no activity in the last 3 years", "process_area": "P2P", "object": "Vendor Master", "type": "Info", "cleanse_intent": "Obsolete", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Relevant", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Migration volume reduction"}, {"dqops_id": 1206, "statement": "Potential duplicates of active vendor", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Enterprise Harmonized", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Vendor consolidation"}, {"dqops_id": 1207, "statement": "Customer matching with active vendor", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Enterprise Harmonized", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Vendor consolidation"}, {"dqops_id": 1309, "statement": "No duplicate bank accounts across unique vendors", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Rule-based Source Cleansing", "readiness": "Enterprise Harmonized", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Vendor control & duplicate-payment risk"}, {"dqops_id": 1209, "statement": "Vendor email at company-code level must match general level", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Rule-based Source Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Vendor master enrichment"}, {"dqops_id": 1216, "statement": "Active vendors must have completed address details", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Vendor master enrichment"}, {"dqops_id": 1218, "statement": "Active vendor must have a tax number", "process_area": "P2P", "object": "Vendor Master", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Ready", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Vendor master enrichment"}, {"dqops_id": 1213, "statement": "Material description \"Deleted\" must be marked inactive", "process_area": "P2P", "object": "Material Master", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Rule-based Source Cleansing", "readiness": "Technically Valid", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Migration volume reduction"}, {"dqops_id": 1215, "statement": "Description must be unique across active materials", "process_area": "P2P", "object": "Material Master", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Enterprise Harmonized", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": 1220, "statement": "Open PO must refer to active material", "process_area": "P2P", "object": "Material Master", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Cleanse in Migration", "readiness": "Business Relevant", "criticality": "1-High", "phase": "Phase 3 During-Migration", "value_lever": "Procurement master completeness"}, {"dqops_id": 1221, "statement": "No movement in stock for past 4 years", "process_area": "P2P", "object": "Material Master", "type": "Info", "cleanse_intent": "Obsolete", "cleanse_method": "Cleanse in Migration", "readiness": "Business Relevant", "criticality": "2-Medium", "phase": "Phase 3 During-Migration", "value_lever": "Obsolete inventory release"}, {"dqops_id": 1222, "statement": "Material and plant combination never used", "process_area": "P2P", "object": "Material Master", "type": "Info", "cleanse_intent": "Obsolete", "cleanse_method": "Cleanse in Migration", "readiness": "Business Relevant", "criticality": "2-Medium", "phase": "Phase 3 During-Migration", "value_lever": "Migration volume reduction"}, {"dqops_id": 1214, "statement": "Service description should be unique", "process_area": "P2P", "object": "Service Master", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Enterprise Harmonized", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": 1311, "statement": "Closed PR referenced in open PO", "process_area": "P2P", "object": "Purchase Order", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Rule-based Source Cleansing", "readiness": "Business Relevant", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Aged PO / commitment release"}, {"dqops_id": 1210, "statement": "Vendor in open PO must be active", "process_area": "P2P", "object": "Purchase Order", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Rule-based Source Cleansing", "readiness": "Business Ready", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Procurement master completeness"}, {"dqops_id": 1211, "statement": "Open purchase-order delivery date in the past", "process_area": "P2P", "object": "Purchase Order", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Relevant", "criticality": "1-High", "phase": "Phase 1 Immediate", "value_lever": "Aged PO / commitment release"}, {"dqops_id": 1223, "statement": "Full GR but delivery completion not set", "process_area": "P2P", "object": "Purchase Order", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Procurement master completeness"}, {"dqops_id": 1297, "statement": "Open PR having blocked vendor", "process_area": "P2P", "object": "Purchase Requisition", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Relevant", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Maverick / non-compliant spend reduction"}, {"dqops_id": 1295, "statement": "Open PR aging analysis (6 months – 5 years)", "process_area": "P2P", "object": "Purchase Requisition", "type": "Info", "cleanse_intent": "Obsolete", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Relevant", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Aged PO / commitment release"}, {"dqops_id": 1296, "statement": "Open PR critical data element completion check", "process_area": "P2P", "object": "Purchase Requisition", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Report-based Source Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Procurement master completeness"}, {"dqops_id": 1232, "statement": "Work center missing or having invalid / blocked cost center", "process_area": "EAM", "object": "Work Center", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Cleanse in Migration", "readiness": "Technically Valid", "criticality": "2-Medium", "phase": "Phase 3 During-Migration", "value_lever": "Cost-centre variance control"}, {"dqops_id": 1238, "statement": "Functional location without classification assigned", "process_area": "EAM", "object": "Functional Location", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "3-Low", "phase": "Phase 1 Immediate", "value_lever": "Asset hierarchy completeness"}, {"dqops_id": 1364, "statement": "WBS closed but settlement line present for current year", "process_area": "FIN", "object": "WBS", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 2 Post-Design", "value_lever": "Project / WBS closure"}], "ruleErrs": {"1212": 1909, "1206": 380, "1207": 577, "1309": 602, "1209": 3516, "1216": 3521, "1218": 3960, "1213": 7936, "1215": 42073, "1220": 122, "1221": 150467, "1222": 2965804, "1214": 154397, "1311": 15929, "1210": 5669, "1211": 150750, "1223": 2711, "1297": 8626, "1295": 146662, "1296": 463, "1232": 293, "1238": 95589, "1364": 277}, "leverValues": {"Obsolete inventory release": {"type": "Count", "value": 5761636}, "Aged PO / commitment release": {"type": "USD", "value": 3400000000}, "Vendor consolidation": {"type": "USD", "value": 685303001}, "Vendor control & duplicate-payment risk": {"type": "USD", "value": 397475741}, "Maverick / non-compliant spend reduction": {"type": "USD", "value": 1203444092}, "Cost-centre variance control": {"type": "USD", "value": 641267643}, "Asset hierarchy completeness": {"type": "Count", "value": 402117}, "Migration volume reduction": {"type": "Count", "value": 10573436}, "Aged AR recovery": {"type": "USD", "value": 53057267}, "Overdue AP penalty avoidance": {"type": "USD", "value": 37065194}}},
+  "Danone": {"name": "Danone", "program": "ECC (multi-system, 4 European SAP) DQ Assessment feeding MDM Target Data Model + S/4HANA Business Partner Harmonization readiness", "asOf": "2026-06-12", "note": "Provisional refs (DAN-*) stand in for DQOps IDs, which Danone's collateral lacks. No dollarized outcomes — all values are counts, directional.", "rules": [{"dqops_id": "DAN-AUA-EMPTY-90", "provisional": true, "statement": "90 of 256 profiled fields are empty / unused (99.5%+ NULL or blank in every org and system) - de-scope from S/4 build, mapping and test scope", "process_area": "O2C", "object": "KNB1, KNVV, KNVP, MARC, MVKE (5 master-data tables, 256 fields)", "type": "Info", "cleanse_intent": "Obsolete", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Migration volume reduction"}, {"dqops_id": "DAN-AUA-DEFAULT-80", "provisional": true, "statement": "80 of 256 profiled fields are constant / near-constant (one value covers 95-100% of records) - set the dominant value as target default and manage the short exception list rather than map field-by-field", "process_area": "O2C", "object": "KNB1, KNVV, KNVP, MARC, MVKE (5 master-data tables, 256 fields)", "type": "Info", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Attribute relevancy & target-model simplification"}, {"dqops_id": "DAN-AUA-GOVERN-20", "provisional": true, "statement": "20 of 256 profiled fields are high-cardinality free text where a controlled list belongs (INCO2 4,684 distinct, VKGRP 1,779, PARZA 932, VKBUR 620, KNVV.ZTERM 603, KNB1.ZTERM 499) - cleanse and govern to a standard list", "process_area": "O2C", "object": "KNVV.INCO2, KNVV.VKGRP, KNVP.PARZA, KNVV.VKBUR, KNVV.ZTERM, KNB1.ZTERM (+14 more)", "type": "Info", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": "DAN-AUA-DISCRIM-66", "provisional": true, "statement": "66 of 256 profiled fields are genuinely discriminating - carry forward As-Is with confidence (headline: 170 of 256 fields, 66%, are empty or single-dominant-value and collapse before the build starts)", "process_area": "O2C", "object": "KNB1, KNVV, KNVP, MARC, MVKE (5 master-data tables, 256 fields)", "type": "Info", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Attribute relevancy & target-model simplification"}, {"dqops_id": "DAN-KNVV-INCO2-DUP", "provisional": true, "statement": "Incoterms location field is free text - 4,684 distinct variants ('frei Haus', 'WARSZAWA', 'free on board'), 4,673 rare, 4,664 single-system, 57.5% blank, where a short standard list belongs", "process_area": "O2C", "object": "KNVV.INCO2 (Incoterms 2)", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": "DAN-ZTERM-VARIANTS", "provisional": true, "statement": "Payment Terms are massively fragmented: 603 distinct codes in KNVV, 499 in KNB1; 100+ active combinations; 71 (approx 70) variants of the 30-day term alone; 15 variants of NET30 with varying discounts; multiple codes (CA30/CN30/CH30/CHN2/CS30) for identical '30 days net' logic - de-duplicate and harmonize into canonical terms", "process_area": "O2C", "object": "KNB1.ZTERM / KNVV.ZTERM (Payment Terms)", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Payment-terms rationalization (DSO & cash-flow)"}, {"dqops_id": "DAN-ZTERM-DSO-185K", "provisional": true, "statement": "~185K customers concentrated on dominant 30-day terms (32% of customers on ~30-day terms); 3 payment terms (7, 14, 30 days) represent 70-90% in many company codes; term spread 1-180 days reduces cash-flow forecast predictability - opportunity to reduce DSO and apply global standard terms", "process_area": "O2C", "object": "Customer Master Payment Terms (ZTERM; KNB1/KNVV)", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Payment-terms rationalization (DSO & cash-flow)"}, {"dqops_id": "DAN-MARC-DISPO-MRP", "provisional": true, "statement": "2.56M materials have NO MRP Controller; 78% of material flow is unplanned; DISPO unpopulated across every plant; 91% NULL in ECC P06 (which holds 85% of material records); only 52 distinct controllers exist business-wide (P02 & P03 prove the discipline works, 9/15) - bulk-remediate missing MRP Controllers and govern auto-assignment by Region/Plant/Product Hierarchy", "process_area": "MM", "object": "MARC.DISPO (MRP Controller)", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "MRP / planning-attribute completeness"}, {"dqops_id": "DAN-CUSTHIER-MISMATCH", "provisional": true, "statement": "~220,000 cases of mismatch in Customer Hierarchy observed - parent customer's Customer Group 1 should be N-4 relative to the child (significant cleansing/transformation required against existing or target hierarchy)", "process_area": "O2C", "object": "Customer Master hierarchy (Customer Group 1 parent-child; RU00244 / DQOpsID 0474)", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": "DAN-FIN-COSTCTR-INACTIVE", "provisional": true, "statement": "A vast majority of cost centers remain open for postings even in controlling areas flagged 'inactive' - weak master-data lifecycle control; top inactive controlling areas still holding open/active cost centers: LLC H&N TRADE 43,004; Danone Russia 9,775; Horizon Organic 5,559; DANONE GmbH 4,152; Schreiber Czech 2,882 (plus a long tail); lock variability spans 0% to 40-60% with no global standard", "process_area": "FIN", "object": "CSKS / controlling areas (Cost Center lifecycle)", "type": "Error", "cleanse_intent": "Obsolete", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Cost-centre variance control"}, {"dqops_id": "DAN-UOM-SPLIT", "provisional": true, "statement": "Base UoM has 69 distinct values; largely standardized but Imperial vs Metric split needs attention (e.g. material group 1140500 = 44.44% kg / 55.56% lb; 1020603 & 1020604 = 50/50 kg/lb) before consolidation onto a single target model", "process_area": "MM", "object": "Material Base Unit of Measure (MARM / MARA MEINS)", "type": "Error", "cleanse_intent": "Harmonize", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Master-data harmonization"}, {"dqops_id": "DAN-KNB1-ZTERM-NULL", "provisional": true, "statement": "Payment Term field carries 14% NULL values at table-schema level - active customer company-code records missing a mandatory payment term, weakening billing/collection reliability", "process_area": "O2C", "object": "KNB1.ZTERM / Payment Terms fill", "type": "Error", "cleanse_intent": "Enrich", "cleanse_method": "Staged Cleansing", "readiness": "Business Ready", "criticality": "2-Medium", "phase": "Phase 1 Immediate", "value_lever": "Vendor master enrichment"}], "ruleErrs": {"DAN-AUA-EMPTY-90": 90, "DAN-AUA-DEFAULT-80": 80, "DAN-AUA-GOVERN-20": 20, "DAN-AUA-DISCRIM-66": 66, "DAN-KNVV-INCO2-DUP": 4684, "DAN-ZTERM-VARIANTS": 603, "DAN-ZTERM-DSO-185K": 185000, "DAN-MARC-DISPO-MRP": 2560000, "DAN-CUSTHIER-MISMATCH": 220000, "DAN-FIN-COSTCTR-INACTIVE": 43004, "DAN-UOM-SPLIT": 69}, "leverValues": {"Migration volume reduction": {"type": "Count", "value": 90, "note": "90 empty/unused fields de-scoped from the S/4 build across 5 tables (of 256 profiled); removable from mapping/test/migration scope. Field-level count, not record-level."}, "Attribute relevancy & target-model simplification": {"type": "Count", "value": 146, "note": "80 default-able + 66 discriminating fields whose target-model treatment is now evidenced by usage (default+exceptions vs carry As-Is); combined 170 of 256 fields (66%) are empty or single-dominant-value."}, "Master-data harmonization": {"type": "Count", "value": 20, "note": "20 high-cardinality hotspot fields needing controlled value lists (INCO2, ZTERM, VKGRP, PARZA, VKBUR); plus ~220K customer-hierarchy mismatches and 69 UoM variants requiring harmonization."}, "Payment-terms rationalization (DSO & cash-flow)": {"type": "Count", "value": 603, "note": "603 distinct payment-term codes (KNVV) / 499 (KNB1); ~71 variants of the 30-day term; ~185K customers on 30-day terms (32%); addressable working-capital / DSO reduction opportunity - not dollarized in the collateral."}, "MRP / planning-attribute completeness": {"type": "Count", "value": 2560000, "note": "2.56M materials with NO MRP Controller (DISPO); 78% of material flow unplanned; 91% NULL in P06. Addressable population for bulk remediation + governed auto-assignment."}, "Cost-centre variance control": {"type": "Count", "value": 43004, "note": "Cost centers open for postings inside 'inactive' controlling areas; largest single area (LLC H&N TRADE) = 43,004; long tail across Danone entities. Measures lifecycle-control gaps, not a dollar variance (no plan-vs-actual figures in collateral)."}}}
+};
+
+let CURKEY = "PDO", CURTAB = "spine";
+function buildClient(c){ return { name:c.name, program:c.program, asOf:c.asOf, disclaimer:c.disclaimer, note:c.note, ruleErrs:c.ruleErrs||{}, leverValues:c.leverValues||{} }; }
+let VLIB = { outcome_categories: CATS, value_levers: LEVERS, rules: (CLIENTS.PDO.rules||[]).slice() };
+let CLIENT = buildClient(CLIENTS.PDO);
+function applyClient(key){
+  if(!CLIENTS[key]) return;
+  CURKEY = key; const c = CLIENTS[key];
+  VLIB = { outcome_categories: CATS, value_levers: LEVERS, rules: (c.rules||[]).slice() };
+  CLIENT = buildClient(c);
+  if(typeof leverEvidenced==="function"){ THREAD_SEL = (LEVERS.find(v=>leverEvidenced(v.name))||LEVERS[0]).name; }
+}
+function rerenderCurrent(){ renderNav(); const t=TABS.find(x=>x.k===CURTAB); if(t) t.fn(); }
+function loadClientFile(e){
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=function(){
+    try{
+      const o=JSON.parse(rd.result); let c;
+      if(o.VLIB && o.CLIENT){
+        (o.VLIB.outcome_categories||[]).forEach(function(cat){ if(CATS.indexOf(cat)<0) CATS.push(cat); });
+        (o.VLIB.value_levers||[]).forEach(function(l){ if(!LEVERS.find(function(x){return x.name===l.name;})) LEVERS.push(l); });
+        c={ name:(o.CLIENT.name||f.name.replace(/\.json$/i,"")), program:o.CLIENT.program, asOf:o.CLIENT.asOf, disclaimer:o.CLIENT.disclaimer, note:o.CLIENT.note, rules:(o.VLIB.rules||[]), ruleErrs:(o.CLIENT.ruleErrs||{}), leverValues:(o.CLIENT.leverValues||{}) };
+      } else if(o.name && (o.rules||o.ruleErrs||o.leverValues)){
+        (o.new_levers||[]).forEach(function(l){ if(!LEVERS.find(function(x){return x.name===l.name;})) LEVERS.push(l); });
+        c={ name:o.name, program:o.program, asOf:o.asOf, disclaimer:o.disclaimer, note:o.note, rules:(o.rules||[]), ruleErrs:(o.ruleErrs||{}), leverValues:(o.leverValues||{}) };
+      } else { throw new Error("expected a {VLIB,CLIENT} bundle or a {name,rules,ruleErrs,leverValues} overlay"); }
+      CLIENTS[c.name]=c; applyClient(c.name); rerenderCurrent();
+    }catch(err){ var m=document.getElementById("dataMsg"); if(m){ m.style.color="#DC2626"; m.textContent="Could not load file: "+err.message; } }
+    e.target.value="";
+  };
+  rd.readAsText(f);
+}
+
+/* ---------- vocab / colour maps ---------- */
+const CAT_COLOR={
+  "Working Capital & Cash Flow":"#0E9F6E",
+  "Procurement Effectiveness & Spend Control":"#2563CC",
+  "P&L Accuracy & Financial Close":"#8B5CF6",
+  "Operational Efficiency & Asset Productivity":"#E08A0B",
+  "Compliance, Audit & Risk":"#64748B",
+  "Program / Migration Economics":"#1E2761"
+};
+const INTENT_COLOR={Obsolete:"#E08A0B", Harmonize:"#8B5CF6", Enrich:"#2563CC", "Relevancy Preparation":"#64748B"};
+const CRIT_COLOR={"1-High":"#DC2626","2-Medium":"#E08A0B","3-Low":"#0E9F6E"};
+const READINESS=["Technically Valid","Business Relevant","Business Ready","Enterprise Harmonized","Validated & Authorized","AI-Ready & Bias-Free"];
+
+/* ---------- formatting helpers ---------- */
+const fmtUSD=n=>"$"+ (n>=1e9?(n/1e9).toFixed(2)+"B": n>=1e6?(n/1e6).toFixed(1)+"M": n>=1e3?(n/1e3).toFixed(0)+"k": ""+n);
+const fmtNum=n=>n.toLocaleString("en-US");
+const fmtCompact=n=>n>=1e6?(n/1e6).toFixed(n>=1e7?0:1)+"M":n>=1e3?(n/1e3).toFixed(0)+"k":""+n;
+const headlineStr=h=> h.type==="USD"?fmtUSD(h.value):fmtNum(h.value)+" recs";
+
+/* ---------- ROLLUP HELPERS — rule (dqops_id) -> lever -> category ---------- */
+/* a rule's measured error count comes ONLY from the CLIENT instance, by DQOps ID */
+const errOf=id=>CLIENT.ruleErrs[id]||0;
+/* a value lever's member rules = VLIB.rules whose value_lever === lever.name  */
+const leverMembers=name=>VLIB.rules.filter(r=>r.value_lever===name);
+/* a lever's measured headline = CLIENT.leverValues[name] if present, else the
+   summed defect count over its member rules (from CLIENT.ruleErrs).           */
+function leverHeadline(name){
+  const measured=CLIENT.leverValues[name];
+  if(measured) return {type:measured.type, value:measured.value};
+  const cnt=leverMembers(name).reduce((a,r)=>a+errOf(r.dqops_id),0);
+  return {type:"Count", value:cnt};
+}
+/* the lever objects that belong to a given outcome category */
+const leversInCat=cat=>VLIB.value_levers.filter(v=>v.outcome_category===cat);
+/* find a lever definition by name */
+const leverDef=name=>VLIB.value_levers.find(v=>v.name===name);
+/* categories that actually carry at least one lever */
+const activeCats=()=>VLIB.outcome_categories.filter(c=>leversInCat(c).length);
+/* every lever's total member defects (always the count, ignoring measured $) */
+const leverDefects=name=>leverMembers(name).reduce((a,r)=>a+errOf(r.dqops_id),0);
+/* is a lever EVIDENCED for this client? (a client leverValue, or member rules with measured errors).
+   If not, the lever still belongs on the map — it is business-outcome POTENTIAL with evidence absent. */
+const leverEvidenced=name=>(CLIENT.leverValues&&CLIENT.leverValues[name])?true:leverMembers(name).some(r=>errOf(r.dqops_id)>0);
+/* evidence coverage across the FULL library (the target potential) */
+const coverage=()=>{const all=VLIB.value_levers;return {ev:all.filter(v=>leverEvidenced(v.name)).length, tot:all.length};};
+const clientNote=()=>CLIENT.disclaimer||CLIENT.note||"";
+
+/* ================= APP SHELL: modes · tiers · staging · guide ================= */
+let MODE="present", TIER="exec", OPLEVER=null, THREAD_SEL=null, EDITMODE=false, GUIDE=false, PUBLISHED=false;
+let STAGE={excluded:{}, presNote:""};
+let META={engagement:"", date:""};
+
+const CLIENT_SOURCE={
+  "PDO":"PDO ISC · S/4HANA RISE DQ Assessment · April 2026 · Syniti ADM-M",
+  "Danone":"Danone ECC (4 European systems) · DQ Assessment Sprints 1–4 · June 2026"
+};
+/* Activity — how much / how often; aging is emphasised for obsolete data */
+const ACTIVITY={
+  "Obsolete inventory release":"no stock movement in 4+ years — obsolete stock",
+  "Migration volume reduction":"dead & duplicate records carried for years",
+  "Aged PO / commitment release":"open beyond delivery date · aged > 2 years",
+  "Vendor consolidation":"duplicates created at every new-vendor onboarding",
+  "Vendor control & duplicate-payment risk":"shared bank details recur at vendor creation",
+  "Maverick / non-compliant spend reduction":"off-contract POs raised routinely",
+  "Cost-centre variance control":"mis-postings accumulate each close",
+  "Asset hierarchy completeness":"hierarchy gaps introduced at asset creation",
+  "Master-data harmonization":"variants created across systems continuously",
+  "Procurement master completeness":"critical fields skipped at PO/PR creation",
+  "Aged AR recovery":"invoices age past terms each cycle",
+  "Overdue AP penalty avoidance":"invoices slip past due dates each period"
+};
+/* Strategy — impact on the initiative (qualitative), sourced from the methodology, not live progress */
+const STRATEGY_IMPACT={
+  "Obsolete inventory release":"Archiving strategy · data volume & carrying cost · working-capital release",
+  "Migration volume reduction":"Archiving strategy · migration scope, cost & risk · S/4 clean-core",
+  "Aged PO / commitment release":"Working-capital & cash-flow strategy · procurement cycle-time",
+  "Aged AR recovery":"Working-capital & DSO strategy · cash collection",
+  "Overdue AP penalty avoidance":"Working-capital & DPO strategy · penalty avoidance",
+  "Vendor consolidation":"MDM single-source-of-truth · spend visibility · category leverage",
+  "Master-data harmonization":"MDM harmonisation · reporting reliability · S/4 readiness",
+  "Vendor control & duplicate-payment risk":"Controls & compliance (SOX) · audit-defensibility",
+  "Maverick / non-compliant spend reduction":"Procurement compliance · spend-under-management",
+  "Procurement master completeness":"Process automation · straight-through processing",
+  "Vendor master enrichment":"Master-data readiness · fewer process blocks",
+  "Cost-centre variance control":"Financial-close reliability · budget accuracy",
+  "Asset hierarchy completeness":"Asset productivity · cost-flow accuracy",
+  "Project / WBS closure":"Financial-close reliability · clean cost objects"
+};
+function strategyByIntent(v){ return ({Obsolete:"Archiving strategy · data volume & cost impacted",Harmonize:"MDM / single-source-of-truth impacted",Enrich:"Process automation & data-readiness impacted"}[v.default_intent])||v.outcome_category; }
+
+function setClient(k){ applyClient(k); OPLEVER=(LEVERS.find(v=>leverEvidenced(v.name))||LEVERS[0]).name; STAGE={excluded:{}, presNote:""}; META={engagement:(CLIENT.program?CLIENT.name+" · "+CLIENT.program:CLIENT.name), date:CLIENT.asOf||""}; }
+const excluded=n=>!!STAGE.excluded[n];
+const included=n=>!excluded(n);
+function fmtHead(h){ return h.type==="USD"?fmtUSD(h.value):fmtNum(h.value); }
+function topOutcomes(n){
+  const ev=LEVERS.filter(v=>leverEvidenced(v.name)&&included(v.name)).map(v=>({v,head:leverHeadline(v.name)}));
+  ev.sort((a,b)=>((b.head.type==="USD")-(a.head.type==="USD"))||(b.head.value-a.head.value));
+  return n?ev.slice(0,n):ev;
+}
+function allInUSD(){ return topOutcomes().map(t=>t.head).filter(h=>h.type==="USD").reduce((a,h)=>a+h.value,0); }
+/* the four dimensions, computed from the underlying DQOps rules + methodology mapping */
+function contextOf(name){
+  const v=leverDef(name), M=leverMembers(name);
+  const areas=[...new Set(M.map(r=>r.process_area).filter(Boolean))];
+  const objs=[...new Set(M.map(r=>r.object).filter(Boolean))];
+  const records=M.reduce((a,r)=>a+errOf(r.dqops_id),0);
+  const head=leverHeadline(name);
+  return {areas, objs, records, rulesCount:M.length,
+    value:head, valued:(leverEvidenced(name)&&head.type==="USD"),
+    inputs:(v.inputs||[]), formula:v.formula||"",
+    activity:ACTIVITY[name]||({Obsolete:"records accumulate over time",Harmonize:"duplicates / variants created across systems",Enrich:"gaps introduced at record creation"}[v.default_intent]||"recurring"),
+    strategy:STRATEGY_IMPACT[name]||strategyByIntent(v)};
+}
+function footer(){ return `<div class="foot">${gt("point-in-time","Point-in-time")} depiction · ${gt("aggregated","aggregated")} · may require further refinement and analysis · <b>${META.engagement||CLIENT.name}</b>${META.date?" · "+META.date:""} · evidenced by ${gt("DQOps ID","DQOps ID")}</div>`; }
+
+/* ---------- top bar ---------- */
+function renderTop(){
+  const tiers=[["exec","Executive"],["tactical","Tactical"],["operational","Operational"]];
+  const segs=tiers.map(t=>`<div class="seg ${!GUIDE&&MODE==="present"&&TIER===t[0]?"active":""}" data-tier="${t[0]}">${t[1]}</div>`).join("");
+  const copts=Object.keys(CLIENTS).map(k=>`<option value="${k}" ${k===CURKEY?"selected":""}>${k}</option>`).join("");
+  const tools = (MODE==="present"&&!GUIDE&&!PUBLISHED) ? `<button class="mini ${EDITMODE?"on":""}" id="editBtn">${EDITMODE?"✓ staging":"Staging edit"}</button><button class="mini pub" id="pubBtn">Publish →</button>` : "";
+  document.getElementById("topbar").innerHTML=`
+    <div class="brand"><div class="synmark">${SYNITI_LOGO}<span class="capg">part of Capgemini</span></div><div class="ttl">Business outcomes activation · Data journey map</div></div>
+    <div class="bar-center">
+      ${PUBLISHED?"":`<div class="mode-toggle"><div class="mbtn ${MODE==="present"?"active":""}" data-mode="present">Present</div><div class="mbtn ${MODE==="build"?"active":""}" data-mode="build">Build</div></div>`}${PUBLISHED?'<span class="pub-badge">\u25cf Published</span>':""}
+      ${(MODE==="present"&&!GUIDE)?`<div class="segmented">${segs}</div>`:`<div class="chip-mode" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:600;padding:8px 14px;border-radius:11px;background:rgba(37,99,204,.08);border:1px solid rgba(37,99,204,.18)">${GUIDE?"Guide":"Get the results"}</div>`}
+    </div>
+    <div class="bar-right">${CUST_LOGO?`<img class="custlogo" src="${CUST_LOGO}" alt="customer logo">`:""}${tools}<button class="mini" id="srcBtn">Sources</button><button class="mini" id="printBtn">Print</button><button class="mini" id="guideBtn">${GUIDE?"✕ close":"ⓘ Guide"}</button>${PUBLISHED?`<span class="client-static">${CLIENT.name}</span>`:`<select class="client-sel" id="clientSel">${copts}</select><button class="btn-load" id="loadBtn">+ load client</button>`}</div>`;
+  document.querySelectorAll("#topbar .seg").forEach(s=>s.onclick=()=>{GUIDE=false;TIER=s.dataset.tier;rerender();});
+  document.querySelectorAll("#topbar .mbtn").forEach(b=>b.onclick=()=>{GUIDE=false;MODE=b.dataset.mode;rerender();});
+  const cs=document.getElementById("clientSel"); if(cs) cs.onchange=()=>{setClient(cs.value);rerender();};
+  const lb=document.getElementById("loadBtn"),fi=document.getElementById("fileIn"); if(lb&&fi){lb.onclick=()=>fi.click();fi.onchange=loadClientFile;}
+  const eb=document.getElementById("editBtn"); if(eb) eb.onclick=()=>{EDITMODE=!EDITMODE;rerender();};
+  const pb=document.getElementById("pubBtn"); if(pb) pb.onclick=publish;
+  const gb=document.getElementById("guideBtn"); if(gb) gb.onclick=()=>{GUIDE=!GUIDE;rerender();};
+  const sb2=document.getElementById("srcBtn"); if(sb2) sb2.onclick=openSources;
+  const pr=document.getElementById("printBtn"); if(pr) pr.onclick=()=>window.print();
+  const li=document.getElementById("logoIn"); if(li) li.onchange=onLogo;
+}
+function showOnly(id){ ["scr-exec","scr-tactical","scr-operational","scr-build","scr-guide"].forEach(s=>{document.getElementById(s).style.display=s===id?"block":"none";}); }
+function renderScreen(){
+  if(GUIDE){ renderGuide(); showOnly("scr-guide"); return; }
+  if(MODE==="build"){renderBuild();showOnly("scr-build");return;}
+  if(TIER==="exec"){renderExec();showOnly("scr-exec");} else if(TIER==="tactical"){renderTactical();showOnly("scr-tactical");} else {renderOperational();showOnly("scr-operational");}
+}
+function rerender(){ renderTop(); renderScreen(); }
+function rerenderCurrent(){ rerender(); }
+
+/* ================= PRESENT · EXECUTIVE ================= */
+function renderExec(){
+  const tops=topOutcomes(3), cov=coverage();
+  const cards=tops.map((t,i)=>{ const col=CAT_COLOR[t.v.outcome_category]||"#64748B"; const c=contextOf(t.v.name);
+    return `<div class="card top3 clickable" style="--accent:${col}" data-l="${t.v.name.replace(/"/g,'&quot;')}">
+      <div class="t3-top"><span class="t3-rank">${i+1}</span>${EDITMODE?`<button class="excl" data-l="${t.v.name.replace(/"/g,'&quot;')}">exclude</button>`:""}</div>
+      <div class="t3-big">${fmtHead(t.head)}</div>
+      <div class="t3-lever">${t.v.name}</div>
+      <div class="t3-why">${c.strategy}</div>
+      <div class="t3-cat"><span class="sq" style="background:${col}"></span>${t.v.outcome_category}</div>
+    </div>`; }).join("");
+  const rest=topOutcomes().slice(3);
+  const restChips=rest.map(t=>`<span class="mchip clickable mchip-hidden" data-l="${t.v.name.replace(/"/g,'&quot;')}"><b>${fmtHead(t.head)}</b> ${t.v.name}</span>`).join("")+(rest.length?`<span class="mchip more-toggle" data-lbl="\u25b8 ${rest.length} more" onclick="event.stopPropagation();var w=this.parentElement;var e=w.classList.toggle('mexp');this.textContent=e?'show fewer':this.dataset.lbl;">\u25b8 ${rest.length} more</span>`:"");
+  const potL=LEVERS.filter(v=>!leverEvidenced(v.name)); const pots=potL.map(v=>`<span class="pchip2 mchip-hidden"><span class="rd"></span>${v.name}</span>`).join("")+(potL.length?`<span class="mchip more-toggle" data-lbl="\u25b8 ${potL.length} more" onclick="event.stopPropagation();var w=this.parentElement;var e=w.classList.toggle('mexp');this.textContent=e?'show fewer':this.dataset.lbl;">\u25b8 ${potL.length} more</span>`:"");
+  const exKeys=Object.keys(STAGE.excluded);
+  const stagePanel = EDITMODE ? `<div class="card stage-panel authoring">
+    <div class="auth-tag">✎ Authoring · not published</div>
+    <div class="sec-h" style="margin-top:0">Shape the published version</div>
+    <div class="stage-fields"><div class="stage-row"><label>Engagement / project</label><input id="engIn" value="${(META.engagement||"").replace(/"/g,'&quot;')}"></div><div class="stage-row"><label>Date</label><input id="dateIn" value="${(META.date||"").replace(/"/g,'&quot;')}"></div><div class="stage-row"><label>Customer logo</label><button class="btn sec" style="padding:8px 12px;font-size:12px" onclick="pickLogo()">${CUST_LOGO?"Replace logo":"Upload logo"}</button></div></div>
+    <textarea id="presNote" placeholder="Add a framing note for the published presentation…">${STAGE.presNote||""}</textarea>
+    ${exKeys.length?`<div class="excl-list">Excluded: ${exKeys.map(n=>`<button class="reinc" data-l="${n.replace(/"/g,'&quot;')}">${n} ✕</button>`).join("")}</div>`:""}
+    <div class="stage-hint">Exclude outcomes with the button on each card · edit the engagement, date &amp; note · then <b>Publish →</b> for a clean read-only HTML.</div></div>` : "";
+  document.getElementById("scr-exec").innerHTML=`
+    ${stageBanner()}
+    <div class="exec-head">
+      <div><div class="sec-h" style="margin:0">What the executive should know</div><div class="exec-sub">${CLIENT.name} · the outcomes on the table now — click any for its dynamic context</div></div>
+      <div class="cov-chip"><b>${cov.ev}/${cov.tot}</b> ${gt("coverage","outcome levers evidenced")} · ${cov.tot-cov.ev} ${gt("potential","potential")}</div>
+    </div>
+    <div class="top3-grid">${cards}</div>
+    ${rest.length?`<div class="more-row"><span class="more-lab">Also on the table</span><div class="mchips">${restChips}</div></div>`:""}
+    <div class="allin2">${gt("indicative","Illustrative")} all-in <b>≈ ${fmtUSD(allInUSD())} ${gt("addressable population","addressable")}</b><span class="flag">${gt("distinct lenses","distinct lenses")} · ${gt("not a bankable total","not a bankable total")}</span></div>
+    ${pots?`<div class="pot-row"><span class="more-lab">Potential · evidence absent</span><div class="mchips">${pots}</div></div>`:""}
+    ${stagePanel}
+    ${footer()}`;
+  document.querySelectorAll("#scr-exec .top3").forEach(c=>c.onclick=()=>openDC(c.dataset.l));
+  document.querySelectorAll("#scr-exec .mchip.clickable").forEach(c=>c.onclick=()=>openDC(c.dataset.l));
+  document.querySelectorAll("#scr-exec .excl").forEach(b=>b.onclick=(e)=>{e.stopPropagation();STAGE.excluded[b.dataset.l]=true;renderExec();});
+  document.querySelectorAll("#scr-exec .reinc").forEach(b=>b.onclick=()=>{delete STAGE.excluded[b.dataset.l];renderExec();});
+  const pn=document.getElementById("presNote"); if(pn) pn.oninput=()=>{STAGE.presNote=pn.value;};
+  const en=document.getElementById("engIn"); if(en) en.oninput=()=>{META.engagement=en.value;};
+  const dt=document.getElementById("dateIn"); if(dt) dt.oninput=()=>{META.date=dt.value;};
+}
+
+/* ================= PRESENT · TACTICAL ================= */
+function renderTactical(){
+  const cats=CATS.filter(c=>leversInCat(c).length);
+  const cards=cats.map(c=>{
+    const col=CAT_COLOR[c]||"#64748B";
+    const levs=leversInCat(c).map(v=>({v,ev:leverEvidenced(v.name),head:leverHeadline(v.name)}));
+    const nEv=levs.filter(l=>l.ev).length;
+    const rows=levs.map(l=>`<div class="lev-row ${l.ev?"clickable":"absent"}" ${l.ev?`data-l="${l.v.name.replace(/"/g,'&quot;')}"`:""}><span class="ln">${l.v.name}</span>${l.ev?`<span class="lv">${fmtHead(l.head)}</span>`:`<span class="lv ab">absent</span>`}</div>`).join("");
+    return `<div class="card cat-card"><div class="cn"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${col};margin-right:8px;vertical-align:middle"></span>${c}</div>
+      <div class="ccov">${nEv} of ${levs.length} levers evidenced</div>
+      <div class="cbar"><i style="display:block;height:100%;width:${Math.round(nEv/levs.length*100)}%;background:${col}"></i></div>${rows}</div>`;
+  }).join("");
+  const dcN=topOutcomes().length; const dc=topOutcomes().map((t,ix)=>{const c=contextOf(t.v.name);const col=CAT_COLOR[t.v.outcome_category]||"#64748B";
+    return `<tr class="clickable ${ix>=5?"dc-hidden":""}" data-l="${t.v.name.replace(/"/g,'&quot;')}"><td><span class="dot2" style="background:${col}"></span><b>${t.v.name}</b></td>
+      <td>${c.objs.length} obj · ${c.areas.join(", ")||"—"}</td>
+      <td class="recs">${c.valued?fmtUSD(c.value.value):`<span style="color:var(--slate)">compute pending</span>`}</td>
+      <td class="recs">${fmtCompact(c.records)}</td>
+      <td style="font-size:11.5px">${c.strategy}</td><td style="text-align:right;color:var(--slate)">↗</td></tr>`;}).join("");
+  const phases=["Phase 1 Immediate","Phase 2 Post-Design","Phase 3 During-Migration"], intents=["Obsolete","Harmonize","Enrich"];
+  const PHASE_COL=["#0E9F6E","#2563CC","#8B5CF6"];
+  const phInfo=phases.map((ph,i)=>{const rs=VLIB.rules.filter(r=>r.phase===ph);const tot=rs.reduce((a,r)=>a+errOf(r.dqops_id),0);const byI=intents.map(it=>({it,v:rs.filter(r=>r.cleanse_intent===it).reduce((a,r)=>a+errOf(r.dqops_id),0)}));const mx=Math.max(...byI.map(x=>x.v),1);return {ph,i,tot,byI,mx,short:ph.replace(/Phase \d /,"")};});
+  document.getElementById("scr-tactical").innerHTML=`
+    ${stageBanner()}
+    <div class="sec-h" style="margin-top:0">Outcomes by category · the plan <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--slate);margin-left:8px">— click any evidenced lever for its dynamic context</span></div>
+    <div class="cat-grid">${cards}</div>
+    <div class="card dc-card">
+      <div class="sec-h" style="margin-top:0">Dynamic context · Organization · Value · Activity · Strategy</div>
+      <table class="dc-tbl"><thead><tr><th>Outcome lever</th><th>Organization <span>where · scope</span></th><th>Value <span>$ of the issue</span></th><th>Activity <span>records</span></th><th>Strategy <span>impact</span></th><th></th></tr></thead><tbody>${dc}</tbody></table>${dcN>5?`<button class="mini dc-toggle" data-lbl="Show all ${dcN} rows \u2193" onclick="var t=this.parentElement.querySelector('table');var e=t.classList.toggle('expanded');this.textContent=e?'Show fewer \u2191':this.dataset.lbl;">Show all ${dcN} rows \u2193</button>`:""}
+      <div class="stage-hint"><b>Value</b> is the $ tied to the issue (or "compute pending"); <b>Activity</b> is the record volume — kept distinct. Click a row for the four-panel detail.</div>
+    </div>
+    <div class="card roadmap">
+      <div class="sec-h" style="margin-top:0">Cleanse roadmap · the journey <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--slate);margin-left:8px">— get clean, then stay clean</span></div>
+      <div class="rmtl"><div class="rmtl-caps"><span>Get clean</span><span class="rc-r">Stay clean →</span></div><div class="rmtl-body"><div class="rmtl-line"><div class="rmtl-flow"></div></div><div class="rmtl-grid">${phInfo.map(p=>`<div class="rmtl-col"><div class="rmtl-node" style="background:${PHASE_COL[p.i]}"></div><div class="card rmtl-c"><div class="rmtl-when">Phase ${p.i+1}</div><div class="rmtl-ph">${p.short}</div><div class="rmtl-tot">${fmtCompact(p.tot)}<span>records</span></div><div class="rmtl-bars">${p.byI.map(x=>`<div class="rmtl-bar"><span class="rb-l">${x.it}</span><span class="rb-t"><i style="width:${Math.round(x.v/p.mx*100)}%;background:${INTENT_COLOR[x.it]}"></i></span></div>`).join("")}</div></div></div>`).join("")}</div></div></div>
+    </div>
+    ${footer()}`;
+  document.querySelectorAll("#scr-tactical .clickable[data-l]").forEach(el=>el.onclick=()=>openDC(el.dataset.l));
+}
+
+/* ================= DYNAMIC CONTEXT · four-panel pop-up ================= */
+function openDC(name){
+  const v=leverDef(name); if(!v) return; const c=contextOf(name); const M=leverMembers(name);
+  const objVol={}; M.forEach(r=>{objVol[r.object]=(objVol[r.object]||0)+errOf(r.dqops_id);});
+  const objBars=Object.entries(objVol).filter(o=>o[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  const maxObj=Math.max(...objBars.map(o=>o[1]),1);
+  const bench=v.benchmark;
+  const valPanel = c.valued
+    ? `<div class="dcp-metrics"><div class="dcp-m"><div class="dcp-big">${fmtUSD(c.value.value)}</div><div class="dcp-l">value linked to this issue</div></div><div class="dcp-m"><div class="dcp-big" style="font-size:20px">${v.default_confidence}</div><div class="dcp-l">confidence</div></div></div>${bench?`<div class="dcp-note">benchmark · ${bench}</div>`:""}`
+    : `<div class="compute"><div class="cp-h">${gt("compute pending","compute pending")}</div><div class="dcp-l">${fmtNum(c.records)} records — value not yet computed</div><div class="cp-need">To compute, provide: <b>${(c.inputs&&c.inputs.length)?c.inputs.join(", "):"a baseline / rate"}</b><br><code>${c.formula||"records × rate"}</code></div></div>`;
+  const impChips=c.strategy.split(" · ").map(s=>`<span class="imp-chip">${s}</span>`).join("");
+  const html=`<div class="modal-card">
+    <div class="modal-head"><div><div class="modal-kick">Dynamic context</div><div class="modal-ttl">${name}</div><div class="modal-sub">${v.outcome_category} · ${CLIENT.name}</div></div><button class="modal-x" onclick="closeDC()">✕</button></div>
+    <div class="dc4">
+      <div class="dcp org"><div class="dcp-h">${gt("organization","Organization")} <span>where · scope</span></div>
+        <div class="dcp-metrics"><div class="dcp-m"><div class="dcp-big">${c.objs.length}</div><div class="dcp-l">objects affected</div></div><div class="dcp-m"><div class="dcp-big">${c.areas.length}</div><div class="dcp-l">process area(s) · ${c.areas.join(", ")||"—"}</div></div></div>
+        <div class="dcp-bars">${objBars.map(o=>`<div class="dcp-bar"><span class="dcp-bn">${o[0]}</span><span class="dcp-bt"><i style="width:${Math.round(o[1]/maxObj*100)}%"></i></span><span class="dcp-bv">${fmtCompact(o[1])}</span></div>`).join("")||`<div class="dcp-note">object breakdown appears once measured</div>`}</div></div>
+      <div class="dcp val"><div class="dcp-h">${gt("value","Value")} <span>$ of the issue</span></div>${valPanel}</div>
+      <div class="dcp act"><div class="dcp-h">${gt("activity","Activity")} <span>how much · how often</span></div>
+        <div class="dcp-metrics"><div class="dcp-m"><div class="dcp-big">${fmtCompact(c.records)}</div><div class="dcp-l">defect records</div></div><div class="dcp-m"><div class="dcp-big">${c.rulesCount}</div><div class="dcp-l">DQ rules</div></div></div>
+        <div class="dcp-note">${c.activity}</div></div>
+      <div class="dcp str"><div class="dcp-h">${gt("strategy","Strategy")} <span>impact on the initiative</span></div>
+        <div class="imp-chips">${impChips}</div><div class="dcp-note">what this issue impacts — from the methodology mapping</div></div>
+    </div>
+    <div class="modal-foot"><span class="dcp-note" style="margin:0;flex:1">Organization · Value · Activity from the assessment · Strategy from the methodology · illustrative where noted.</span><button class="btn sec" onclick="closeDC()">Close</button><button class="btn" onclick="dcToOperational('${name.replace(/'/g,"\\'")}')">Operational detail →</button></div>
+  </div>`;
+  const m=document.getElementById("dcModal"); m.innerHTML=html; m.style.display="flex";
+}
+function closeDC(){ const m=document.getElementById("dcModal"); if(m){m.style.display="none";m.innerHTML="";} }
+function dcToOperational(name){ OPLEVER=name; closeDC(); GUIDE=false; MODE="present"; TIER="operational"; rerender(); }
+
+/* ================= PRESENT · OPERATIONAL ================= */
+function renderOperational(){
+  if(!OPLEVER || !leverDef(OPLEVER)) OPLEVER=(LEVERS.find(v=>leverEvidenced(v.name))||LEVERS[0]).name;
+  const pick=LEVERS.map(v=>{const ev=leverEvidenced(v.name);return `<div class="lchip ${ev?"ev":""} ${v.name===OPLEVER?"active":""}" data-l="${v.name.replace(/"/g,'&quot;')}"><span class="rd"></span>${v.name}</div>`;}).join("");
+  const v=leverDef(OPLEVER); const ev=leverEvidenced(v.name); const col=CAT_COLOR[v.outcome_category]||"#64748B";
+  const members=leverMembers(v.name); const head=leverHeadline(v.name);
+  const objs=[...new Set(members.map(r=>r.object))];
+  const ruleRows = members.length ? members.map(r=>{const e=errOf(r.dqops_id);const ic=INTENT_COLOR[r.cleanse_intent]||"#64748B";
+    return `<div class="rule-line"><span class="mono">${r.dqops_id}</span><span style="flex:1">${r.statement}</span><span class="tag" style="color:${ic};border:1px solid ${ic}44">${r.cleanse_intent}</span>${e?`<span class="recs">${fmtNum(e)} recs</span>`:`<span style="color:var(--slate);font-size:11px">no client measure</span>`}</div>`;
+  }).join("") : `<div class="rule-line" style="color:var(--slate)">No catalog DQOps rule mapped for ${CLIENT.name} yet — this outcome is <b style="color:var(--muted)">potential</b>; the evidence is the gap to close.</div>`;
+  const row=(k,val)=>`<div class="op-row"><div class="ok">${k}</div><div class="ov">${val}</div></div>`;
+  document.getElementById("scr-operational").innerHTML=`
+    ${stageBanner()}
+    <div class="sec-h" style="margin-top:0">Value lever · walk the evidence</div>
+    <div class="lev-pick">${pick}</div>
+    <div class="card op-detail">
+      <div class="op-top">
+        <span class="op-cat" style="background:${col}">${v.outcome_category}</span>
+        <span class="op-head ${ev?"":"ab"}">${ev?headlineStr(head):"potential — evidence absent"}</span>
+        <span style="font-size:12px;color:var(--slate)">${ev?`${v.default_confidence} · DQOps ${members.map(r=>r.dqops_id).join(", ")}`:`${v.default_confidence} · no evidence in ${CLIENT.name}`}</span>
+        <button class="btn sec" style="margin-left:auto;padding:6px 12px;font-size:11.5px" onclick="openDC('${v.name.replace(/'/g,"\\'")}')">Dynamic context</button>
+      </div>
+      ${row("Value lever", `<b>${v.name}</b>`)}
+      ${row("Value formula", `<span style="color:var(--muted);font-size:12px">${v.formula}</span>`)}
+      ${row("KPI", v.kpi + (v.benchmark?` <span style="color:var(--slate)">· benchmark ${v.benchmark}</span>`:""))}
+      ${row("Data object(s)", objs.map(o=>`<b>${o}</b>`).join(" · ")||"<span style='color:var(--slate)'>— to be identified</span>")}
+      ${row("DQOps rules / defects", ruleRows)}
+    </div>
+    ${footer()}`;
+  document.querySelectorAll("#scr-operational .lchip").forEach(cc=>cc.onclick=()=>{OPLEVER=cc.dataset.l;renderOperational();});
+}
+
+/* ================= GUIDE · educate the audience ================= */
+function renderGuide(){
+  const g=(n,t,body)=>`<div class="card g-card"><h3><span class="g-num">${n}</span>${t}</h3>${body}</div>`;
+  document.getElementById("scr-guide").innerHTML=`
+    <div class="guide-head"><div class="sec-h" style="margin:0">How to read this report</div><div class="exec-sub">A quick guide to the Data Journey Map · Business Outcomes Activation</div></div>
+    <div class="guide-grid">
+      ${g(1,"What this is",`<p>It turns a data-quality assessment into <b>business outcomes</b>. The spine runs <b>outcome → value lever → DQOps rule → defect</b>: every dollar traces down to a rule, every fixed record traces up to a dollar. Nothing is a per-client one-off — the <b>DQOps ID is the only identifier</b>.</p>`)}
+      ${g(2,"Two modes",`<p><b>Build</b> — <i>get the results</i>: load a client's assessment, map findings to reusable value levers, download templates for exactly the data needed.</p><p><b>Present</b> — <i>present the results</i>: the story, for three audiences.</p>`)}
+      ${g(3,"Three tiers",`<div class="g-dims"><div class="g-dim"><b>Executive</b> — the top outcomes on the table</div><div class="g-dim"><b>Tactical</b> — the plan by category + dynamic context</div><div class="g-dim"><b>Operational</b> — the DQOps rules & defects</div><div class="g-dim"><b>Build</b> — populate & template the evidence</div></div>`)}
+      ${g(4,"Coverage & potential",`<p>Every client is measured against the same <b>target library</b> of value levers. <b>Evidenced</b> levers carry the client's numbers; the rest are <b>potential — evidence absent</b>: the opportunity a deeper assessment would light up, not an omission.</p>`)}
+      ${g(5,"Dynamic context · four dimensions",`<p>Any opportunity can be quantified across four dimensions, at any level:</p><div class="g-dims"><div class="g-dim"><b>Organization</b> — where · the objects & systems in scope</div><div class="g-dim"><b>Value</b> — the $ tied to the issue (or "compute pending")</div><div class="g-dim"><b>Activity</b> — how much / how often · records & aging</div><div class="g-dim"><b>Strategy</b> — the impact on the initiative</div></div>`)}
+      ${g(6,"The honesty discipline",`<p>Every figure is <b>indicative</b> of the <b>addressable population</b>, <b>directional</b> (not audited), a set of <b>distinct lenses that must not be summed</b>, and <b>evidenced by a DQOps rule</b>. The footer carries the point-in-time disclaimer, engagement and date.</p>`)}
+      ${g(7,"From staging to published",`<p>Present is a <b>staging area</b>. Use <b>Staging edit</b> to exclude items, set the engagement/date and add a note, then <b>Publish →</b> to export a clean, read-only presentation HTML for the client.</p>`)}<div class="card g-card gloss-full"><h3><span class="g-num">*</span>Glossary of terms</h3><div class="gloss-list">${Object.keys(GLOSSARY).map(k=>`<div class="gloss-item"><b>${GLOSSARY[k].term}</b><span>${GLOSSARY[k].def}</span></div>`).join("")}</div></div>
+    </div>
+    ${footer()}`;
+}
+
+/* ================= BUILD · get the results ================= */
+function renderBuild(){
+  const rules=VLIB.rules.slice();
+  const rows=rules.map(r=>{const e=errOf(r.dqops_id);const ic=INTENT_COLOR[r.cleanse_intent]||"#64748B";
+    return `<tr><td class="mono">${r.dqops_id}${r.provisional?` <span class="tag" style="color:var(--amber);border:1px solid rgba(224,138,11,.35)">prov</span>`:""}</td>
+      <td>${r.statement}</td><td>${r.object||""}</td><td><span class="tag" style="color:${ic};border:1px solid ${ic}44">${r.cleanse_intent}</span></td>
+      <td>${r.value_lever}</td><td class="recs" style="text-align:right">${e?fmtNum(e):"—"}</td></tr>`;}).join("");
+  const lvs=Object.entries(CLIENT.leverValues||{}).map(([k,v])=>`<tr><td>${k}</td><td class="recs" style="text-align:right">${v.type==="USD"?fmtUSD(v.value):fmtNum(v.value)}</td></tr>`).join("")||`<tr><td colspan="2" style="color:var(--slate)">none supplied — levers roll up from defect counts</td></tr>`;
+  document.getElementById("scr-build").innerHTML=`
+    <div class="card build-head">
+      <div class="bh-l"><div class="bt">${CLIENT.name} · get the results</div>
+        <div class="src-line">Evidence source · <b>${CLIENT_SOURCE[CLIENT.name]||CLIENT.program||"—"}</b></div>
+        <div class="bs">Populate from a client's assessment. In the app this pulls a project's results in directly; here, download a template to see exactly what data the presentation needs. The DQOps ID is the only identifier — only client-specific evidence lives here; the reusable library is untouched.</div>
+        <div class="tpl-btns"><button class="tpl" data-t="json">↓ overlay template · .json</button><button class="tpl" data-t="csv">↓ rules template · .csv</button><button class="tpl" data-t="req">↓ data requirements · .md</button></div></div>
+      <div class="build-actions"><button class="btn" id="bLoad">+ load client file</button><button class="btn sec" id="bExport">Export ledger</button></div>
+    </div>
+    <div class="build-grid">
+      <div class="card tbl-card"><div class="sec-h" style="margin:8px 6px 4px">Evidence · ${CLIENT.name}'s rules keyed on DQOps ID</div>
+        <table class="tbl"><thead><tr><th>DQOps ID</th><th>Statement</th><th>Object</th><th>Intent</th><th>Value lever</th><th style="text-align:right">Measured</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div>
+        <div class="card imp"><p>Paste a <b>{VLIB, CLIENT}</b> bundle or a <b>{name, rules, ruleErrs, leverValues}</b> overlay, then apply.</p>
+          <textarea id="impBox" spellcheck="false" placeholder="paste client JSON…"></textarea>
+          <div style="margin-top:10px"><button class="btn" id="bApply">Apply</button></div><div class="msg" id="dataMsg"></div></div>
+        <div class="card imp" style="margin-top:18px"><div class="sec-h" style="margin-top:0">Lever headline values</div><table class="tbl"><tbody>${lvs}</tbody></table></div>
+      </div>
+    </div>
+    <div class="disc"><b>${CLIENT.name}.</b> ${clientNote()}</div>`;
+  document.querySelectorAll("#scr-build .tpl").forEach(b=>b.onclick=()=>dlTemplate(b.dataset.t));
+  document.getElementById("bLoad").onclick=()=>document.getElementById("fileIn").click();
+  document.getElementById("bExport").onclick=()=>{const blob=new Blob([JSON.stringify({VLIB,CLIENT},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(CLIENT.name||"client")+"-ledger.json";a.click();};
+  document.getElementById("bApply").onclick=()=>{const msg=document.getElementById("dataMsg");
+    try{ const o=JSON.parse(document.getElementById("impBox").value);
+      if(o.VLIB&&o.CLIENT){ (o.VLIB.value_levers||[]).forEach(l=>{if(!LEVERS.find(x=>x.name===l.name))LEVERS.push(l);}); (o.VLIB.outcome_categories||[]).forEach(c=>{if(CATS.indexOf(c)<0)CATS.push(c);});
+        CLIENTS[o.CLIENT.name||"Loaded"]={name:o.CLIENT.name||"Loaded",program:o.CLIENT.program,asOf:o.CLIENT.asOf,note:o.CLIENT.note,rules:o.VLIB.rules||[],ruleErrs:o.CLIENT.ruleErrs||{},leverValues:o.CLIENT.leverValues||{}}; setClient(o.CLIENT.name||"Loaded"); }
+      else if(o.name){ (o.new_levers||[]).forEach(l=>{if(!LEVERS.find(x=>x.name===l.name))LEVERS.push(l);}); CLIENTS[o.name]={name:o.name,program:o.program,asOf:o.asOf,note:o.note,rules:o.rules||[],ruleErrs:o.ruleErrs||{},leverValues:o.leverValues||{}}; setClient(o.name); }
+      else throw new Error("expected {VLIB,CLIENT} or {name,rules,…}");
+      msg.style.color="var(--teal)"; msg.textContent="✓ applied — "+CLIENT.name; rerender();
+    }catch(e){ msg.style.color="#C0392B"; msg.textContent="✗ "+e.message; }};
+}
+
+/* ---------- templates ---------- */
+function dl(name,content,type){ const blob=new Blob([content],{type:type}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; a.click(); }
+function dlTemplate(kind){
+  if(kind==="json"){ dl("client-overlay-template.json", JSON.stringify({name:"<Client>",program:"<e.g. ECC → S/4HANA>",asOf:"<YYYY-MM>",source:"<assessment / project name + date>",note:"Indicative; the DQOps id is the only identifier.",new_levers:[],rules:[{dqops_id:"<DQOps id or provisional ref>",statement:"<finding statement>",object:"<SAP object / table>",process_area:"<O2C | P2P | FIN | EAM | MM>",cleanse_intent:"Obsolete | Harmonize | Enrich",cleanse_method:"Staged Cleansing",readiness:"Business Ready",criticality:"2-Medium",phase:"Phase 1 Immediate",value_lever:"<from the Value Lever Catalog>"}],ruleErrs:{"<dqops id or ref>":0},leverValues:{"<value lever>":{type:"USD | Count",value:0,note:""}}},null,2),"application/json"); }
+  else if(kind==="csv"){ dl("rules-template.csv","dqops_id,statement,object,process_area,cleanse_intent,cleanse_method,readiness,criticality,phase,value_lever,defect_count,lever_value,lever_value_type\n1221,\"No movement in stock for past 4 years\",Material Master,P2P,Obsolete,Cleanse in Migration,Business Relevant,2-Medium,Phase 3 During-Migration,Obsolete inventory release,150467,5761636,Count\n","text/csv"); }
+  else { dl("data-requirements.md","# Data required for the Business Outcomes presentation\n\nProvide, per client assessment:\n\n1. **Assessment rule results** — one row per finding: DQOps id (or a provisional ref), statement, object/table, defect count, cleanse intent, criticality, phase.\n2. **Value lever per finding** — which reusable outcome it evidences (from the Value Lever Catalog).\n3. **Client-quantified value** (if any) — a $ figure or headline count per lever.\n4. **Value baselines / rates** (optional) — carrying %, savings %, DSO days — to turn counts into $.\n5. **Evidence source** — the project / assessment name + date.\n\nThe DQOps id is the only identifier. Fill the overlay template and load it via '+ load client'.\n","text/markdown"); }
+}
+
+/* ---------- publish ---------- */
+function publish(){
+  hideGlossary(); closeDC(); GUIDE=false; MODE="present"; TIER="exec"; renderScreen();
+  var only={}; only[CURKEY]=CLIENTS[CURKEY];
+  var state={client:CURKEY, meta:META, logo:CUST_LOGO, excluded:STAGE.excluded, presNote:STAGE.presNote, published:true};
+  var full="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+  full=full.replace(/const CLIENTS = \{[\s\S]*?\n\};/, "const CLIENTS = "+JSON.stringify(only)+";");
+  var inj="<scr"+"ipt>window.__PUB__="+JSON.stringify(state)+";<\/scr"+"ipt>";
+  full=full.replace("</head>", inj+"</head>");
+  var nm=((CLIENT.name||"client")+"_"+(META.engagement||"")).replace(/[^A-Za-z0-9]+/g,"_").replace(/_+/g,"_").replace(/^_|_$/g,"")||"published";
+  dl(nm+"_published.html", full, "text/html");
+}
+
+/* ---------- branding · sources · customer logo ---------- */
+const SYNITI_LOGO=`<svg width="84" height="26" viewBox="0 0 84 26" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Syniti"><defs><linearGradient id="syng" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6AA6F0"/><stop offset=".5" stop-color="#7B63E4"/><stop offset="1" stop-color="#6D28D9"/></linearGradient></defs><text x="0" y="20" font-family="system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="25" font-weight="600" letter-spacing="-.6" fill="url(#syng)">syniti</text></svg>`;
+let CUST_LOGO=null;
+const SOURCES={
+  syniti:[
+    {t:"Why AI fails without business-ready data", u:"https://blog.syniti.com/business-ready-data-for-ai"},
+    {t:"Data quality is key to amplify the business value of your data", u:"https://blog.syniti.com/data-quality-is-key-to-amplify-the-business-value-of-your-data"},
+    {t:"5 reasons why data quality initiatives fail", u:"https://blog.syniti.com/5-reasons-why-data-quality-initiatives-fail"},
+    {t:"Syniti — Data Quality platform", u:"https://www.syniti.com/solutions/data-quality/"},
+    {t:"Syniti resources & thought leadership", u:"https://resources.syniti.com/data-quality"}
+  ],
+  benchmarks:[
+    {stat:"Poor data quality costs organisations ~$12.9M / year (average)", src:"Gartner", u:"https://www.gartner.com/en/data-analytics/topics/data-quality"},
+    {stat:"Only 39% of organisations see measurable EBIT impact from AI — business-ready data is the gap", src:"McKinsey · State of AI 2025", u:"https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"},
+    {stat:"Data readiness is the key constraint on scaling AI value", src:"McKinsey", u:"https://www.mckinsey.com/capabilities/mckinsey-technology/our-insights/ai-data-readiness-the-key-to-scaling-impact"},
+    {stat:"20–30% of a migration's effort should go to data preparation", src:"SAP migration best practice", u:""},
+    {stat:"Inventory carrying cost ~20–30% / year", src:"Industry holding-cost benchmark", u:""},
+    {stat:"Procurement savings ~3–5% on addressable spend", src:"Industry procurement benchmark", u:""}
+  ]
+};
+function openSources(){
+  const syn=SOURCES.syniti.map(s=>`<li><a href="${s.u}" target="_blank" rel="noopener">${s.t} ↗</a></li>`).join("");
+  const bm=SOURCES.benchmarks.map(b=>`<li><span>${b.stat}</span> — <b>${b.src}</b>${b.u?` · <a href="${b.u}" target="_blank" rel="noopener">source ↗</a>`:""}</li>`).join("");
+  const m=document.getElementById("dcModal");
+  m.innerHTML=`<div class="modal-card"><div class="modal-head"><div><div class="modal-kick">References</div><div class="modal-ttl">Sources &amp; further reading</div><div class="modal-sub">Syniti thought leadership · the sources behind the benchmark figures</div></div><button class="modal-x" onclick="closeDC()">✕</button></div><div class="src-cols"><div><div class="dcp-h">Syniti articles</div><ul class="src-list">${syn}</ul></div><div><div class="dcp-h">Benchmark sources</div><ul class="src-list bm">${bm}</ul></div></div></div>`;
+  m.style.display="flex";
+}
+function pickLogo(){ document.getElementById("logoIn").click(); }
+function onLogo(e){ const f=e.target.files&&e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=function(){ CUST_LOGO=rd.result; rerender(); }; rd.readAsDataURL(f); e.target.value=""; }
+function stageBanner(){ if(PUBLISHED) return ""; const pub=(TIER==="exec"&&MODE==="present"); return `<div class="stage-banner"><span class="sb-i">◱</span><div>${pub?`<b>Executive view — this is what publishes.</b>`:`<b>Working view — not published;</b> the Executive tier publishes.`} The <span class="sb-auth">✎ authoring</span> controls, coverage &amp; potential are context, not published.</div></div>`; }
+
+/* ---------- glossary ---------- */
+const GLOSSARY={
+"directional":{term:"Directional",def:"An indicative estimate that shows scale and direction, not a precise or audited figure. Use it to size the opportunity, not to book a number."},
+"indicative":{term:"Indicative",def:"A figure that illustrates the likely magnitude of the opportunity; not a committed target or guaranteed saving."},
+"addressable population":{term:"Addressable population",def:"The set of records the issue could apply to — the opportunity size before business validation narrows it to what is actually recoverable."},
+"not a bankable total":{term:"Not a bankable total",def:"The all-in figure adds up overlapping lenses (the same PO can appear in two), so it must not be taken to the P&L. It sizes the opportunity only."},
+"distinct lenses":{term:"Distinct lenses",def:"Each outcome is a separate way of looking at value; because they overlap, they must never be summed into one total."},
+"point-in-time":{term:"Point-in-time",def:"A snapshot from the assessment date. Data changes, so the picture may shift and will require refresh."},
+"aggregated":{term:"Aggregated",def:"Rolled up from many low-level rule results into a business view; individual records sit beneath each number."},
+"evidenced":{term:"Evidenced",def:"An outcome the client's assessment actually measured — real defect counts and, where available, a dollar figure."},
+"evidence absent":{term:"Evidence absent (potential)",def:"An outcome in the target library the client's assessment has not yet measured. The opportunity stands; the evidence is the gap to close."},
+"potential":{term:"Potential",def:"A business outcome we expect to matter but which this assessment has not yet evidenced — the next-phase opportunity."},
+"coverage":{term:"Coverage",def:"How many of the target value levers the client's evidence lights up (e.g. 14 of 17). It measures how complete the assessment is, not how good the data is."},
+"value lever":{term:"Value lever",def:"A named, reusable way a class of data defects converts into a business outcome (e.g. Vendor consolidation). Levers replace one-off issue IDs."},
+"DQOps ID":{term:"DQOps ID",def:"The identifier of a catalog data-quality rule. It is the only identifier in the model — every finding and dollar traces back to a DQOps ID."},
+"dynamic context":{term:"Dynamic context",def:"A way to quantify any opportunity across four dimensions — Organization, Value, Activity, Strategy — used alone or combined, at any level."},
+"compute pending":{term:"Compute pending",def:"The records are counted but no dollar value is set yet because a baseline/rate is missing. The panel lists exactly what input is needed to compute it."},
+"readiness":{term:"Readiness",def:"How far a data set has climbed from technically valid toward business-ready and AI-ready."},
+"obsolete":{term:"Obsolete",def:"Cleanse intent: remove, archive or deactivate records no longer needed (dead stock, aged POs) — reduces volume before migration."},
+"harmonize":{term:"Harmonize",def:"Cleanse intent: de-duplicate and standardise so there is one trusted record per real-world entity across systems."},
+"enrich":{term:"Enrich",def:"Cleanse intent: complete and correct missing or invalid attributes so a record is fit for its business process."},
+"benchmark":{term:"Benchmark",def:"An industry rate (e.g. carrying cost 20–30%/yr) used to put an indicative dollar range on a count when the client supplied no baseline."},
+"confidence":{term:"Confidence",def:"How firm a value is: Directional (analyst hypothesis), Benchmarked (industry rate), or Validated (client-agreed)."},
+"organization":{term:"Organization (dimension)",def:"Where the issue occurs — the systems, process areas and objects in scope."},
+"value":{term:"Value (dimension)",def:"The dollar figure tied to the specific issue. Distinct from record counts."},
+"activity":{term:"Activity (dimension)",def:"How much and how often — record volume and aging/usage. Most telling for obsolete data (e.g. not used in years)."},
+"strategy":{term:"Strategy (dimension)",def:"The impact on the client's initiative or strategy (archiving, MDM, working-capital release)."}
+};
+function gt(term,text){ const d=GLOSSARY[term]; if(!d) return text||term; return `<span class="gterm" data-g="${term}">${text||d.term}</span>`; }
+function showGlossary(el){ const d=GLOSSARY[el.dataset.g]; if(!d) return; const tip=document.getElementById("gtip"); tip.innerHTML=`<div class="gtip-t">${d.term}</div><div class="gtip-d">${d.def}</div>`; tip.style.display="block"; const r=el.getBoundingClientRect(); const W=300; let left=window.scrollX+r.left; if(left+W>window.scrollX+window.innerWidth-16) left=window.scrollX+window.innerWidth-W-16; tip.style.left=left+"px"; tip.style.top=(window.scrollY+r.bottom+8)+"px"; }
+function hideGlossary(){ const t=document.getElementById("gtip"); if(t) t.style.display="none"; }
+document.addEventListener("click",function(e){ const t=(e.target&&e.target.closest)?e.target.closest(".gterm"):null; if(t){ showGlossary(t); e.stopPropagation(); } else { hideGlossary(); } });
+
+/* ---------- boot ---------- */
+setClient(CURKEY);
+if(typeof window!=="undefined" && window.__PUB__){ var p=window.__PUB__; if(p.client&&CLIENTS[p.client])setClient(p.client); if(p.meta)META=p.meta; if(p.logo)CUST_LOGO=p.logo; if(p.excluded)STAGE.excluded=p.excluded; if(p.presNote!=null)STAGE.presNote=p.presNote; PUBLISHED=true; MODE="present"; TIER="exec"; }
+renderTop();
+renderScreen();
+
+</script>
+</body>
+</html>

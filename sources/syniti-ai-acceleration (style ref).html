@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syniti · AI across our operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#09081A; --ink-2:#100E29; --panel-solid:#171436; --line:#2A2754;
+    --blue:#4F22EB; --violet:#8A61F6; --sky:#70B6FF;
+    --paper:#ECEAF6; --muted:#9A95C0; --muted-2:#6E699A;
+    --good:#46D6A0; --warn:#F4866B;
+    --grad:linear-gradient(100deg,var(--blue),var(--violet) 55%,var(--sky));
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--ink);color:var(--paper);font-family:'Inter',system-ui,-apple-system,sans-serif;
+    overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  .ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .ambient::before{content:"";position:absolute;width:60vmax;height:60vmax;left:-15vmax;top:-25vmax;
+    background:radial-gradient(circle,rgba(79,34,235,.30),transparent 62%);filter:blur(10px)}
+  .ambient::after{content:"";position:absolute;width:55vmax;height:55vmax;right:-18vmax;bottom:-22vmax;
+    background:radial-gradient(circle,rgba(112,182,255,.16),transparent 62%);filter:blur(10px)}
+
+  .chrome{position:fixed;left:0;right:0;z-index:30;display:flex;align-items:center;gap:18px;
+    padding:18px 30px;font-size:12.5px;letter-spacing:.04em}
+  .chrome.top{top:0}
+  .chrome.bottom{bottom:0}
+  .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;letter-spacing:.02em;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .eyebrow-now{color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.18em;
+    font-family:'JetBrains Mono',monospace}
+  .spacer{flex:1}
+  .meta{color:var(--muted-2);font-family:'JetBrains Mono',monospace;font-size:11.5px}
+  .meta b{color:var(--paper);font-weight:500}
+  .time-pill{color:var(--sky);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    border:1px solid var(--line);border-radius:30px;padding:3px 10px}
+
+  .progress{position:fixed;left:0;bottom:0;height:3px;width:100%;z-index:31;background:#1A1740}
+  .progress span{display:block;height:100%;width:0;background:var(--grad);
+    transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+  .navbtn{appearance:none;border:1px solid var(--line);background:#130F30;color:var(--paper);
+    width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:.18s}
+  .navbtn:hover{border-color:var(--violet);background:#1B1640}
+  .navbtn:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+  .dots{display:flex;gap:7px;align-items:center}
+  .dot{width:8px;height:8px;border-radius:50%;background:#2C2858;border:0;padding:0;cursor:pointer;transition:.2s}
+  .dot:hover{background:var(--violet)}
+  .dot.on{background:var(--grad);width:22px;border-radius:6px}
+  .dot:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+
+  .deck{position:fixed;inset:0;z-index:10}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+    padding:84px 40px 76px;opacity:0;visibility:hidden;transform:translateY(22px);
+    transition:opacity .5s ease,transform .5s ease;overflow-y:auto}
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto}
+
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--sky);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:30px;height:1px;background:var(--sky);opacity:.7}
+
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.02;letter-spacing:-.02em}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.08;letter-spacing:-.015em}
+  .lead{color:var(--muted);line-height:1.55;font-size:18px;max-width:64ch}
+  .bridge{color:var(--muted);line-height:1.55;font-size:15.5px;max-width:62ch;margin-bottom:18px}
+  .bridge b{color:var(--paper);font-weight:500}
+
+  /* THE RAIL — connective device */
+  .rail{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .rail .seg{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.02em;color:var(--muted-2);
+    border:1px solid var(--line);border-radius:30px;padding:6px 13px;background:#110E2C;transition:.25s;white-space:nowrap}
+  .rail .seg.on{color:#fff;background:var(--grad);border-color:transparent}
+  .rail .sep{color:var(--muted-2);font-size:11px;opacity:.6}
+
+  /* TITLE */
+  .s1 h1{font-size:clamp(36px,6vw,72px)}
+  .s1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .s1 .sub{margin-top:26px;font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:64ch;line-height:1.55}
+  .hint{margin-top:44px;font-size:12.5px;color:var(--muted-2);font-family:'JetBrains Mono',monospace;
+    display:flex;align-items:center;gap:10px}
+  .key{border:1px solid var(--line);border-radius:5px;padding:1px 7px;color:var(--muted)}
+
+  /* THE CHAIN (map) */
+  .chainmap{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:6px}
+  .clink{border:1px solid var(--line);border-radius:13px;padding:16px 14px;background:#120F2D;position:relative}
+  .clink .ci{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);letter-spacing:.08em}
+  .clink h3{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;margin:9px 0 7px;line-height:1.15}
+  .clink p{color:var(--muted);font-size:12.5px;line-height:1.45}
+  .clink::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--grad);
+    border-radius:2px;opacity:.45}
+  .connective{margin-top:22px;border:1px dashed var(--line);border-radius:13px;padding:16px 20px;
+    background:#0F0C2680;display:flex;gap:14px;align-items:center}
+  .connective .dotmark{width:11px;height:11px;border-radius:50%;background:var(--grad);flex:none}
+  .connective b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px}
+  .connective span{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;line-height:1.45}
+
+  .panel{background:linear-gradient(180deg,#15123380,#100D2880);border:1px solid var(--line);
+    border-radius:16px;padding:22px}
+
+  /* GTM toggle */
+  .toggle-row{display:inline-flex;border:1px solid var(--line);border-radius:11px;padding:4px;background:#100D28;gap:4px}
+  .toggle-row button{appearance:none;border:0;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;
+    font-size:13.5px;font-weight:500;padding:9px 16px;border-radius:8px;cursor:pointer;transition:.2s}
+  .toggle-row button.on{background:var(--grad);color:#fff}
+  .toggle-row button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+  .record{margin-top:18px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0F0C26}
+  .record .rhead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;
+    border-bottom:1px solid var(--line);background:#13102F;gap:12px}
+  .record .rhead .name{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--paper)}
+  .verdict{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;
+    transition:.25s;white-space:nowrap}
+  .verdict.pass{background:rgba(70,214,160,.14);color:var(--good);border:1px solid rgba(70,214,160,.4)}
+  .verdict.fail{background:rgba(244,134,107,.14);color:var(--warn);border:1px solid rgba(244,134,107,.45)}
+  .checks{padding:6px 18px 14px}
+  .check{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid #1C1942;align-items:flex-start}
+  .check:last-child{border-bottom:0}
+  .check .ic{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12px;margin-top:1px}
+  .check .ic.ok{background:rgba(70,214,160,.16);color:var(--good)}
+  .check .ic.no{background:rgba(244,134,107,.16);color:var(--warn)}
+  .check .ctext b{font-size:14px;font-weight:500;font-family:'Space Grotesk',sans-serif}
+  .check .ctext span{display:block;color:var(--muted);font-size:13px;margin-top:2px;line-height:1.45}
+  .takeaway{margin-top:16px;font-size:14.5px;color:var(--muted);line-height:1.55;border-left:2px solid var(--violet);padding-left:16px}
+  .takeaway b{color:var(--paper);font-weight:600}
+
+  /* internal machine lifecycle */
+  .flow{display:flex;gap:8px;margin:6px 0 20px;flex-wrap:wrap}
+  .lc-node{flex:1;min-width:130px;border:1px solid var(--line);border-radius:12px;padding:14px 12px;background:#120F2D;
+    cursor:pointer;text-align:center;transition:.2s;font-family:inherit;color:inherit}
+  .lc-node:hover{border-color:var(--violet);transform:translateY(-3px)}
+  .lc-node:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+  .lc-node.on{border-color:transparent;background:var(--grad)}
+  .lc-node.on .lc-k,.lc-node.on .lc-i{color:#fff}
+  .lc-i{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2)}
+  .lc-k{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;margin-top:6px;color:var(--paper)}
+  .lc-detail{border:1px solid var(--line);border-radius:14px;padding:22px;background:#0F0C26;
+    display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .lc-detail .col .h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+  .lc-detail .ai .h{color:var(--sky)}
+  .lc-detail .rm .h{color:var(--warn)}
+  .lc-detail p{font-size:14.5px;line-height:1.55;color:var(--paper)}
+  .lc-detail .rm p{color:var(--muted)}
+
+  /* delivery intro */
+  .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .qcard{border:1px solid var(--line);border-radius:15px;padding:24px;background:#120F2D}
+  .qcard .qt{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;margin-bottom:6px}
+  .qcard .qt .num{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .qcard p{color:var(--muted);font-size:14.5px;line-height:1.5}
+  .exnote{margin-top:22px;border-left:2px solid var(--sky);padding-left:16px;font-size:15px;color:var(--muted);line-height:1.55}
+  .exnote b{color:var(--paper);font-weight:600}
+
+  /* capability cards */
+  .caps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  .cap{border:1px solid var(--line);border-radius:14px;padding:18px;background:#120F2D;cursor:pointer;transition:.22s;
+    position:relative;text-align:left;font-family:inherit;color:inherit}
+  .cap:hover{border-color:var(--violet);transform:translateY(-3px)}
+  .cap:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+  .cap.open{border-color:var(--sky);background:#16123A}
+  .cap h3{font-family:'Space Grotesk',sans-serif;font-size:15.5px;font-weight:600;line-height:1.2}
+  .cap .what{color:var(--muted);font-size:13px;line-height:1.45;margin-top:8px}
+  .cap .gap{max-height:0;overflow:hidden;transition:max-height .3s ease,margin .3s ease;color:var(--sky);font-size:12.5px;line-height:1.45}
+  .cap.open .gap{max-height:170px;margin-top:12px}
+  .cap .gap b{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted-2);margin-bottom:5px}
+  .cap .more{position:absolute;top:16px;right:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2)}
+  .caphint{margin-top:14px;font-size:12.5px;color:var(--muted-2);font-family:'JetBrains Mono',monospace}
+
+  /* impact */
+  .impact-top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+  .switch{display:inline-flex;border:1px solid var(--line);border-radius:11px;padding:4px;background:#100D28;gap:4px}
+  .switch button{appearance:none;border:0;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;
+    font-size:13.5px;font-weight:500;padding:9px 18px;border-radius:8px;cursor:pointer;transition:.2s}
+  .switch button.on{background:var(--grad);color:#fff}
+  .switch button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+  .impact-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+  .timeline{border:1px solid var(--line);border-radius:14px;padding:20px;background:#0F0C26}
+  .tl-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted-2);margin-bottom:16px}
+  .bar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .bar .lbl{width:128px;font-size:12.5px;color:var(--muted);flex:none;line-height:1.3}
+  .bar .track{flex:1;height:26px;border-radius:7px;background:#16133A;overflow:hidden;position:relative}
+  .bar .fill{height:100%;width:0;border-radius:7px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+  .fill.tech{background:linear-gradient(90deg,#3A2C8F,#5B3FD6)}
+  .fill.biz{background:var(--grad)}
+  .bar .val{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:#fff;opacity:.9}
+  .impact-stats{display:flex;flex-direction:column;gap:14px}
+  .stat{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:#120F2D}
+  .stat .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;line-height:1;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;transition:.3s}
+  .stat .k{color:var(--muted);font-size:13px;margin-top:6px;line-height:1.4}
+  .ratio{display:flex;height:14px;border-radius:8px;overflow:hidden;margin-top:10px;border:1px solid var(--line)}
+  .ratio .seg{height:100%;transition:width .6s ease}
+  .ratio .tech{background:#4A3AA0}
+  .ratio .biz{background:var(--grad)}
+  .ratio-l{display:flex;justify-content:space-between;font-size:11px;color:var(--muted-2);font-family:'JetBrains Mono',monospace;margin-top:6px}
+  .costtrack{height:42px;border-radius:9px;background:#16133A;overflow:hidden;display:flex;border:1px solid var(--line)}
+  .costfill{height:100%;background:linear-gradient(90deg,#3A2C8F,#5B3FD6);transition:width .6s cubic-bezier(.4,0,.2,1)}
+  .costmargin{height:100%;width:0;transition:width .6s cubic-bezier(.4,0,.2,1);
+    background:repeating-linear-gradient(45deg,rgba(112,182,255,.30),rgba(112,182,255,.30) 7px,transparent 7px,transparent 14px)}
+  .costlbl{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:9px}
+  .costlbl #marginLbl{color:var(--sky)}
+
+  /* connect / compound */
+  .fly-wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+  .fly-stage{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #1C1942}
+  .fly-stage:last-child{border-bottom:0}
+  .fly-stage .n{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;width:26px;flex:none;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fly-stage b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15.5px}
+  .fly-stage span{display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.45}
+
+  /* close */
+  .s9 h1{font-size:clamp(32px,5vw,56px);line-height:1.05}
+  .s9 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .closegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  .closecard{border:1px solid var(--line);border-radius:14px;padding:20px;background:#120F2D}
+  .closecard .t{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sky);margin-bottom:10px}
+  .closecard p{font-size:14.5px;line-height:1.5;color:var(--paper)}
+  .closecard p b{font-weight:600}
+
+  .mt8{margin-top:8px}.mt16{margin-top:16px}.mt24{margin-top:24px}.mt30{margin-top:30px}
+
+  @media (max-width:860px){
+    .impact-grid,.fly-wrap,.lc-detail,.qgrid{grid-template-columns:1fr}
+    .caps{grid-template-columns:1fr}
+    .chainmap{grid-template-columns:1fr 1fr}
+    .slide{padding:74px 22px 70px}
+    .chrome{padding:14px 18px}
+    .eyebrow-now,.meta{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+
+<div class="chrome top">
+  <span class="wordmark">SYNITI</span>
+  <span class="eyebrow-now" id="sectionLabel">Opening</span>
+  <span class="spacer"></span>
+  <span class="time-pill" id="timePill">~2 min</span>
+  <span class="meta">Internal · AI in our operations · June 2026</span>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- S1 TITLE -->
+  <section class="slide active" data-section="Opening" data-time="">
+    <div class="wrap">
+      <div class="eyebrow">AI in our own operations</div>
+      <h1>We enable our clients' AI<br>with business-ready data.<br><span class="grad">This is about using AI to run ourselves better.</span></h1>
+      <p class="sub">Making data business-ready so clients' AI projects can succeed is the work we sell. This is a different question, asked inward: where can AI improve how <em>we</em> operate? From the messaging that wins work, through presales, sales ops and resourcing, to the quality and volume of delivery itself. One operating chain, improved link by link, and increasingly connected.</p>
+      <div class="hint"><span class="key">&rarr;</span> next &nbsp;&middot;&nbsp; <span class="key">&larr;</span> back &nbsp;&middot;&nbsp; use the controls below to jump around</div>
+    </div>
+  </section>
+
+  <!-- S2 THE CHAIN -->
+  <section class="slide" data-section="The operating chain" data-time="~2 min">
+    <div class="wrap">
+      <div class="eyebrow">How to read the rest of this</div>
+      <h2 style="font-size:clamp(24px,3.2vw,38px)">One chain. Five links. We'll walk it left to right.</h2>
+      <p class="bridge mt16">Every section that follows is a stop on this chain. AI improves each link on its own — and, increasingly, the same data and intelligence flow between them.</p>
+      <div class="chainmap mt8">
+        <div class="clink"><div class="ci">01</div><h3>Go-to-market</h3><p>Sharper messaging and client-ready material, faster.</p></div>
+        <div class="clink"><div class="ci">02</div><h3>Presales</h3><p>Better-qualified pursuits, less senior time burned.</p></div>
+        <div class="clink"><div class="ci">03</div><h3>Sales ops</h3><p>SOWs and pipeline work with the manual graft removed.</p></div>
+        <div class="clink"><div class="ci">04</div><h3>Resourcing</h3><p>The right people on the right work, with the reasoning shown.</p></div>
+        <div class="clink"><div class="ci">05</div><h3>Delivery</h3><p>More output, at higher and more consistent quality.</p></div>
+      </div>
+      <div class="connective">
+        <span class="dotmark"></span>
+        <div><b>Beneath all five: a connective layer</b><span>Shared data and intelligence that links the stages — so a win flows into resourcing, and a delivery learning flows back into presales.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S3 GO-TO-MARKET -->
+  <section class="slide" data-section="Go-to-market" data-time="~4 min">
+    <div class="wrap">
+      <div class="rail" data-active="0"></div>
+      <div class="eyebrow">Link 01 · Go-to-market</div>
+      <h2 style="font-size:clamp(22px,2.8vw,34px)">It starts with how we make our case.</h2>
+      <p class="bridge mt16">We've produced client-ready interactive briefings — a technical-vs-business-process explainer, a dual-load position paper — in <b>hours rather than days</b>. Better messaging, far less effort. Here's the kind of argument they carry; toggle the lens.</p>
+      <div class="mt8">
+        <div class="toggle-row" role="group" aria-label="Validation lens">
+          <button class="on" data-lens="tech" onclick="setLens('tech')">Technical validation</button>
+          <button data-lens="biz" onclick="setLens('biz')">Business process</button>
+        </div>
+        <div class="record">
+          <div class="rhead">
+            <span class="name">A single equipment record &middot; ready to migrate</span>
+            <span class="verdict pass" id="verdict">All checks pass</span>
+          </div>
+          <div class="checks" id="checks"></div>
+        </div>
+        <p class="takeaway" id="takeaway"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4 INTERNAL MACHINE -->
+  <section class="slide" data-section="The internal machine" data-time="~5 min">
+    <div class="wrap">
+      <div class="rail" data-active="1,2,3"></div>
+      <div class="eyebrow">Links 02&ndash;04 · Presales, sales ops, resourcing</div>
+      <h2 style="font-size:clamp(22px,2.8vw,34px)">Behind the messaging sits the machine that turns interest into staffed, scoped work.</h2>
+      <p class="bridge mt16">This is where most of the hidden effort lives — and where AI quietly removes it. Click a stage.</p>
+      <div class="flow" id="flow"></div>
+      <div class="lc-detail" id="lcDetail">
+        <div class="col ai"><div class="h">What AI does here</div><p id="lcAi"></p></div>
+        <div class="col rm"><div class="h">What it removes</div><p id="lcRm"></p></div>
+      </div>
+      <p class="caphint mt16">These run on shared data, not three disconnected tools — a qualified opportunity carries its assumptions into the SOW, and into resourcing.</p>
+    </div>
+  </section>
+
+  <!-- S5 DELIVERY INTRO -->
+  <section class="slide" data-section="Delivery" data-time="~2 min">
+    <div class="wrap">
+      <div class="rail" data-active="4"></div>
+      <div class="eyebrow">Link 05 · Delivery</div>
+      <h2 style="font-size:clamp(22px,2.8vw,34px)">The real shift in delivery is who can do the work.</h2>
+      <div class="qgrid mt24">
+        <div class="qcard">
+          <div class="qt">Senior-quality work, from less experienced people</div>
+          <p>The method is built into the work itself, so a less experienced consultant produces what used to need a senior &mdash; at the same quality. Good output stops depending on who happens to be assigned.</p>
+        </div>
+        <div class="qcard">
+          <div class="qt"><span class="num">Same work</span>, better margin</div>
+          <p>When a C2 delivers what previously needed a C4, the cost of delivering the engagement falls while the price doesn't. That gap is margin &mdash; a significant improver across a portfolio of work.</p>
+        </div>
+      </div>
+      <p class="exnote">Our clearest example is data quality &mdash; the <b>DQ Methodology Studio</b>. The next two slides show how far it goes; read it as a pattern for delivery generally, not a one-off.</p>
+    </div>
+  </section>
+
+  <!-- S6 DQ STUDIO — CAPABILITIES -->
+  <section class="slide" data-section="Delivery · DQ Studio" data-time="~3 min">
+    <div class="wrap">
+      <div class="rail" data-active="4"></div>
+      <div class="eyebrow">Delivery example · What it does</div>
+      <h2 style="font-size:clamp(21px,2.6vw,31px)">The methodology, lifted out of people's heads into capability the tool enforces.</h2>
+      <p class="bridge mt16">Each one adds something to how we already work &mdash; making the data clearer, the checks faster, the findings readable. Click any to see what it adds.</p>
+      <div class="caps" id="caps"></div>
+      <p class="caphint">Click a capability to see what it adds.</p>
+    </div>
+  </section>
+
+  <!-- S7 DQ STUDIO — IMPACT -->
+  <section class="slide" data-section="Delivery · DQ Studio" data-time="~4 min">
+    <div class="wrap">
+      <div class="rail" data-active="4"></div>
+      <div class="eyebrow">Delivery example · What it changes</div>
+      <h2 style="font-size:clamp(21px,2.6vw,31px)">Same work. Lower grade. Better margin.</h2>
+      <p class="bridge mt16">The biggest implication isn't speed &mdash; it's who can do the work. When a C2 produces what used to need a C4, at the same quality, the engagement's margin improves without changing the price.</p>
+      <div class="impact-top">
+        <div class="switch" role="group" aria-label="Delivery model">
+          <button data-mode="now" class="on" onclick="setMode('now')">Today</button>
+          <button data-mode="studio" onclick="setMode('studio')">With the Studio</button>
+        </div>
+        <span class="meta" id="modeNote" style="display:inline">The work needs a senior consultant, and quality varies with who's assigned.</span>
+      </div>
+      <div class="impact-grid">
+        <div class="timeline">
+          <div class="tl-title">Cost to deliver the same scope of work</div>
+          <div class="costtrack"><div class="costfill" id="costFill"></div><div class="costmargin" id="costMargin"></div></div>
+          <div class="costlbl"><span id="gradeLbl">C4 &middot; senior consultant</span><span id="marginLbl"></span></div>
+          <p class="caphint" style="margin-top:16px">Illustrative &mdash; the point is the direction, not the exact figures.</p>
+        </div>
+        <div class="impact-stats">
+          <div class="stat"><div class="v" id="statGrade">C4</div><div class="k">Grade that can deliver senior-quality work</div></div>
+          <div class="stat"><div class="v" id="statCap">1&times;</div><div class="k">Capacity per consultant</div></div>
+          <div class="stat"><div class="v" id="statRamp">~6 months</div><div class="k">For a less experienced consultant to reach senior-grade output</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S8 WHEN THE LINKS CONNECT -->
+  <section class="slide" data-section="When the links connect" data-time="~3 min">
+    <div class="wrap">
+      <div class="rail" data-active="0,1,2,3,4"></div>
+      <div class="eyebrow">The compounding effect</div>
+      <h2 style="font-size:clamp(23px,3vw,36px)">We've walked the chain. The real point is what happens when the links connect.</h2>
+      <div class="fly-wrap mt30">
+        <div>
+          <div class="fly-stage"><span class="n">01</span><div><b>Each link improves on its own</b><span>Faster go-to-market, sharper presales, leaner sales ops and resourcing, better delivery.</span></div></div>
+          <div class="fly-stage"><span class="n">02</span><div><b>The links connect</b><span>Shared data means a win flows into resourcing, and a delivery insight flows back into the next pursuit.</span></div></div>
+          <div class="fly-stage"><span class="n">03</span><div><b>The capability learns</b><span>What works on one engagement is encoded once and improves the whole firm at once &mdash; not one person's head.</span></div></div>
+          <div class="fly-stage"><span class="n">04</span><div><b>The operation compounds</b><span>Every cycle makes the next faster and better. Internal advantage that builds on itself.</span></div></div>
+        </div>
+        <div style="display:grid;place-items:center">
+          <svg viewBox="0 0 240 240" width="100%" style="max-width:300px" aria-hidden="true">
+            <defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#4F22EB"/><stop offset="0.55" stop-color="#8A61F6"/><stop offset="1" stop-color="#70B6FF"/>
+            </linearGradient></defs>
+            <circle cx="120" cy="120" r="86" fill="none" stroke="#1E1B45" stroke-width="14"/>
+            <circle cx="120" cy="120" r="86" fill="none" stroke="url(#fg)" stroke-width="14" stroke-linecap="round"
+              stroke-dasharray="400 540" transform="rotate(-90 120 120)">
+              <animateTransform attributeName="transform" type="rotate" from="-90 120 120" to="270 120 120" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="120" y="116" text-anchor="middle" fill="#ECEAF6" font-family="Space Grotesk" font-weight="700" font-size="17">compounds</text>
+            <text x="120" y="138" text-anchor="middle" fill="#9A95C0" font-family="JetBrains Mono" font-size="9">every cycle</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S9 CLOSE -->
+  <section class="slide s9" data-section="What it adds up to" data-time="~2 min">
+    <div class="wrap">
+      <div class="eyebrow">What this adds up to</div>
+      <h1>AI isn't a feature here.<br>It's how the <span class="grad">operation gets better</span>.</h1>
+      <div class="closegrid">
+        <div class="closecard"><div class="t">Go-to-market</div><p>Sharper messaging and client-ready material in <b>hours, not days</b>.</p></div>
+        <div class="closecard"><div class="t">Internal processes</div><p>Presales, sales ops and resourcing run <b>leaner</b>, with the manual work between them removed.</p></div>
+        <div class="closecard"><div class="t">Delivery</div><p><b>More output at higher, more consistent quality</b> &mdash; DQ Studio is the proof of how far that goes.</p></div>
+      </div>
+      <p class="lead mt30" style="font-size:17px">Improved link by link, and increasingly connected. Quality stops depending on who's at the keyboard, cost to serve falls, and capacity rises &mdash; the shift already under way inside the business.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="chrome bottom">
+  <button class="navbtn" id="prev" aria-label="Previous slide">&lsaquo;</button>
+  <button class="navbtn" id="next" aria-label="Next slide">&rsaquo;</button>
+  <div class="dots" id="dots"></div>
+  <span class="spacer"></span>
+  <span class="meta"><b id="cur">1</b> / <span id="tot">9</span></span>
+</div>
+
+<div class="progress"><span id="progressBar"></span></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* rails */
+  var STAGES = ['Go-to-market','Presales','Sales ops','Resourcing','Delivery'];
+  Array.prototype.slice.call(document.querySelectorAll('.rail[data-active]')).forEach(function(r){
+    var active = (r.getAttribute('data-active')||'').split(',').filter(function(x){return x!=='';}).map(Number);
+    var html='';
+    STAGES.forEach(function(s,i){
+      if(i>0) html += '<span class="sep">&rsaquo;</span>';
+      html += '<span class="seg'+(active.indexOf(i)>-1?' on':'')+'">'+s+'</span>';
+    });
+    r.innerHTML = html;
+  });
+
+  /* deck nav */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length, idx = 0;
+  var dotsWrap = document.getElementById('dots');
+  var progressBar = document.getElementById('progressBar');
+  var sectionLabel = document.getElementById('sectionLabel');
+  var timePill = document.getElementById('timePill');
+  var curEl = document.getElementById('cur');
+  document.getElementById('tot').textContent = total;
+
+  slides.forEach(function(s,i){
+    var b = document.createElement('button');
+    b.className = 'dot' + (i===0?' on':'');
+    b.setAttribute('aria-label','Go to slide '+(i+1));
+    b.addEventListener('click', function(){ go(i); });
+    dotsWrap.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.children);
+
+  function go(n){
+    if(n<0)n=0; if(n>total-1)n=total-1;
+    slides[idx].classList.remove('active'); dots[idx].classList.remove('on');
+    idx=n;
+    slides[idx].classList.add('active'); dots[idx].classList.add('on');
+    progressBar.style.width = ((idx)/(total-1))*100 + '%';
+    var sec = slides[idx].getAttribute('data-section')||'';
+    var tm = slides[idx].getAttribute('data-time')||'';
+    sectionLabel.textContent = sec;
+    timePill.style.visibility = tm?'visible':'hidden';
+    timePill.textContent = tm;
+    curEl.textContent = idx+1;
+    slides[idx].scrollTop = 0;
+  }
+  function nextS(){ go(idx+1); }
+  function prevS(){ go(idx-1); }
+  document.getElementById('next').addEventListener('click', nextS);
+  document.getElementById('prev').addEventListener('click', prevS);
+  document.addEventListener('keydown', function(e){
+    if(['ArrowRight','PageDown',' '].indexOf(e.key)>-1){ e.preventDefault(); nextS(); }
+    else if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); prevS(); }
+    else if(e.key==='Home'){ e.preventDefault(); go(0); }
+    else if(e.key==='End'){ e.preventDefault(); go(total-1); }
+  });
+  go(0);
+
+  /* S3 GTM toggle */
+  var lensData = {
+    tech:{ verdict:'All checks pass', cls:'pass', rows:[
+        {ok:true,t:'Every required field is filled in',d:'Nothing mandatory is missing from the record.'},
+        {ok:true,t:'Everything is in the right format',d:'Dates, codes and values all look exactly as they should.'},
+        {ok:true,t:'It links to records that exist',d:'Everything it points to can be found.'},
+        {ok:true,t:'No duplicates',d:'It appears once, cleanly.'} ],
+      take:'<b>Technically, this record is spotless.</b> Every check a standard data tool runs comes back green. On a technical view alone, it sails straight through.' },
+    biz:{ verdict:"Won\u2019t work in practice", cls:'fail', rows:[
+        {ok:false,t:'The equipment can\u2019t actually be used',d:'Once the system goes live, the maintenance team can\u2019t raise a single job against it. It exists on paper, but it\u2019s unusable.'},
+        {ok:false,t:'It\u2019s attached to nothing',d:'Its place in the plant structure wasn\u2019t moved across with it, so it hangs off nothing.'},
+        {ok:false,t:'Costs will land in the wrong place',d:'It\u2019s pointed at a different cost centre than the asset it belongs to, so maintenance and depreciation costs drift apart.'},
+        {ok:true,t:'\u2026 yet every technical check still passed',d:'None of this shows up in a standard data check. The data looks clean.'} ],
+      take:'<b>The same record breaks the business.</b> Technically clean isn\u2019t the same as business-ready \u2014 and closing exactly that gap is what we do. AI lets us build a client briefing that shows it, fully interactive, in hours.' }
+  };
+  var checksEl = document.getElementById('checks');
+  var verdictEl = document.getElementById('verdict');
+  var takeawayEl = document.getElementById('takeaway');
+  window.setLens = function(lens){
+    var d = lensData[lens];
+    document.querySelectorAll('.toggle-row button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-lens')===lens); });
+    verdictEl.className='verdict '+d.cls; verdictEl.textContent=d.verdict;
+    checksEl.innerHTML = d.rows.map(function(r){
+      return '<div class="check"><span class="ic '+(r.ok?'ok':'no')+'">'+(r.ok?'\u2713':'\u2717')+'</span>'+
+             '<span class="ctext"><b>'+r.t+'</b><span>'+r.d+'</span></span></div>'; }).join('');
+    takeawayEl.innerHTML = d.take;
+  };
+  setLens('tech');
+
+  /* S4 internal machine */
+  var lc = [
+    {k:'Presales',ai:'Opportunity qualification scored against historical win patterns; a solution-pattern library on tap; feasibility checked before a bid goes out.',rm:'Senior bid time spent re-deriving fit, gut-feel qualification, and committing to work we can\u2019t staff.'},
+    {k:'Sales ops',ai:'A first-draft SOW generated from structured presales data \u2014 clause library, assumptions surfaced explicitly, change orders from the same engine. Capacity impact of winning modelled up front.',rm:'Manual SOW drafting, and the assumptions that get lost in the hand-off from sales to delivery.'},
+    {k:'Resourcing',ai:'An explainable recommendation engine \u2014 hard filters plus soft scoring, with the reasoning shown, never a hidden league table.',rm:'Spreadsheet matching, bench guesswork, and the best-connected PM quietly getting the best people.'}
+  ];
+  var flow = document.getElementById('flow');
+  flow.innerHTML = lc.map(function(s,i){
+    return '<button class="lc-node'+(i===0?' on':'')+'" data-i="'+i+'"><div class="lc-i">0'+(i+1)+'</div><div class="lc-k">'+s.k+'</div></button>';
+  }).join('');
+  var lcAi=document.getElementById('lcAi'), lcRm=document.getElementById('lcRm');
+  function setLc(i){
+    Array.prototype.slice.call(flow.children).forEach(function(n,j){ n.classList.toggle('on', j===i); });
+    lcAi.textContent = lc[i].ai; lcRm.textContent = lc[i].rm;
+  }
+  Array.prototype.slice.call(flow.children).forEach(function(n){
+    n.addEventListener('click', function(){ setLc(parseInt(n.getAttribute('data-i'),10)); });
+  });
+  setLc(0);
+
+  /* S6 capability cards */
+  var caps = [
+    {h:'Data health at a glance',w:'Instant, shareable dashboards showing the quality of every field \u2014 what\u2019s missing, what\u2019s inconsistent.',g:'Gives the team a shared picture to work from, so issues surface in the first conversation rather than weeks in.'},
+    {h:'Attribute Usage Analysis (AUA)',w:'Shows where a field is genuinely used across the business \u2014 for example, a status used in only 2 of 17 company codes.',g:'Points effort straight at what matters, so consultants focus on the data the business actually relies on.'},
+    {h:'Write a check once, use it everywhere',w:'Define a quality check once and apply it across every system automatically.',g:'Takes out the repetitive rebuild, so the same rigour reaches every system without the extra hours.'},
+    {h:'A ready-made library of checks',w:'More than 100 pre-built quality checks ready to apply.',g:'Gives every consultant a head start, so their time goes on judging what to check, not writing checks.'},
+    {h:'Tuned to each client automatically',w:'Learns the shape of each client\u2019s system so the checks fit their data from day one.',g:'Less manual setup, and the work fits the client\u2019s data straight away.'},
+    {h:'Plain meanings, not codes',w:'Turns cryptic system codes into the business meaning behind them.',g:'Lets the people who own the data read the findings directly, speeding up the decisions that follow.'}
+  ];
+  var capsWrap = document.getElementById('caps');
+  capsWrap.innerHTML = caps.map(function(c,i){
+    return '<button class="cap" data-i="'+i+'"><span class="more">+</span><h3>'+c.h+'</h3>'+
+      '<div class="what">'+c.w+'</div><div class="gap"><b>What it adds</b>'+c.g+'</div></button>';
+  }).join('');
+  Array.prototype.slice.call(capsWrap.children).forEach(function(card){
+    card.addEventListener('click', function(){
+      var wasOpen = card.classList.contains('open');
+      Array.prototype.slice.call(capsWrap.children).forEach(function(c){ c.classList.remove('open'); c.querySelector('.more').textContent='+'; });
+      if(!wasOpen){ card.classList.add('open'); card.querySelector('.more').textContent='\u2013'; }
+    });
+  });
+
+  /* S7 impact */
+  var modes = {
+    now:{ cost:100, margin:0, grade:'C4', cap:'1\u00d7', ramp:'~6 months', gradeLbl:'C4 \u00b7 senior consultant', marginLbl:'',
+          note:'The work needs a senior consultant, and quality varies with who\u2019s assigned.' },
+    studio:{ cost:60, margin:40, grade:'C2', cap:'2\u20133\u00d7', ramp:'Day one', gradeLbl:'C2 \u00b7 less experienced consultant', marginLbl:'margin retained',
+          note:'A less experienced consultant produces the same quality \u2014 from day one.' }
+  };
+  function setMode(m){
+    var d=modes[m];
+    document.querySelectorAll('.switch button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-mode')===m); });
+    document.getElementById('costFill').style.width=d.cost+'%';
+    document.getElementById('costMargin').style.width=d.margin+'%';
+    document.getElementById('gradeLbl').textContent=d.gradeLbl;
+    document.getElementById('marginLbl').textContent=d.marginLbl;
+    document.getElementById('statGrade').textContent=d.grade;
+    document.getElementById('statCap').textContent=d.cap;
+    document.getElementById('statRamp').textContent=d.ramp;
+    document.getElementById('modeNote').textContent=d.note;
+  }
+  window.setMode = setMode;
+  setMode('now');
+
+})();
+</script>
+</body>
+</html>

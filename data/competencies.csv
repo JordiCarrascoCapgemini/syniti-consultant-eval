@@ -1,0 +1,79 @@
+ref,area,competency,description,exp_C1,exp_C2,exp_C3,exp_C4-S,exp_C4-M,exp_C5-S,exp_C5-M,exp_C6-S,exp_C6-M
+A1,Syniti Platform: Technical (ADM),Data Prep: Collect,Gathering and organizing source system data for further processing and data quality activities.,1,2,3,4,3,5,3,5,4
+A2,Syniti Platform: Technical (ADM),Data Prep: Transform/Relevancy,Applying transformations and logic to ensure data is relevant and accurate for data quality.,1,2,3,4,3,5,3,5,4
+A3,Syniti Platform: Technical (ADM),DQ Dev: SQL View,"Building SQL views to support data profiling, cleansing, and validation.",2,2,3,4,3,5,3,5,4
+A4,Syniti Platform: Technical (ADM),DQ Dev: DQ Components,Registering rules and configuring components such as notifications and thresholds for DQ.,1,2,3,4,3,5,3,5,4
+A5,Syniti Platform: Technical (ADM),DQ Dashboard: Scorecards,Adjusting thresholds and managing scorecard components for data quality metrics.,1,2,3,4,3,5,3,5,4
+A6,Syniti Platform: Technical (ADM),DQ Admin: ADM,Administering ADM settings for project governance and data operations.,1,2,3,4,3,5,3,5,4
+A7,Syniti Platform: Technical (ADM),ADM Architecture,Designing and maintaining the technical architecture of ADM solutions.,1,2,3,4,3,5,3,5,4
+A8,Syniti Platform: Technical (ADM),DQ Match: Syniti Match (Cortex),Configuring and deploying Syniti Match for deduplication and entity resolution using Cortex engine.,1,2,3,4,3,5,3,5,4
+A9,Syniti Platform: Technical (ADM),DQ Operate: Automate/Serv. page,Automating service tasks and workflows within ADM for efficient operations.,1,2,3,4,3,5,3,5,4
+A10,Syniti Platform: Technical (ADM),Construct - webApps,"Creating, adapting, supporting customized solutions using Syniti Construct webApps",1,2,3,4,3,5,3,5,4
+B1,Syniti Platform: Technical (ADM-M),Data Prep: Replicate/Snapshot,Creating and managing data replicas and snapshots to preserve source data state for data quality.,1,2,3,4,3,5,3,5,4
+B2,Syniti Platform: Technical (ADM-M),Data Prep: Migrate/Relevancy,"Assessing and preparing data objects for data quality, focusing on relevance and data scope.",1,2,3,4,3,5,3,5,4
+B3,Syniti Platform: Technical (ADM-M),DQ Dev: SQL (Within ADM-M),"Designing SQL views to facilitate data profiling, cleansing, and transformation during data quality.",2,2,3,4,3,5,3,5,4
+B4,Syniti Platform: Technical (ADM-M),DQ Dev: DQ Components,Configuring data quality rules and related automation modules for data quality projects.,1,2,3,4,3,5,3,5,4
+B5,Syniti Platform: Technical (ADM-M),DQ Dashboard: Standard (Dataset),"Using the standard DQ dashboard to monitor, report, and analyze dataset-level quality metrics.",1,2,3,4,3,5,3,5,4
+B6,Syniti Platform: Technical (ADM-M),DQ Admin: ADM-M,Administering ADM-M project settings and data quality configurations for migration.,1,2,3,4,3,5,3,5,4
+B7,Syniti Platform: Technical (ADM-M),ADM-M Architecture,Designing and optimizing the ADM-M technical architecture for scalable data quality.,1,2,3,4,3,5,3,5,4
+B8,Syniti Platform: Technical (ADM-M),DQ Match: Cloud Match,Applying cloud-based matching capabilities to deduplicate and resolve entities across systems.,1,2,3,4,3,5,3,5,4
+B9,Syniti Platform: Technical (ADM-M),DQ Operate: Orchestrate,Automating and orchestrating sequences of data quality tasks in ADM-M.,1,2,3,4,3,5,3,5,4
+B10,Syniti Platform: Technical (ADM-M),Construct - webApps,"Creating, adapting, supporting customized solutions using Syniti Construct webApps",1,2,3,4,3,5,3,5,4
+C1,DQ-Specific Technical,Data Profiling & Analysis,"Analyzing data sources to identify anomalies, patterns, and quality issues.",1,2,3,4,3,5,3,5,4
+C2,DQ-Specific Technical,Exception Handling Mechanisms,Implementing processes to capture and manage data exceptions in DQ workflows.,1,2,3,4,3,5,3,5,4
+C3,DQ-Specific Technical,Duplicate Detection Techniques,Utilizing algorithms and metadata to identify duplicate records across datasets.,1,2,3,4,3,5,3,5,4
+C4,DQ-Specific Technical,Root Cause Analysis of DQ Issues,Systematically investigating the sources of data quality failures.,1,2,3,4,3,5,3,5,4
+C5,DQ-Specific Technical,Data Models and Entity Relation,Designing relational models for master and transactional data.,1,2,3,4,3,5,3,5,4
+D1,DQ-Specific Functional,Business Rules Gathering,Collecting and defining business requirements to shape DQ processes.,1,2,2,3,5,5,5,5,5
+D2,DQ-Specific Functional,Data Standards Governance,Enforcing data standards and regulatory policies for compliance.,1,2,2,3,5,5,5,5,5
+D3,DQ-Specific Functional,KPI Definition with Business,Collaborating with stakeholders to establish KPIs and DQ measurement frameworks.,1,2,2,3,5,5,5,5,5
+D4,DQ-Specific Functional,DQ Policy Interpretation,Translating DQ policies into actionable operational procedures.,1,2,2,3,5,5,5,5,5
+D5,DQ-Specific Functional,Common Data Tools (Excel),Utilizing Excel and other tools for analysis and validation tasks.,1,2,3,3,5,5,5,5,5
+E1,SAP Data Functional,"Major SAP MD: Cus, Ven, Mat, Fin","Managing key SAP master data objects for customers, vendors, materials, and finance.",1,2,3,4,4,4,5,5,5
+E2,SAP Data Functional,"Major SAP BP: OTC, P2P, MM, R2R",Handling core SAP business processes such as order-to-cash and procure-to-pay.,1,2,3,4,4,4,5,5,5
+E3,SAP Data Functional,SAP Data Structures,"Working with SAP tables, LSMW objects, IDOCs, and BAPI interfaces.",1,2,3,4,4,4,5,5,5
+E4,SAP Data Functional,Source-to-Target Mapping for SAP,Defining and executing mappings between source and SAP target systems.,1,2,3,4,4,4,5,5,5
+E5,SAP Data Functional,SAP Business Process Awareness,Understanding and adapting to SAP process requirements.,1,2,3,4,4,4,5,5,5
+F1,Delivery & Consulting,Stakeholder/Expectation Mgmt.,Managing client and stakeholder expectations throughout deliverables.,1,2,3,3,4,4,5,5,5
+F2,Delivery & Consulting,Requirements Gathering/Clarif.,Collecting and clarifying project requirements from business and technical users.,1,2,3,3,4,4,5,5,5
+F3,Delivery & Consulting,Facilitating Workshops/Meetings,Leading discussions and engagements to drive consensus and solutioning.,1,2,3,3,4,4,5,5,5
+F4,Delivery & Consulting,Collaborative Work Management,Coordinating across teams for effective project outcomes.,1,2,3,3,4,4,5,5,5
+F5,Delivery & Consulting,Conflict Resolution,Addressing team or stakeholder disputes constructively.,1,2,3,3,4,4,5,5,5
+F6,Delivery & Consulting,Solution Design Thinking,Applying structured methodologies to create optimal solutions.,1,2,3,3,4,4,5,5,5
+F7,Delivery & Consulting,Project Risk Awareness,"Identifying, managing, and mitigating delivery risks.",1,2,3,3,4,4,5,5,5
+F8,Delivery & Consulting,Cross-functional Collaboration,Working effectively across functional boundaries.,1,2,3,3,4,4,5,5,5
+F9,Delivery & Consulting,Mentoring & Coaching,Supporting team and individual development.,1,2,3,3,4,4,5,5,5
+F10,Delivery & Consulting,Ongoing Improvement/Innovation,Driving continuous process and solution enhancement.,1,2,3,3,4,4,5,5,5
+G1,Squad-Delivery Excellence,Requirements to Proposal,Translating business requirements into detailed project proposals and solution approaches.,0,1,2,3,3,4,4,5,5
+G2,Squad-Delivery Excellence,SoW and Resource Plan,Developing statements of work and resourcing plans for successful engagements.,0,1,2,3,3,4,4,5,5
+G3,Squad-Delivery Excellence,Implementation Plan & WBS,Structuring and managing implementation plans using work breakdown structures.,0,1,2,3,3,4,4,5,5
+G4,Squad-Delivery Excellence,RAID-Risk/Issue Management,"Tracking risks, issues, actions, and decisions to mitigate delivery problems.",0,1,2,3,3,4,4,5,5
+G5,Squad-Delivery Excellence,Methodology Enforcement/Adher.,Ensuring compliance with Syniti and industry-standard project delivery methodologies.,0,1,2,3,3,4,4,5,5
+G6,Squad-dqOps,Overall DQOps Methodology,Applying the Syniti methodology for data quality operations across different projects.,1,2,3,4,4,5,5,5,5
+G7,Squad-dqOps,Enforcement of DQOps Methodology,Driving consistency and governance in DQ processes through methodology adherence.,1,2,3,4,4,5,5,5,5
+G8,Squad-dqOps,Specify rule,Defining and managing granular data quality rules for business scenarios.,1,2,3,4,4,5,5,5,5
+G9,Squad-dqOps,Build and execute QA,"Designing, executing, and reviewing QA activities for data quality assurance.",1,2,3,4,4,5,5,5,5
+G10,Squad-dqOps,Iterate Validate & Improve,Cycling through validation and continuous improvement of DQ processes.,1,2,3,4,4,5,5,5,5
+G11,Squad-Harmonization,Harmonization Methodology,Applying structured techniques for harmonizing data across domains or systems.,1,2,3,3,3,4,4,5,5
+G12,Squad-Harmonization,Harmonization Solutioning,Designing solutions for data harmonization challenges and outcomes.,1,2,3,3,3,4,4,5,5
+G13,Squad-Harmonization,Harmonization Architecture,Architecting frameworks to support harmonized enterprise data landscapes.,1,2,3,3,3,4,4,5,5
+G14,Squad-Harmonization,Implement BP Consolidation,Executing business partner consolidation within harmonization initiatives.,1,2,3,3,2,4,3,5,4
+G15,Squad-Harmonization,Implement MRO Spare Parts,"Integrating and consolidating MRO (Maintenance, Repair, Operations) spare parts for enterprise harmonization",1,2,3,4,2,3,3,4,4
+G16,Squad-Source Cleansing,Src. Cleanse Methodology ,Applying structured cleansing methodology to source data sets.,1,2,2,3,3,4,4,5,5
+G17,Squad-Source Cleansing,Src. Cleanse Approach,"Crafting approach for source cleansing considering process, people, and tools.",1,2,2,3,3,4,4,5,5
+G18,Squad-Source Cleansing,"Src. Cleanse arch. (DQ, Migrate)",Designing architecture for cleansing activities in DQ,1,2,2,3,3,4,4,5,5
+G19,Squad-Source Cleansing,Implement Src. Cleanse (Migrate),Executing source cleansing as part of data migration initiatives.,1,2,2,3,3,4,4,5,5
+G20,Squad-Source Cleansing,Src. Cleanse Analytics,Utilizing analytics to measure and optimize source data cleansing.,1,2,2,3,3,4,4,5,5
+G21,Squad-Cloud Data Quality,Cloud DQ Methodology ,Implementing methodologies for cloud-based data quality management.,1,2,2,3,3,4,4,5,5
+G22,Squad-Cloud Data Quality,Cloud DQ Approach,Defining tailored approaches for cloud DQ challenges using Syniti tools.,1,2,2,3,3,4,4,5,5
+G23,Squad-Cloud Data Quality,"Cloud DQ arch. (DQ, Migrate)",Designing and operating cloud data architecture supporting quality,1,2,2,3,3,4,4,5,5
+G24,Squad-Cloud Data Quality,Implement Cloud DQ (Quality),Delivering end-to-end data quality solutions in cloud platforms.,1,2,2,3,3,4,4,5,5
+G25,Squad-Cloud Data Quality,Cloud DQ Analytics,Applying analytics to assess and improve data quality in cloud environments.,1,2,2,3,3,4,4,5,5
+G26,Squad-Dashboarding & Analytics,Advanced Data Modelling (SQL),Building complex data models and visualizations using advanced SQL techniques.,1,1,2,4,3,4,3,5,3
+G27,Squad-Dashboarding & Analytics,Construct - DynamicContext,Configuring dynamic data constructs within Syniti platform dashboards.,1,1,2,4,3,4,3,5,3
+G28,Squad-Dashboarding & Analytics,ADM Custom Dashboard - Quicksite,Customizing ADM dashboards for targeted insights in Quicksite.,1,1,2,3,3,4,3,5,3
+G29,Squad-Dashboarding & Analytics,PowerBI,Designing and managing dashboards and reports in PowerBI.,1,1,1,2,2,2,2,2,2
+G30,Squad-Dashboarding & Analytics,"Other (Tableau, Databricks)","Creating data dashboards with other analytics platforms (Tableau, Databricks, Snowflake, SAC).",1,1,1,2,2,2,2,2,2
+G31,AI Enablement,General AI Knowledge & Day-to-Day Use,"Understanding of AI/LLM concepts and applying them in day-to-day delivery work: prompting, tool selection, and sound judgement on when and how to use AI. (Expected values provisional - confirm with CoE.)",1,1,1,2,2,3,3,3,3
+G32,AI Enablement,AI-Augmentation: Development Acceleration,"Using AI to accelerate build and development work: generating and refining code, rules, transformations and automation, with review for correctness. (Expected values provisional - confirm with CoE.)",1,1,1,2,2,2,2,2,2
+G33,AI Enablement,AI-Augmentation: Delivery & Consulting Quality,"Using AI to enhance the quality of delivery and consulting outputs: analysis, documentation, client-facing materials, and QA/review. (New competency; expected values provisional - confirm with CoE.)",1,1,1,2,2,3,3,3,3
