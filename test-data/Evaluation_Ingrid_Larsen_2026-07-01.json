@@ -1,0 +1,95 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Ingrid Larsen",
+  "project": "Helios S/4 Cleanse",
+  "lead": "T. Gordon",
+  "level": "C3",
+  "type": "Regular",
+  "date": "2026-07-01",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": true,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 2,
+  "C2": 3,
+  "C3": 1,
+  "C4": 3,
+  "C5": 2,
+  "D1": 0,
+  "D2": 0,
+  "D3": 0,
+  "D4": 0,
+  "D5": 1,
+  "E1": 1,
+  "E2": 1,
+  "E3": 1,
+  "E4": 0,
+  "E5": 1,
+  "F1": 2,
+  "F2": 2,
+  "F3": 2,
+  "F4": 1,
+  "F5": 2,
+  "F6": 2,
+  "F7": 3,
+  "F8": 1,
+  "F9": 2,
+  "F10": 2,
+  "G16": 1,
+  "G17": 1,
+  "G18": 1,
+  "G19": 1,
+  "G20": 1
+ },
+ "na": {
+  "D1": true,
+  "D4": true
+ },
+ "feedback": {
+  "classification": "below",
+  "recommendation": "Formal improvement plan",
+  "projectRating": "Amber",
+  "strengths": "Willing attitude and improving domain vocabulary.",
+  "development": "Structured development plan - pair with a senior on all deliverables.",
+  "projectFeedback": "Captured during the regular review on Helios S/4 Cleanse."
+ },
+ "learningPlan": [
+  {
+   "area": "SAP Data Functional",
+   "provider": "coursera",
+   "title": "SAP Master Data Essentials",
+   "meta": "Course \u00b7 5h \u00b7 Intermediate",
+   "url": ""
+  },
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 1.429,
+  "avgD": -1.321,
+  "pctMet": 11,
+  "gaps": 11,
+  "n": 28
+ }
+}

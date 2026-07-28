@@ -1,0 +1,83 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Hannah Berg",
+  "project": "Beacon Finance Data",
+  "lead": "T. Gordon",
+  "level": "C6-M",
+  "type": "Regular",
+  "date": "2026-07-07",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": true,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": true
+ },
+ "ratings": {
+  "C1": 4,
+  "C2": 4,
+  "C3": 4,
+  "C4": 4,
+  "C5": 4,
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 5,
+  "D5": 5,
+  "E1": 5,
+  "E2": 5,
+  "E3": 5,
+  "E4": 5,
+  "E5": 0,
+  "F1": 5,
+  "F2": 5,
+  "F3": 5,
+  "F4": 5,
+  "F5": 5,
+  "F6": 5,
+  "F7": 5,
+  "F8": 5,
+  "F9": 5,
+  "F10": 5,
+  "G1": 5,
+  "G2": 0,
+  "G3": 5,
+  "G4": 4,
+  "G5": 5,
+  "G31": 2,
+  "G32": 3,
+  "G33": 3
+ },
+ "na": {
+  "E5": true,
+  "G2": true
+ },
+ "feedback": {
+  "classification": "meets",
+  "recommendation": "Continue on current trajectory",
+  "projectRating": "Green",
+  "strengths": "Solid, dependable delivery at level with good stakeholder communication.",
+  "development": "Deepen the weaker squad-area skills ahead of the next level conversation.",
+  "projectFeedback": "Captured during the regular review on Beacon Finance Data."
+ },
+ "learningPlan": [],
+ "summary": {
+  "avgScore": 4.548,
+  "avgD": -0.065,
+  "pctMet": 90,
+  "gaps": 0,
+  "n": 31
+ }
+}

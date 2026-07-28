@@ -1,0 +1,97 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Anna Lindqvist",
+  "project": "Northwind MDM",
+  "lead": "K. Osei",
+  "level": "C5-S",
+  "type": "Regular",
+  "date": "2026-06-16",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": true,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 0,
+  "C2": 5,
+  "C3": 4,
+  "C4": 4,
+  "C5": 4,
+  "D1": 5,
+  "D2": 0,
+  "D3": 4,
+  "D4": 4,
+  "D5": 4,
+  "E1": 2,
+  "E2": 3,
+  "E3": 3,
+  "E4": 2,
+  "E5": 3,
+  "F1": 0,
+  "F2": 3,
+  "F3": 3,
+  "F4": 2,
+  "F5": 3,
+  "F6": 4,
+  "F7": 3,
+  "F8": 3,
+  "F9": 4,
+  "F10": 3,
+  "G6": 4,
+  "G7": 0,
+  "G8": 3,
+  "G9": 3,
+  "G10": 3
+ },
+ "na": {
+  "C1": true,
+  "D2": true,
+  "F1": true,
+  "G7": true
+ },
+ "feedback": {
+  "classification": "below",
+  "recommendation": "Formal improvement plan",
+  "projectRating": "Amber",
+  "strengths": "Willing attitude and improving domain vocabulary.",
+  "development": "Structured development plan - pair with a senior on all deliverables.",
+  "projectFeedback": "Captured during the regular review on Northwind MDM."
+ },
+ "learningPlan": [
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  },
+  {
+   "area": "Squad-dqOps",
+   "provider": "linkedin",
+   "title": "Quality Assurance Fundamentals",
+   "meta": "Course \u00b7 1h 10m \u00b7 Beginner",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 3.385,
+  "avgD": -1.077,
+  "pctMet": 15,
+  "gaps": 6,
+  "n": 26
+ }
+}

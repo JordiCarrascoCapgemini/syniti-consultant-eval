@@ -1,0 +1,89 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Ahmed Hassan",
+  "project": "Orion Supply Chain DQ",
+  "lead": "S. Ferreira",
+  "level": "C4-S",
+  "type": "Regular",
+  "date": "2026-05-12",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": true,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 5,
+  "C2": 4,
+  "C3": 3,
+  "C4": 4,
+  "C5": 4,
+  "D1": 3,
+  "D2": 3,
+  "D3": 3,
+  "D4": 2,
+  "D5": 3,
+  "E1": 0,
+  "E2": 4,
+  "E3": 2,
+  "E4": 0,
+  "E5": 4,
+  "F1": 3,
+  "F2": 4,
+  "F3": 4,
+  "F4": 3,
+  "F5": 3,
+  "F6": 4,
+  "F7": 4,
+  "F8": 4,
+  "F9": 3,
+  "F10": 4,
+  "G11": 2,
+  "G12": 3,
+  "G13": 2,
+  "G14": 4,
+  "G15": 0
+ },
+ "na": {
+  "E1": true,
+  "E4": true,
+  "G15": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Green",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the regular review on Orion Supply Chain DQ."
+ },
+ "learningPlan": [
+  {
+   "area": "SAP Data Functional",
+   "provider": "coursera",
+   "title": "SAP Master Data Essentials",
+   "meta": "Course \u00b7 5h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 3.37,
+  "avgD": 0.074,
+  "pctMet": 81,
+  "gaps": 1,
+  "n": 27
+ }
+}

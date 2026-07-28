@@ -1,0 +1,80 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Ahmed Hassan",
+  "project": "Aurora Migration",
+  "lead": "T. Gordon",
+  "level": "C4-S",
+  "type": "Mid-project",
+  "date": "2026-02-25",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": true,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 5,
+  "C2": 4,
+  "C3": 4,
+  "C4": 4,
+  "C5": 4,
+  "D1": 0,
+  "D2": 3,
+  "D3": 3,
+  "D4": 4,
+  "D5": 3,
+  "E1": 4,
+  "E2": 4,
+  "E3": 5,
+  "E4": 5,
+  "E5": 4,
+  "F1": 3,
+  "F2": 2,
+  "F3": 4,
+  "F4": 3,
+  "F5": 3,
+  "F6": 2,
+  "F7": 3,
+  "F8": 2,
+  "F9": 3,
+  "F10": 3,
+  "G11": 4,
+  "G12": 0,
+  "G13": 4,
+  "G14": 2,
+  "G15": 4
+ },
+ "na": {
+  "D1": true,
+  "G12": true
+ },
+ "feedback": {
+  "classification": "meets",
+  "recommendation": "Continue on current trajectory",
+  "projectRating": "Green",
+  "strengths": "Solid, dependable delivery at level with good stakeholder communication.",
+  "development": "Deepen the weaker squad-area skills ahead of the next level conversation.",
+  "projectFeedback": "Captured during the mid-project review on Aurora Migration."
+ },
+ "learningPlan": [],
+ "summary": {
+  "avgScore": 3.5,
+  "avgD": 0.107,
+  "pctMet": 86,
+  "gaps": 0,
+  "n": 28
+ }
+}

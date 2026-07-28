@@ -1,0 +1,95 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Grace Mburu",
+  "project": "Nimbus Cloud DQ",
+  "lead": "T. Gordon",
+  "level": "C4-S",
+  "type": "Regular",
+  "date": "2026-05-19",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": true,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 3,
+  "C2": 3,
+  "C3": 2,
+  "C4": 4,
+  "C5": 2,
+  "D1": 2,
+  "D2": 1,
+  "D3": 3,
+  "D4": 3,
+  "D5": 2,
+  "E1": 2,
+  "E2": 4,
+  "E3": 3,
+  "E4": 3,
+  "E5": 0,
+  "F1": 2,
+  "F2": 2,
+  "F3": 2,
+  "F4": 2,
+  "F5": 1,
+  "F6": 1,
+  "F7": 1,
+  "F8": 3,
+  "F9": 2,
+  "F10": 1,
+  "G11": 2,
+  "G12": 1,
+  "G13": 2,
+  "G14": 1,
+  "G15": 0
+ },
+ "na": {
+  "E5": true,
+  "G15": true
+ },
+ "feedback": {
+  "classification": "below",
+  "recommendation": "Formal improvement plan",
+  "projectRating": "Amber",
+  "strengths": "Willing attitude and improving domain vocabulary.",
+  "development": "Structured development plan - pair with a senior on all deliverables.",
+  "projectFeedback": "Captured during the regular review on Nimbus Cloud DQ."
+ },
+ "learningPlan": [
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  },
+  {
+   "area": "Squad-dqOps",
+   "provider": "linkedin",
+   "title": "Quality Assurance Fundamentals",
+   "meta": "Course \u00b7 1h 10m \u00b7 Beginner",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 2.143,
+  "avgD": -1.179,
+  "pctMet": 18,
+  "gaps": 10,
+  "n": 28
+ }
+}

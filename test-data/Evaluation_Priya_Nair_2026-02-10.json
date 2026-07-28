@@ -1,0 +1,80 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Priya Nair",
+  "project": "Atlas DQ Assessment",
+  "lead": "S. Ferreira",
+  "level": "C2",
+  "type": "Mid-project",
+  "date": "2026-02-10",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": true,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 3,
+  "C2": 2,
+  "C3": 2,
+  "C4": 2,
+  "C5": 2,
+  "D1": 0,
+  "D2": 2,
+  "D3": 2,
+  "D4": 2,
+  "D5": 2,
+  "E1": 4,
+  "E2": 2,
+  "E3": 2,
+  "E4": 2,
+  "E5": 2,
+  "F1": 1,
+  "F2": 2,
+  "F3": 2,
+  "F4": 2,
+  "F5": 1,
+  "F6": 2,
+  "F7": 2,
+  "F8": 1,
+  "F9": 1,
+  "F10": 2,
+  "G16": 1,
+  "G17": 2,
+  "G18": 0,
+  "G19": 1,
+  "G20": 2
+ },
+ "na": {
+  "D1": true,
+  "G18": true
+ },
+ "feedback": {
+  "classification": "meets",
+  "recommendation": "Continue on current trajectory",
+  "projectRating": "Green",
+  "strengths": "Solid, dependable delivery at level with good stakeholder communication.",
+  "development": "Deepen the weaker squad-area skills ahead of the next level conversation.",
+  "projectFeedback": "Captured during the mid-project review on Atlas DQ Assessment."
+ },
+ "learningPlan": [],
+ "summary": {
+  "avgScore": 1.893,
+  "avgD": -0.107,
+  "pctMet": 79,
+  "gaps": 0,
+  "n": 28
+ }
+}

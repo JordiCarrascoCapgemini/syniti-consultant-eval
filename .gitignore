@@ -1,2 +1,5 @@
 .DS_Store
 *.tmp
+
+# Local Claude Code overrides — never commit (machine-specific, may hold tokens)
+.claude/settings.local.json

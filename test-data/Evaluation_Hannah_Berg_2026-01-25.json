@@ -1,0 +1,83 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Hannah Berg",
+  "project": "Beacon Finance Data",
+  "lead": "S. Ferreira",
+  "level": "C6-M",
+  "type": "Mid-project",
+  "date": "2026-01-25",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": true,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": true
+ },
+ "ratings": {
+  "C1": 3,
+  "C2": 4,
+  "C3": 3,
+  "C4": 4,
+  "C5": 4,
+  "D1": 5,
+  "D2": 5,
+  "D3": 5,
+  "D4": 4,
+  "D5": 0,
+  "E1": 5,
+  "E2": 4,
+  "E3": 5,
+  "E4": 5,
+  "E5": 5,
+  "F1": 4,
+  "F2": 4,
+  "F3": 5,
+  "F4": 5,
+  "F5": 4,
+  "F6": 5,
+  "F7": 5,
+  "F8": 5,
+  "F9": 5,
+  "F10": 5,
+  "G1": 4,
+  "G2": 5,
+  "G3": 5,
+  "G4": 5,
+  "G5": 0,
+  "G31": 2,
+  "G32": 2,
+  "G33": 3
+ },
+ "na": {
+  "D5": true,
+  "G5": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Green",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the mid-project review on Beacon Finance Data."
+ },
+ "learningPlan": [],
+ "summary": {
+  "avgScore": 4.323,
+  "avgD": -0.29,
+  "pctMet": 71,
+  "gaps": 0,
+  "n": 31
+ }
+}

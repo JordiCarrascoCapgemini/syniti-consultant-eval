@@ -1,0 +1,87 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Fatima Zahra",
+  "project": "Orion Supply Chain DQ",
+  "lead": "K. Osei",
+  "level": "C4-M",
+  "type": "Regular",
+  "date": "2026-06-02",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": true,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 2,
+  "C2": 0,
+  "C3": 3,
+  "C4": 3,
+  "C5": 2,
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 5,
+  "D5": 5,
+  "E1": 4,
+  "E2": 4,
+  "E3": 4,
+  "E4": 2,
+  "E5": 4,
+  "F1": 3,
+  "F2": 4,
+  "F3": 3,
+  "F4": 4,
+  "F5": 5,
+  "F6": 4,
+  "F7": 4,
+  "F8": 4,
+  "F9": 4,
+  "F10": 4,
+  "G1": 2,
+  "G2": 4,
+  "G3": 4,
+  "G4": 3,
+  "G5": 3
+ },
+ "na": {
+  "C2": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Amber",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the regular review on Orion Supply Chain DQ."
+ },
+ "learningPlan": [
+  {
+   "area": "SAP Data Functional",
+   "provider": "coursera",
+   "title": "SAP Master Data Essentials",
+   "meta": "Course \u00b7 5h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 3.69,
+  "avgD": -0.172,
+  "pctMet": 76,
+  "gaps": 1,
+  "n": 29
+ }
+}

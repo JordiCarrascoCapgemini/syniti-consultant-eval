@@ -1,0 +1,97 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "David Chen",
+  "project": "Atlas DQ Assessment",
+  "lead": "T. Gordon",
+  "level": "C3",
+  "type": "Mid-project",
+  "date": "2026-02-14",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": true,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": true,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "A1": 2,
+  "A2": 0,
+  "A3": 2,
+  "A4": 2,
+  "A5": 2,
+  "A6": 2,
+  "A7": 2,
+  "A8": 2,
+  "A9": 2,
+  "A10": 2,
+  "C1": 3,
+  "C2": 3,
+  "C3": 3,
+  "C4": 2,
+  "C5": 2,
+  "D1": 2,
+  "D2": 3,
+  "D3": 2,
+  "D4": 2,
+  "D5": 4,
+  "E1": 3,
+  "E2": 4,
+  "E3": 3,
+  "E4": 3,
+  "E5": 3,
+  "F1": 3,
+  "F2": 3,
+  "F3": 3,
+  "F4": 3,
+  "F5": 2,
+  "F6": 3,
+  "F7": 3,
+  "F8": 2,
+  "F9": 2,
+  "F10": 3,
+  "G21": 1,
+  "G22": 1,
+  "G23": 1,
+  "G24": 0,
+  "G25": 1
+ },
+ "na": {
+  "A2": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Amber",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the mid-project review on Atlas DQ Assessment."
+ },
+ "learningPlan": [
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 2.333,
+  "avgD": -0.436,
+  "pctMet": 51,
+  "gaps": 1,
+  "n": 39
+ }
+}

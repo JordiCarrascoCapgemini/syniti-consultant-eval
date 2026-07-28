@@ -1,0 +1,79 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Marcus Reid",
+  "project": "Helios S/4 Cleanse",
+  "lead": "S. Ferreira",
+  "level": "C3",
+  "type": "Regular",
+  "date": "2026-06-16",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": true,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 3,
+  "C2": 3,
+  "C3": 2,
+  "C4": 3,
+  "C5": 2,
+  "D1": 1,
+  "D2": 1,
+  "D3": 2,
+  "D4": 2,
+  "D5": 3,
+  "E1": 2,
+  "E2": 3,
+  "E3": 3,
+  "E4": 4,
+  "E5": 2,
+  "F1": 3,
+  "F2": 3,
+  "F3": 3,
+  "F4": 0,
+  "F5": 3,
+  "F6": 4,
+  "F7": 3,
+  "F8": 2,
+  "F9": 2,
+  "F10": 3,
+  "G1": 1,
+  "G2": 2,
+  "G3": 3,
+  "G4": 2,
+  "G5": 2
+ },
+ "na": {
+  "F4": true
+ },
+ "feedback": {
+  "classification": "meets",
+  "recommendation": "Continue on current trajectory",
+  "projectRating": "Green",
+  "strengths": "Solid, dependable delivery at level with good stakeholder communication.",
+  "development": "Deepen the weaker squad-area skills ahead of the next level conversation.",
+  "projectFeedback": "Captured during the regular review on Helios S/4 Cleanse."
+ },
+ "learningPlan": [],
+ "summary": {
+  "avgScore": 2.483,
+  "avgD": -0.207,
+  "pctMet": 69,
+  "gaps": 0,
+  "n": 29
+ }
+}

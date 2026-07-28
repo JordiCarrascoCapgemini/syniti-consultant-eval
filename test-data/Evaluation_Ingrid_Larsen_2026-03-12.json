@@ -1,0 +1,95 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Ingrid Larsen",
+  "project": "Zephyr Governance",
+  "lead": "K. Osei",
+  "level": "C3",
+  "type": "Mid-project",
+  "date": "2026-03-12",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": true,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 2,
+  "C2": 0,
+  "C3": 2,
+  "C4": 2,
+  "C5": 2,
+  "D1": 2,
+  "D2": 1,
+  "D3": 1,
+  "D4": 0,
+  "D5": 2,
+  "E1": 2,
+  "E2": 1,
+  "E3": 2,
+  "E4": 2,
+  "E5": 2,
+  "F1": 3,
+  "F2": 2,
+  "F3": 2,
+  "F4": 2,
+  "F5": 2,
+  "F6": 2,
+  "F7": 2,
+  "F8": 2,
+  "F9": 2,
+  "F10": 2,
+  "G16": 1,
+  "G17": 2,
+  "G18": 0,
+  "G19": 0,
+  "G20": 1
+ },
+ "na": {
+  "C2": true,
+  "G18": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Amber",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the mid-project review on Zephyr Governance."
+ },
+ "learningPlan": [
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  },
+  {
+   "area": "Squad-dqOps",
+   "provider": "linkedin",
+   "title": "Quality Assurance Fundamentals",
+   "meta": "Course \u00b7 1h 10m \u00b7 Beginner",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 1.714,
+  "avgD": -1.0,
+  "pctMet": 11,
+  "gaps": 3,
+  "n": 28
+ }
+}

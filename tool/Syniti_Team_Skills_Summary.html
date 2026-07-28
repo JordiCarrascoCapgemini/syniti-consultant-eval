@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syniti · Team Skills Summary</title>
+<style>
+:root{
+  /* Syniti brand kit tokens (source: syniti-brand-kit/tokens/tokens.css) */
+  --deep:#190033; --navy:#232F63; --blue:#365EB9; --violet:#5B30EE;
+  --violet-soft:#8B6CF3; --slate-blue:#6F8BD9; --light-blue:#83AFF8; --lavender:#BCAFFF;
+  --ink:#20242E; --muted:#6B7492; --slate:#64748B; --dim:#8FA1C8;
+  --canvas:#F6F8FE; --panel:#F7F9FD; --line:#E1E8F2;
+  --glass-fill:linear-gradient(152deg, rgba(255,255,255,.82), rgba(255,255,255,.55) 58%, rgba(246,248,254,.62));
+  --glass-hairline:rgba(255,255,255,.90);
+  --glass-blur:blur(26px) saturate(160%);
+  --glass-shadow:0 10px 34px rgba(35,47,99,.09), 0 2px 8px rgba(35,47,99,.05), inset 0 1px 0 rgba(255,255,255,.95);
+  --good:#0E9F6E; --warn:#B45309; --warn-bg:#FEF3E2; --warn-line:#F5D9A8; --critical:#DC2626;
+  --r-card:22px; --r-panel:16px; --r-control:11px; --r-chip:8px; --r-button:10px;
+  --grad:linear-gradient(120deg,#365EB9,#5B30EE);
+  --li:#0A66C2; --co:#0056D2; --dg:#6F8BD9;
+  --maxw:1360px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;min-height:100vh;position:relative;overflow-x:hidden;line-height:1.5}
+/* Aurora underlay (kit) */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(52% 44% at 12% 6%,  rgba(54,94,185,.14), transparent 62%),
+  radial-gradient(46% 40% at 92% 12%, rgba(91,48,238,.10), transparent 60%),
+  radial-gradient(60% 52% at 78% 96%, rgba(131,175,248,.16),transparent 64%),
+  radial-gradient(38% 34% at 4% 88%,  rgba(188,175,255,.12),transparent 60%)}
+/* glass card */
+.card{background:var(--glass-fill);border:1px solid var(--glass-hairline);border-radius:var(--r-card);
+  box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  padding:26px 28px;margin-top:22px}
+/* "how to read" strip */
+.htr{padding:10px 14px;border:1px solid var(--line);border-radius:var(--r-control);background:var(--panel);
+  font-size:11.5px;color:var(--slate);line-height:1.5}
+
+.shell{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:32px 40px 120px}
+
+.topbar{display:flex;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap;padding-left:52px}
+.brandlogo{height:30px;width:auto;display:block}
+.eyebrow-now{color:var(--slate);text-transform:uppercase;font-size:11px;letter-spacing:.04em;font-weight:700}
+.spacer{flex:1}
+.actbtns{display:flex;gap:9px;flex-wrap:wrap}
+
+.btn{appearance:none;cursor:pointer;font-family:var(--font);font-size:12.5px;font-weight:600;
+  padding:9px 15px;border-radius:var(--r-button);transition:.16s;display:inline-flex;align-items:center;gap:7px;
+  border:1px solid rgba(54,94,185,.22);background:var(--glass-fill);color:var(--blue);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.btn:hover{background:rgba(255,255,255,.75)}
+.btn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.btn.primary{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 10px 24px -14px rgba(35,47,99,.5)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn .ic{font-size:14px;line-height:1}
+
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--violet);opacity:.6}
+
+h1{font-weight:700;line-height:1.03;letter-spacing:-.02em;font-size:clamp(30px,5vw,50px);color:var(--navy)}
+h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);line-height:1.6;font-size:16px;max-width:72ch;margin-top:16px}
+
+.panel-h{font-weight:600;font-size:19px;margin-bottom:4px;color:var(--navy);display:flex;align-items:center;gap:11px}
+.panel-h .n{font-size:12px;font-weight:700;color:var(--blue);border:1px solid rgba(54,94,185,.25);
+  border-radius:8px;padding:3px 8px;background:rgba(54,94,185,.06);font-variant-numeric:tabular-nums}
+.panel-h .sic{display:inline-flex;color:var(--blue)}
+.panel-h .sic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.panel-sub{color:var(--muted);font-size:13.5px;margin-bottom:20px;line-height:1.55}
+.ovsub{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+
+.panel-h .hdrchip{margin-left:auto;font-size:11px;font-weight:700;color:var(--slate);border:1px solid var(--line);
+  border-radius:7px;padding:3px 9px;background:rgba(255,255,255,.55);font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel-h .hdrchip.blue{color:var(--blue);border-color:rgba(54,94,185,.3);background:rgba(54,94,185,.08)}
+.panel-h.collapsible{cursor:pointer;user-select:none}
+.panel-h.collapsible:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:8px}
+.panel-h .chev{margin-left:auto;font-size:11px;color:var(--slate);transition:transform .18s;flex:none}
+.panel-h.collapsed .chev{transform:rotate(-90deg)}
+
+#sec-import,#sec-kpis,#sec-roster,#sec-heatmap,#sec-growth,#sec-detail{scroll-margin-top:16px}
+
+/* ===== sidenav / toggle ===== */
+.navtoggle{position:fixed;top:18px;left:18px;z-index:60;width:40px;height:40px;border-radius:11px;border:1px solid var(--glass-hairline);
+  background:var(--glass-fill);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);cursor:pointer;display:grid;place-items:center;
+  box-shadow:0 10px 24px -16px rgba(35,47,99,.5);transition:.16s}
+.navtoggle:hover{background:rgba(255,255,255,.9)}
+.navtoggle span{display:block;width:16px;height:2px;border-radius:2px;background:var(--navy);position:relative}
+.navtoggle span::before,.navtoggle span::after{content:"";position:absolute;left:0;width:16px;height:2px;border-radius:2px;background:var(--navy)}
+.navtoggle span::before{top:-5px}.navtoggle span::after{top:5px}
+.sidenav{position:fixed;top:0;left:0;bottom:0;width:226px;z-index:55;padding:72px 14px 22px;
+  background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
+  border-right:1px solid var(--glass-hairline);transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+body.nav-open .sidenav{transform:translateX(0)}
+.sidenav .navttl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);padding:0 12px 10px}
+.navlink{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;cursor:pointer;color:var(--muted);
+  font-size:13px;font-weight:500;transition:.14s;text-decoration:none;margin-bottom:2px}
+.navlink:hover{background:rgba(255,255,255,.85);color:var(--navy)}
+.navlink.active{background:var(--grad);color:#fff;box-shadow:0 8px 18px -12px rgba(35,47,99,.6)}
+.navlink svg{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.navlink .idx{font-size:10.5px;opacity:.65;margin-left:auto;font-variant-numeric:tabular-nums}
+.navbackdrop{position:fixed;inset:0;z-index:50;background:rgba(20,25,50,.28);opacity:0;pointer-events:none;transition:.28s}
+body.nav-open .navbackdrop{opacity:1;pointer-events:auto}
+@media(min-width:1180px){
+  body.nav-open .navbackdrop{opacity:0;pointer-events:none}
+  body.nav-open .shell{margin-left:236px}
+}
+
+/* ===== import ===== */
+.dropzone{border:2px dashed var(--line);border-radius:var(--r-panel);padding:34px 20px;text-align:center;
+  background:rgba(255,255,255,.35);transition:.16s;cursor:pointer}
+.dropzone:hover,.dropzone.drag{border-color:var(--violet);background:rgba(91,48,238,.05)}
+.dropzone .dz-ic{font-size:24px;margin-bottom:8px;color:var(--blue)}
+.dropzone .dz-t{font-weight:600;color:var(--navy);font-size:14px}
+.dropzone .dz-s{color:var(--muted);font-size:12.5px;margin-top:4px}
+
+.fileroster{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.filerow{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r-control);
+  padding:10px 13px;background:rgba(255,255,255,.5);font-size:12.5px}
+.filerow .fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);font-weight:500}
+.filerow .fs{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:7px;white-space:nowrap}
+.filerow .fs.ok{color:var(--good);background:rgba(14,159,110,.1);border:1px solid rgba(14,159,110,.3)}
+.filerow .fs.error{color:var(--critical);background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.3)}
+.filerow .fs.duplicate{color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-line)}
+.filerow .fr{color:var(--muted);font-size:11.5px;max-width:38%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filerow .fx{cursor:pointer;color:var(--slate);font-size:13px;flex:none;background:none;border:0;line-height:1;padding:2px}
+.filerow .fx:hover{color:var(--critical)}
+
+/* ===== KPIs ===== */
+.bandrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.bandchip{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:12.5px;padding:6px 12px;
+  border-radius:var(--r-chip);border:1px solid var(--line);background:rgba(255,255,255,.5)}
+.bandchip .n{font-variant-numeric:tabular-nums;font-weight:700}
+.bandchip.exceeds{color:var(--good);border-color:rgba(14,159,110,.4);background:rgba(14,159,110,.1)}
+.bandchip.meets{color:var(--blue);border-color:rgba(54,94,185,.35);background:rgba(54,94,185,.09)}
+.bandchip.partial{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
+.bandchip.below{color:var(--critical);border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.12)}
+
+.kpigrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin-top:16px}
+.kpi{border:1px solid var(--glass-hairline);border-radius:var(--r-panel);padding:18px 20px;background:rgba(255,255,255,.5);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 14px 34px -30px rgba(35,47,99,.5)}
+.kpi .v{font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi .v.plain{background:none;-webkit-text-fill-color:var(--ink);color:var(--ink)}
+.kpi .k{color:var(--muted);font-size:12.5px;margin-top:7px;line-height:1.35}
+
+.bandbadge{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13px;padding:7px 13px;
+  border-radius:var(--r-chip);border:1px solid var(--line);background:rgba(255,255,255,.5);white-space:nowrap}
+.bandbadge.exceeds{color:var(--good);border-color:rgba(14,159,110,.4);background:rgba(14,159,110,.1)}
+.bandbadge.meets{color:var(--blue);border-color:rgba(54,94,185,.35);background:rgba(54,94,185,.09)}
+.bandbadge.partial{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
+.bandbadge.below{color:var(--critical);border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.12)}
+.dotm{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+
+/* ===== insights ===== */
+.insightsrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px}
+.inscard{position:relative;border:1px solid var(--glass-hairline);border-radius:var(--r-panel);padding:16px 18px 18px;
+  background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 14px 34px -30px rgba(35,47,99,.5);overflow:hidden}
+.inscard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+.inscard.ac-blue::before{background:var(--blue)}
+.inscard.ac-critical::before{background:var(--critical)}
+.inscard.ac-warn::before{background:var(--warn)}
+.ins-label{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+.ins-muted{color:var(--muted);font-size:12.5px}
+.ins-good{color:var(--good);font-weight:600;font-size:13.5px}
+.ins-sub-lead{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.ins-bigfig{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.2}
+.ins-bigfig.good{color:var(--good)}
+.ins-bigfig.warn{color:var(--warn)}
+.ins-bigfig.crit{color:var(--critical)}
+.ins-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+.ins-ranklist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ins-ranklist li{display:flex;align-items:baseline;gap:7px;font-size:12.5px}
+.ins-rank{color:var(--slate);font-weight:700;flex:none;width:14px}
+.ins-arealbl{flex:1;color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ins-figure{font-variant-numeric:tabular-nums;font-weight:700;flex:none}
+.ins-figure.good{color:var(--good)}
+.ins-figure.warn{color:var(--warn)}
+.ins-figure.crit{color:var(--critical)}
+.ins-n{font-size:10px;color:var(--slate);font-variant-numeric:tabular-nums;flex:none;border:1px solid var(--line);
+  border-radius:6px;padding:1px 6px;background:rgba(255,255,255,.55)}
+
+/* ===== roster ===== */
+.rostergrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:4px}
+.rcard{border:1px solid var(--glass-hairline);border-radius:var(--r-panel);padding:16px 18px;background:rgba(255,255,255,.5);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);cursor:pointer;transition:.16s;display:flex;flex-direction:column;gap:10px}
+.rcard:hover{background:rgba(255,255,255,.78);box-shadow:0 14px 34px -26px rgba(35,47,99,.5)}
+.rcard.sel{border-color:rgba(91,48,238,.4);box-shadow:0 8px 20px -16px rgba(35,47,99,.5)}
+.rcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.rcard .rn{font-weight:600;font-size:15px;color:var(--navy);line-height:1.3}
+.rcard .rl{font-size:11.5px;color:var(--muted);margin-top:2px}
+.rcard .rmeta{font-size:12px;color:var(--muted);line-height:1.4}
+.rcard .rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:2px}
+.rcard .rstat{text-align:center}
+.rcard .rstat .rv{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+.rcard .rstat .rk{font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);font-weight:700;margin-top:2px}
+.rtrend{font-size:9.5px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.rtrend.trend-up{color:var(--good)}
+.rtrend.trend-down{color:var(--critical)}
+.rcard .chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);
+  background:rgba(255,255,255,.55);border-radius:7px;padding:3px 9px;color:var(--slate);font-variant-numeric:tabular-nums}
+.chip.levelchange{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
+.chip.unknown{color:var(--warn);border-color:var(--warn-line);background:var(--warn-bg)}
+
+/* ===== heatmap ===== */
+.hmwrap{overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:var(--r-panel);background:rgba(255,255,255,.4)}
+.hmtable{border-collapse:collapse;width:100%;font-size:12px}
+.hmtable th,.hmtable td{padding:9px 11px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line)}
+.hmtable th{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);background:rgba(255,255,255,.65)}
+.hmtable td.hmname,.hmtable th.hmname{position:sticky;left:0;z-index:2;text-align:left;background:rgba(255,255,255,.94);
+  font-weight:600;color:var(--navy);cursor:pointer}
+.hmtable th.hmname{z-index:3}
+.hmtable td.hmcell{cursor:pointer;font-variant-numeric:tabular-nums;font-weight:700;border-left:1px solid var(--line)}
+.hmcell.good{color:var(--good);background:rgba(14,159,110,.12)}
+.hmcell.warn{color:var(--warn);background:var(--warn-bg)}
+.hmcell.crit{color:var(--critical);background:rgba(220,38,38,.10)}
+.hmcell.neutral{color:var(--dim);background:var(--panel);font-weight:500}
+.hmlegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--slate)}
+.hmlegend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* ===== heatmap level tabs ===== */
+.hmtabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.hmtab{appearance:none;cursor:pointer;font-family:var(--font);border:1px solid var(--line);border-radius:var(--r-chip);
+  background:rgba(255,255,255,.5);color:var(--slate);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:6px 12px;display:inline-flex;align-items:center;gap:7px;transition:.14s}
+.hmtab:hover{background:rgba(255,255,255,.85);color:var(--navy)}
+.hmtab:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.hmtab .hmtabn{font-variant-numeric:tabular-nums;font-weight:700}
+.hmtab.active{background:var(--grad);border-color:transparent;color:#fff}
+
+/* ===== drill-down bars (copied pattern) ===== */
+.barwrap{margin-top:10px}
+.bar{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.bar .lbl{width:170px;font-size:12px;color:var(--muted);flex:none;line-height:1.25}
+.bar .track{flex:1;height:22px;border-radius:7px;background:rgba(100,116,139,.12);overflow:hidden;position:relative;border:1px solid var(--line)}
+.bar .fill{height:100%;width:0;border-radius:7px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bar .val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10.5px;color:var(--ink);opacity:.85;font-variant-numeric:tabular-nums}
+.bar .exp-mark{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--navy);opacity:.55}
+
+.dhead{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+.dhead .dn{font-size:19px;font-weight:600;color:var(--navy)}
+.dhead .dm{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+.gapslist{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.gaprow{display:flex;align-items:center;gap:10px;border:1px solid rgba(220,38,38,.25);border-radius:var(--r-control);
+  padding:9px 13px;background:rgba(220,38,38,.05);font-size:12.5px}
+.gaprow .gref{font-size:10px;color:var(--slate);border:1px solid var(--line);border-radius:5px;padding:1px 6px;background:rgba(255,255,255,.7);flex:none}
+.gaprow .gt{flex:1;color:var(--ink)}
+.gaprow .gv{font-weight:700;color:var(--critical);font-variant-numeric:tabular-nums;flex:none}
+
+.fbgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:2px}
+.fbblock{border:1px solid var(--line);border-radius:var(--r-control);padding:12px 14px;background:rgba(255,255,255,.4)}
+.fbblock .fbh{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+.fbblock .fbv{font-size:13px;color:var(--ink);line-height:1.5;white-space:pre-wrap}
+
+.planchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.planchip{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;border:1px solid var(--line);border-radius:9px;
+  padding:6px 11px;background:rgba(255,255,255,.55)}
+.planchip .prov{font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;flex:none}
+.planchip .prov.linkedin{color:var(--li);background:rgba(10,102,194,.1);border:1px solid rgba(10,102,194,.25)}
+.planchip .prov.degreed{color:var(--dg);background:rgba(111,139,217,.14);border:1px solid rgba(111,139,217,.32)}
+.planchip .prov.coursera{color:var(--co);background:rgba(0,86,210,.09);border:1px solid rgba(0,86,210,.25)}
+.planchip .popen{font-size:11px;font-weight:600;color:var(--blue);text-decoration:none}
+.planchip .popen:hover{text-decoration:underline}
+
+/* ===== growth by area ===== */
+.growthsummary{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.growthchip{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:12.5px;padding:6px 12px;
+  border-radius:var(--r-chip);border:1px solid var(--line);background:rgba(255,255,255,.5);color:var(--ink)}
+.growthchip.good{color:var(--good);border-color:rgba(14,159,110,.4);background:rgba(14,159,110,.1)}
+.growthchip.critical{color:var(--critical);border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.12)}
+.growthchart{margin-top:4px}
+.growthscale{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.growthscale .gslbl{width:170px;flex:none}
+.growthscale .gstrack{flex:1;display:flex;justify-content:space-between;font-size:10px;color:var(--slate);font-variant-numeric:tabular-nums}
+.growthscale .gstrail{width:106px;flex:none}
+.growthrow{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.growthrow .glbl{width:170px;flex:none;font-size:12px;font-weight:600;color:var(--ink);line-height:1.25}
+.growthrow .gtrack{flex:1;position:relative;height:24px}
+.growthrow .gtrack .gbaseline{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.growthrow .gtrack .gzero{position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:var(--line)}
+.growthrow .gtrack .gconnector{position:absolute;top:50%;height:3px;border-radius:2px;transform:translateY(-50%)}
+.growthrow .gtrack .gdot{position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%}
+.growthrow .gtrack .gdot.early{width:8px;height:8px;background:transparent;border:2px solid var(--dim)}
+.growthrow .gtrack .gdot.late{width:8px;height:8px;border:0}
+.growthrow .gfig{width:56px;flex:none;text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:12.5px}
+.growthrow .gcount{flex:none;font-size:10px;font-weight:700;color:var(--slate);background:rgba(255,255,255,.55);
+  border:1px solid var(--line);border-radius:7px;padding:3px 8px;font-variant-numeric:tabular-nums}
+.growthmuted{font-size:11.5px;color:var(--muted);margin-top:10px}
+
+/* ===== footer / toast ===== */
+.footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;
+  align-items:center;color:var(--slate);font-size:11.5px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);z-index:99;
+  background:#fff;border:1px solid var(--violet);border-radius:12px;padding:12px 20px;font-size:13.5px;color:var(--ink);
+  transition:.3s;box-shadow:0 18px 50px -18px rgba(35,47,99,.5);opacity:0;font-weight:500}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+@media(max-width:1080px){ .ovgrid{grid-template-columns:1fr} }
+@media(max-width:720px){
+  .shell{padding:26px 20px 100px}
+  .rostergrid{grid-template-columns:1fr}
+  .rcard .rstats{grid-template-columns:repeat(2,1fr)}
+  .bar .lbl{width:110px}
+}
+@media print{
+  body{background:#fff}
+  body::before{display:none}
+  .navtoggle,.sidenav,.navbackdrop,.actbtns,#sec-import{display:none!important}
+  body.nav-open .shell{margin-left:0}
+  .card{break-inside:avoid;box-shadow:none;background:#fff;border-color:#ddd;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .hmwrap{overflow:visible}
+}
+</style>
+</head>
+<body>
+<button class="navtoggle" id="navToggle" aria-label="Toggle sections"><span></span></button>
+<div class="navbackdrop" id="navBackdrop"></div>
+<nav class="sidenav" id="sidenav">
+  <div class="navttl">Sections</div>
+  <a class="navlink" href="#sec-import"><svg viewBox="0 0 24 24"><path d="M12 3v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M4 19h16"/></svg><span>Import evaluations</span><span class="idx">01</span></a>
+  <a class="navlink" href="#sec-kpis"><svg viewBox="0 0 24 24"><rect x="4" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg><span>Team KPIs</span><span class="idx">02</span></a>
+  <a class="navlink" href="#sec-roster"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.8 14.6c2.6.4 4.2 2.3 4.2 5.4"/></svg><span>Consultant roster</span><span class="idx">03</span></a>
+  <a class="navlink" href="#sec-heatmap"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Skills heatmap</span><span class="idx">04</span></a>
+  <a class="navlink" href="#sec-growth"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><span>Team growth</span><span class="idx">05</span></a>
+  <a class="navlink" href="#sec-detail"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Drill-down</span><span class="idx">06</span></a>
+</nav>
+<div class="shell">
+
+  <div class="topbar">
+    <img class="brandlogo" src="data:image/png;base64,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" alt="Syniti">
+    <span class="eyebrow-now">Syniti EMEA Data Quality</span>
+    <span class="spacer"></span>
+    <div class="actbtns">
+      <button class="btn" id="importBtn"><span class="ic">&#8681;</span> Import evaluations</button>
+      <button class="btn" id="printBtn"><span class="ic">&#128424;</span> Save / Print</button>
+      <button class="btn primary" id="exportTeamBtn"><span class="ic">&#8682;</span> Export team JSON</button>
+    </div>
+    <input type="file" id="fileInput" accept="application/json,.json" multiple style="display:none">
+  </div>
+
+  <div class="eyebrow">Team Skills Summary</div>
+  <h1>See every consultant's skills, <span class="grad">side by side.</span></h1>
+  <p class="lead">Import the evaluation files exported from the Skills Evaluation and Enablement tool - one per consultant, as many as you like - and this tool merges them into team KPIs, a per-consultant roster, a heatmap across all thirteen competency areas, and a drill-down for anyone on the team. Everything runs in your browser; nothing is uploaded anywhere.</p>
+
+  <div class="card" id="sec-import">
+    <div class="panel-h collapsible" id="importHeader" role="button" tabindex="0" aria-expanded="true" aria-controls="importBody"><span class="sic"><svg viewBox="0 0 24 24"><path d="M12 3v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M4 19h16"/></svg></span><span class="n">01</span> Import evaluations<span class="hdrchip" id="importChip" style="display:none"></span><span class="chev" aria-hidden="true">&#9662;</span></div>
+    <div id="importBody">
+      <div class="panel-sub">Drop exported evaluation files here, or use the button above. Each file is one consultant's evaluation at one point in time - import as many as you like, from any number of consultants.</div>
+      <div class="dropzone" id="dropZone">
+        <div class="dz-ic">&#8681;</div>
+        <div class="dz-t">Drop evaluation JSON files here</div>
+        <div class="dz-s">or click Import evaluations above - multiple files at once is fine</div>
+      </div>
+      <div class="fileroster" id="fileRoster"></div>
+      <div class="htr" id="importHelp" style="margin-top:14px">Accepted files: exports from the Skills Evaluation tool (schema "syniti-skills-eval") or legacy performance assessments (schema "syniti-perf-assessment"). Duplicate files (same consultant, date and ratings) are flagged and skipped. Malformed files are flagged with a reason and do not stop the rest of the batch from importing.</div>
+    </div>
+  </div>
+
+  <div class="card" id="sec-kpis">
+    <div class="panel-h"><span class="sic"><svg viewBox="0 0 24 24"><rect x="4" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span><span class="n">02</span> Team KPI summary<span class="hdrchip blue" id="kpisGradeChip" style="display:none"></span></div>
+    <div class="panel-sub">Aggregated across every consultant's most recent evaluation.</div>
+    <div class="ovsub">Filter by grade</div>
+    <div id="hmTabs" class="hmtabs"></div>
+    <div id="teamBadges" class="bandrow"></div>
+    <div id="teamKpis" class="kpigrid"></div>
+    <div id="teamInsights" class="insightsrow"></div>
+    <div class="htr" id="kpiHelp" style="margin-top:14px"></div>
+  </div>
+
+  <div class="card" id="sec-roster">
+    <div class="panel-h"><span class="sic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.8 14.6c2.6.4 4.2 2.3 4.2 5.4"/></svg></span><span class="n">03</span> Consultant roster<span class="hdrchip blue" id="rosterGradeChip" style="display:none"></span></div>
+    <div class="panel-sub">Click a card to open that consultant's drill-down below.</div>
+    <div id="rosterGrid" class="rostergrid"></div>
+  </div>
+
+  <div class="card" id="sec-heatmap">
+    <div class="panel-h"><span class="sic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><span class="n">04</span> Skills heatmap<span class="hdrchip blue" id="heatmapGradeChip" style="display:none"></span></div>
+    <div class="panel-sub">Each cell is the consultant's average rating minus the average expectation for that area, at their current level. Click a name or a cell to open the drill-down.</div>
+    <div id="heatmapWrap" class="hmwrap"></div>
+    <div id="hmLegend" class="hmlegend"></div>
+    <div class="htr" id="hmHelp" style="margin-top:12px">Positive (green) means the consultant is at or above expectation in that area on average; amber is a small gap; red is a material gap of a full point or more. Grey cells mean the area was not scoped, not rated, or the consultant's level on that evaluation is not recognised.</div>
+  </div>
+
+  <div class="card" id="sec-growth">
+    <div class="panel-h"><span class="sic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span><span class="n">05</span> Team growth by area<span class="hdrchip blue" id="growthGradeChip" style="display:none"></span></div>
+    <div class="panel-sub">Compares each consultant's earliest and latest imported evaluation, area by area, and averages the movement across the team.</div>
+    <div id="growthSummary" class="growthsummary"></div>
+    <div id="growthChart" class="growthchart" style="margin-top:14px"></div>
+    <div class="htr" id="growthHelp" style="margin-top:14px">This compares each consultant's earliest and latest imported evaluation, area by area, then averages the movement across the team. Movement is measured against the expectation at the time of each evaluation, so it stays fair across promotions - a consultant who was promoted mid-series is still compared to what was expected of them at each point. Areas with no repeat evaluations are not shown.</div>
+  </div>
+
+  <div class="card" id="sec-detail">
+    <div class="panel-h"><span class="sic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span><span class="n">06</span> Consultant drill-down</div>
+    <div class="panel-sub">Select a consultant from the roster or heatmap above.</div>
+    <div id="detailPanel">
+      <div class="htr" id="dEmpty">No consultant selected yet. Click a roster card or a heatmap row to see full detail here.</div>
+      <div id="dContent" style="display:none">
+        <div class="dhead">
+          <div><div class="dn" id="dName"></div><div class="dm" id="dMeta"></div></div>
+          <div id="dBand"></div>
+        </div>
+        <div class="ovsub" style="margin-top:16px">Competency areas</div>
+        <div class="barwrap" id="dBarWrap"></div>
+        <div class="ovsub" style="margin-top:20px">Material gaps</div>
+        <div class="gapslist" id="dGaps"></div>
+        <div class="ovsub" style="margin-top:20px">Feedback</div>
+        <div class="fbgrid" id="dFeedback"></div>
+        <div class="ovsub" style="margin-top:20px">Development plan</div>
+        <div class="planchips" id="dPlan"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Syniti Consulting Career Framework</span><span>&middot;</span>
+    <span>Team roll-up</span><span>&middot;</span>
+    <span id="footMeta">No evaluations imported yet</span>
+    <span class="spacer" style="flex:1"></span>
+    <button class="btn primary" onclick="exportTeam()"><span class="ic">&#8682;</span> Export team JSON</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const AREA_ABBR = {"Syniti Platform: Technical (ADM)":"ADM","Syniti Platform: Technical (ADM-M)":"ADM-M","DQ-Specific Technical":"DQ Tech","DQ-Specific Functional":"DQ Func","SAP Data Functional":"SAP","Delivery & Consulting":"Delivery","Squad-Delivery Excellence":"Sq.Delivery","Squad-dqOps":"Sq.dqOps","Squad-Harmonization":"Sq.Harmon","Squad-Source Cleansing":"Sq.Cleanse","Squad-Cloud Data Quality":"Sq.CloudDQ","Squad-Dashboarding & Analytics":"Sq.Dashboard","AI Enablement":"AI Enable"};
+
+const COMPS = [{"ref":"A1","area":"Syniti Platform: Technical (ADM)","t":"Data Prep: Collect","d":"Gathering and organizing source system data for further processing and data quality activities.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A2","area":"Syniti Platform: Technical (ADM)","t":"Data Prep: Transform/Relevancy","d":"Applying transformations and logic to ensure data is relevant and accurate for data quality.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A3","area":"Syniti Platform: Technical (ADM)","t":"DQ Dev: SQL View","d":"Building SQL views to support data profiling, cleansing, and validation.","e":{"C1":2,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A4","area":"Syniti Platform: Technical (ADM)","t":"DQ Dev: DQ Components","d":"Registering rules and configuring components such as notifications and thresholds for DQ.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A5","area":"Syniti Platform: Technical (ADM)","t":"DQ Dashboard: Scorecards","d":"Adjusting thresholds and managing scorecard components for data quality metrics.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A6","area":"Syniti Platform: Technical (ADM)","t":"DQ Admin: ADM","d":"Administering ADM settings for project governance and data operations.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A7","area":"Syniti Platform: Technical (ADM)","t":"ADM Architecture","d":"Designing and maintaining the technical architecture of ADM solutions.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A8","area":"Syniti Platform: Technical (ADM)","t":"DQ Match: Syniti Match (Cortex)","d":"Configuring and deploying Syniti Match for deduplication and entity resolution using Cortex engine.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A9","area":"Syniti Platform: Technical (ADM)","t":"DQ Operate: Automate/Serv. page","d":"Automating service tasks and workflows within ADM for efficient operations.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"A10","area":"Syniti Platform: Technical (ADM)","t":"Construct - webApps","d":"Creating, adapting, supporting customized solutions using Syniti Construct webApps","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B1","area":"Syniti Platform: Technical (ADM-M)","t":"Data Prep: Replicate/Snapshot","d":"Creating and managing data replicas and snapshots to preserve source data state for data quality.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B2","area":"Syniti Platform: Technical (ADM-M)","t":"Data Prep: Migrate/Relevancy","d":"Assessing and preparing data objects for data quality, focusing on relevance and data scope.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B3","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Dev: SQL (Within ADM-M)","d":"Designing SQL views to facilitate data profiling, cleansing, and transformation during data quality.","e":{"C1":2,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B4","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Dev: DQ Components","d":"Configuring data quality rules and related automation modules for data quality projects.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B5","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Dashboard: Standard (Dataset)","d":"Using the standard DQ dashboard to monitor, report, and analyze dataset-level quality metrics.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B6","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Admin: ADM-M","d":"Administering ADM-M project settings and data quality configurations for migration.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B7","area":"Syniti Platform: Technical (ADM-M)","t":"ADM-M Architecture","d":"Designing and optimizing the ADM-M technical architecture for scalable data quality.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B8","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Match: Cloud Match","d":"Applying cloud-based matching capabilities to deduplicate and resolve entities across systems.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B9","area":"Syniti Platform: Technical (ADM-M)","t":"DQ Operate: Orchestrate","d":"Automating and orchestrating sequences of data quality tasks in ADM-M.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"B10","area":"Syniti Platform: Technical (ADM-M)","t":"Construct - webApps","d":"Creating, adapting, supporting customized solutions using Syniti Construct webApps","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"C1","area":"DQ-Specific Technical","t":"Data Profiling & Analysis","d":"Analyzing data sources to identify anomalies, patterns, and quality issues.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"C2","area":"DQ-Specific Technical","t":"Exception Handling Mechanisms","d":"Implementing processes to capture and manage data exceptions in DQ workflows.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"C3","area":"DQ-Specific Technical","t":"Duplicate Detection Techniques","d":"Utilizing algorithms and metadata to identify duplicate records across datasets.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"C4","area":"DQ-Specific Technical","t":"Root Cause Analysis of DQ Issues","d":"Systematically investigating the sources of data quality failures.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"C5","area":"DQ-Specific Technical","t":"Data Models and Entity Relation","d":"Designing relational models for master and transactional data.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":3,"C5-S":5,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"D1","area":"DQ-Specific Functional","t":"Business Rules Gathering","d":"Collecting and defining business requirements to shape DQ processes.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":5,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"D2","area":"DQ-Specific Functional","t":"Data Standards Governance","d":"Enforcing data standards and regulatory policies for compliance.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":5,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"D3","area":"DQ-Specific Functional","t":"KPI Definition with Business","d":"Collaborating with stakeholders to establish KPIs and DQ measurement frameworks.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":5,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"D4","area":"DQ-Specific Functional","t":"DQ Policy Interpretation","d":"Translating DQ policies into actionable operational procedures.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":5,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"D5","area":"DQ-Specific Functional","t":"Common Data Tools (Excel)","d":"Utilizing Excel and other tools for analysis and validation tasks.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":5,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"E1","area":"SAP Data Functional","t":"Major SAP MD: Cus, Ven, Mat, Fin","d":"Managing key SAP master data objects for customers, vendors, materials, and finance.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"E2","area":"SAP Data Functional","t":"Major SAP BP: OTC, P2P, MM, R2R","d":"Handling core SAP business processes such as order-to-cash and procure-to-pay.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"E3","area":"SAP Data Functional","t":"SAP Data Structures","d":"Working with SAP tables, LSMW objects, IDOCs, and BAPI interfaces.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"E4","area":"SAP Data Functional","t":"Source-to-Target Mapping for SAP","d":"Defining and executing mappings between source and SAP target systems.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"E5","area":"SAP Data Functional","t":"SAP Business Process Awareness","d":"Understanding and adapting to SAP process requirements.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F1","area":"Delivery & Consulting","t":"Stakeholder/Expectation Mgmt.","d":"Managing client and stakeholder expectations throughout deliverables.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F2","area":"Delivery & Consulting","t":"Requirements Gathering/Clarif.","d":"Collecting and clarifying project requirements from business and technical users.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F3","area":"Delivery & Consulting","t":"Facilitating Workshops/Meetings","d":"Leading discussions and engagements to drive consensus and solutioning.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F4","area":"Delivery & Consulting","t":"Collaborative Work Management","d":"Coordinating across teams for effective project outcomes.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F5","area":"Delivery & Consulting","t":"Conflict Resolution","d":"Addressing team or stakeholder disputes constructively.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F6","area":"Delivery & Consulting","t":"Solution Design Thinking","d":"Applying structured methodologies to create optimal solutions.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F7","area":"Delivery & Consulting","t":"Project Risk Awareness","d":"Identifying, managing, and mitigating delivery risks.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F8","area":"Delivery & Consulting","t":"Cross-functional Collaboration","d":"Working effectively across functional boundaries.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F9","area":"Delivery & Consulting","t":"Mentoring & Coaching","d":"Supporting team and individual development.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"F10","area":"Delivery & Consulting","t":"Ongoing Improvement/Innovation","d":"Driving continuous process and solution enhancement.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":4,"C5-S":4,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G1","area":"Squad-Delivery Excellence","t":"Requirements to Proposal","d":"Translating business requirements into detailed project proposals and solution approaches.","e":{"C1":0,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G2","area":"Squad-Delivery Excellence","t":"SoW and Resource Plan","d":"Developing statements of work and resourcing plans for successful engagements.","e":{"C1":0,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G3","area":"Squad-Delivery Excellence","t":"Implementation Plan & WBS","d":"Structuring and managing implementation plans using work breakdown structures.","e":{"C1":0,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G4","area":"Squad-Delivery Excellence","t":"RAID-Risk/Issue Management","d":"Tracking risks, issues, actions, and decisions to mitigate delivery problems.","e":{"C1":0,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G5","area":"Squad-Delivery Excellence","t":"Methodology Enforcement/Adher.","d":"Ensuring compliance with Syniti and industry-standard project delivery methodologies.","e":{"C1":0,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G6","area":"Squad-dqOps","t":"Overall DQOps Methodology","d":"Applying the Syniti methodology for data quality operations across different projects.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G7","area":"Squad-dqOps","t":"Enforcement of DQOps Methodology","d":"Driving consistency and governance in DQ processes through methodology adherence.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G8","area":"Squad-dqOps","t":"Specify rule","d":"Defining and managing granular data quality rules for business scenarios.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G9","area":"Squad-dqOps","t":"Build and execute QA","d":"Designing, executing, and reviewing QA activities for data quality assurance.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G10","area":"Squad-dqOps","t":"Iterate Validate & Improve","d":"Cycling through validation and continuous improvement of DQ processes.","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":4,"C5-S":5,"C5-M":5,"C6-S":5,"C6-M":5}},{"ref":"G11","area":"Squad-Harmonization","t":"Harmonization Methodology","d":"Applying structured techniques for harmonizing data across domains or systems.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G12","area":"Squad-Harmonization","t":"Harmonization Solutioning","d":"Designing solutions for data harmonization challenges and outcomes.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G13","area":"Squad-Harmonization","t":"Harmonization Architecture","d":"Architecting frameworks to support harmonized enterprise data landscapes.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G14","area":"Squad-Harmonization","t":"Implement BP Consolidation","d":"Executing business partner consolidation within harmonization initiatives.","e":{"C1":1,"C2":2,"C3":3,"C4-S":3,"C4-M":2,"C5-S":4,"C5-M":3,"C6-S":5,"C6-M":4}},{"ref":"G15","area":"Squad-Harmonization","t":"Implement MRO Spare Parts","d":"Integrating and consolidating MRO (Maintenance, Repair, Operations) spare parts for enterprise harmonization","e":{"C1":1,"C2":2,"C3":3,"C4-S":4,"C4-M":2,"C5-S":3,"C5-M":3,"C6-S":4,"C6-M":4}},{"ref":"G16","area":"Squad-Source Cleansing","t":"Src. Cleanse Methodology","d":"Applying structured cleansing methodology to source data sets.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G17","area":"Squad-Source Cleansing","t":"Src. Cleanse Approach","d":"Crafting approach for source cleansing considering process, people, and tools.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G18","area":"Squad-Source Cleansing","t":"Src. Cleanse arch. (DQ, Migrate)","d":"Designing architecture for cleansing activities in DQ","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G19","area":"Squad-Source Cleansing","t":"Implement Src. Cleanse (Migrate)","d":"Executing source cleansing as part of data migration initiatives.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G20","area":"Squad-Source Cleansing","t":"Src. Cleanse Analytics","d":"Utilizing analytics to measure and optimize source data cleansing.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G21","area":"Squad-Cloud Data Quality","t":"Cloud DQ Methodology","d":"Implementing methodologies for cloud-based data quality management.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G22","area":"Squad-Cloud Data Quality","t":"Cloud DQ Approach","d":"Defining tailored approaches for cloud DQ challenges using Syniti tools.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G23","area":"Squad-Cloud Data Quality","t":"Cloud DQ arch. (DQ, Migrate)","d":"Designing and operating cloud data architecture supporting quality","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G24","area":"Squad-Cloud Data Quality","t":"Implement Cloud DQ (Quality)","d":"Delivering end-to-end data quality solutions in cloud platforms.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G25","area":"Squad-Cloud Data Quality","t":"Cloud DQ Analytics","d":"Applying analytics to assess and improve data quality in cloud environments.","e":{"C1":1,"C2":2,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":4,"C6-S":5,"C6-M":5}},{"ref":"G26","area":"Squad-Dashboarding & Analytics","t":"Advanced Data Modelling (SQL)","d":"Building complex data models and visualizations using advanced SQL techniques.","e":{"C1":1,"C2":1,"C3":2,"C4-S":4,"C4-M":3,"C5-S":4,"C5-M":3,"C6-S":5,"C6-M":3}},{"ref":"G27","area":"Squad-Dashboarding & Analytics","t":"Construct - DynamicContext","d":"Configuring dynamic data constructs within Syniti platform dashboards.","e":{"C1":1,"C2":1,"C3":2,"C4-S":4,"C4-M":3,"C5-S":4,"C5-M":3,"C6-S":5,"C6-M":3}},{"ref":"G28","area":"Squad-Dashboarding & Analytics","t":"ADM Custom Dashboard - Quicksite","d":"Customizing ADM dashboards for targeted insights in Quicksite.","e":{"C1":1,"C2":1,"C3":2,"C4-S":3,"C4-M":3,"C5-S":4,"C5-M":3,"C6-S":5,"C6-M":3}},{"ref":"G29","area":"Squad-Dashboarding & Analytics","t":"PowerBI","d":"Designing and managing dashboards and reports in PowerBI.","e":{"C1":1,"C2":1,"C3":1,"C4-S":2,"C4-M":2,"C5-S":2,"C5-M":2,"C6-S":2,"C6-M":2}},{"ref":"G30","area":"Squad-Dashboarding & Analytics","t":"Other (Tableau, Databricks)","d":"Creating data dashboards with other analytics platforms (Tableau, Databricks, Snowflake, SAC).","e":{"C1":1,"C2":1,"C3":1,"C4-S":2,"C4-M":2,"C5-S":2,"C5-M":2,"C6-S":2,"C6-M":2}},{"ref":"G31","area":"AI Enablement","t":"General AI Knowledge & Day-to-Day Use","d":"Understanding of AI/LLM concepts and applying them in day-to-day delivery work: prompting, tool selection, and sound judgement on when and how to use AI. (Expected values provisional - confirm with CoE.)","e":{"C1":1,"C2":1,"C3":1,"C4-S":2,"C4-M":2,"C5-S":3,"C5-M":3,"C6-S":3,"C6-M":3}},{"ref":"G32","area":"AI Enablement","t":"AI-Augmentation: Development Acceleration","d":"Using AI to accelerate build and development work: generating and refining code, rules, transformations and automation, with review for correctness. (Expected values provisional - confirm with CoE.)","e":{"C1":1,"C2":1,"C3":1,"C4-S":2,"C4-M":2,"C5-S":2,"C5-M":2,"C6-S":2,"C6-M":2}},{"ref":"G33","area":"AI Enablement","t":"AI-Augmentation: Delivery & Consulting Quality","d":"Using AI to enhance the quality of delivery and consulting outputs: analysis, documentation, client-facing materials, and QA/review. (New competency; expected values provisional - confirm with CoE.)","e":{"C1":1,"C2":1,"C3":1,"C4-S":2,"C4-M":2,"C5-S":3,"C5-M":3,"C6-S":3,"C6-M":3}}];
+
+const LEVELS = ["C1","C2","C3","C4-S","C4-M","C5-S","C5-M","C6-S","C6-M"];
+const LEVEL_LABEL = {"C1":"C1 · Associate","C2":"C2 · Consultant","C3":"C3 · Senior Consultant",
+  "C4-S":"C4 · Lead (Solution)","C4-M":"C4 · Lead (Managing)","C5-S":"C5 · Solution Architect",
+  "C5-M":"C5 · Managing Consultant","C6-S":"C6 · Principal Sol. Architect","C6-M":"C6 · Principal Consultant"};
+const SCALE = [{lv:0,nm:"None"},{lv:1,nm:"Awareness"},{lv:2,nm:"Working"},{lv:3,nm:"Competent"},{lv:4,nm:"Proficient"},{lv:5,nm:"Expert"}];
+const CORE_ON = ["DQ-Specific Technical","DQ-Specific Functional","SAP Data Functional","Delivery & Consulting"];
+const AREAS = [...new Set(COMPS.map(c=>c.area))];
+
+const $ = s=>document.querySelector(s);
+const el = (t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2600);}
+function escapeHtml(s){ return String(s==null?"":s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+// ===== logic reused from the eval tool, adapted to per-document arguments =====
+function expForLevel(c,level){ return c.e[level]; }
+function deltaClass(r,e){ if(r>=e) return "met"; if(r<=e-2) return "gap"; return "under"; }
+
+function normName(s){ return String(s||"").trim().toLowerCase().replace(/\s+/g," "); }
+function gradeOf(level){ return level ? String(level).split("-")[0] : null; }
+function signColorClass(d){ return d>=0 ? "good" : (d<=-1 ? "crit" : "warn"); }
+
+// consultants matching the active grade filter (state.hmLevel) - "all" returns everyone.
+// Sections 02-05 (KPIs, roster, heatmap, growth, insights 1-2) consume this; drill-down (06)
+// and Cohort watch (insight 3) and exportTeam() intentionally stay whole-team.
+function filteredConsultants(){
+  const arr=Object.values(state.consultants);
+  if(state.hmLevel==="all") return arr;
+  return arr.filter(c=>gradeOf(c.current.doc.meta&&c.current.doc.meta.level)===state.hmLevel);
+}
+
+function resolveScope(doc){
+  if(doc.scope && Object.keys(doc.scope).length) return doc.scope;
+  const sc={};
+  AREAS.forEach(a=>{ sc[a]=COMPS.some(c=>c.area===a && doc.ratings && doc.ratings[c.ref]!=null); });
+  return sc;
+}
+
+function evalStats(doc){
+  const level=doc.meta&&doc.meta.level;
+  if(!LEVELS.includes(level)){
+    const s=(doc.summary)||{};
+    return {n:s.n||0, avgD:s.avgD||0, avgScore:s.avgScore||0, pctMet:s.pctMet||0, gaps:new Array(s.gaps||0).fill(null), met:0, unknownLevel:true};
+  }
+  const scope=resolveScope(doc);
+  const active=COMPS.filter(c=>scope[c.area] && !(doc.na&&doc.na[c.ref]) && doc.ratings && doc.ratings[c.ref]!=null && c.e[level]!==undefined);
+  let deltas=[],met=0,gaps=[];
+  active.forEach(c=>{ const e=expForLevel(c,level); const r=doc.ratings[c.ref]; const d=r-e; deltas.push(d); if(d>=0)met++; if(d<=-2)gaps.push(c); });
+  const n=active.length;
+  return {n, avgD:n?deltas.reduce((a,b)=>a+b,0)/n:0, avgScore:n?active.reduce((a,c)=>a+doc.ratings[c.ref],0)/n:0,
+    pctMet:n?Math.round(met/n*100):0, gaps, met, unknownLevel:false};
+}
+
+function bandFor(s){
+  if(!s.n) return {k:"meets",l:"Awaiting ratings"};
+  if(s.avgD>=0.5) return {k:"exceeds",l:"Exceeds expectations"};
+  if(s.avgD>=-0.25 && s.gaps.length===0) return {k:"meets",l:"Meets expectations"};
+  if(s.avgD>=-1) return {k:"partial",l:"Partially meets - development needed"};
+  return {k:"below",l:"Below expectations"};
+}
+
+function areaStatsFor(doc){
+  const out={};
+  const level=doc.meta&&doc.meta.level;
+  if(!LEVELS.includes(level)) return out;
+  const scope=resolveScope(doc);
+  AREAS.forEach(a=>{
+    const items=COMPS.filter(c=>c.area===a && scope[a] && !(doc.na&&doc.na[c.ref]) && doc.ratings && doc.ratings[c.ref]!=null && c.e[level]!==undefined);
+    if(!items.length) return;
+    const avg=items.reduce((x,c)=>x+doc.ratings[c.ref],0)/items.length;
+    const expAvg=items.reduce((x,c)=>x+expForLevel(c,level),0)/items.length;
+    out[a]={avg, expAvg, n:items.length, d:avg-expAvg};
+  });
+  return out;
+}
+
+// ===== app state =====
+let state = {records:[], consultants:{}, selected:null, hmLevel:"all", importCollapsed:false};
+let uidSeq=1;
+
+function readFiles(fileList){
+  const files=Array.from(fileList);
+  return Promise.all(files.map(f=>new Promise(resolve=>{
+    const rd=new FileReader();
+    rd.onload=()=>resolve({file:f, text:rd.result, err:null});
+    rd.onerror=()=>resolve({file:f, text:null, err:"Could not read file"});
+    try{ rd.readAsText(f); }catch(e){ resolve({file:f, text:null, err:"Could not read file"}); }
+  })));
+}
+
+function validateDoc(d){
+  if(!d || typeof d!=="object") return "Not a JSON object";
+  if(!d.schema || !["syniti-skills-eval","syniti-perf-assessment"].includes(d.schema)) return "Unrecognised schema";
+  if(!d.meta || typeof d.meta!=="object") return "Missing meta block";
+  if(!d.ratings || typeof d.ratings!=="object") return "Missing ratings block";
+  return null;
+}
+
+function docFingerprint(doc){
+  return normName(doc.meta&&doc.meta.consultant)+"|"+((doc.meta&&doc.meta.date)||"")+"|"+JSON.stringify(doc.ratings||{});
+}
+
+async function addFiles(fileList){
+  const results=await readFiles(fileList);
+  let okInBatch=0;
+  results.forEach(r=>{
+    const rec={id:uidSeq++, filename:r.file.name, status:"error", reason:"", doc:null, fingerprint:null};
+    if(r.err){ rec.reason=r.err; state.records.push(rec); return; }
+    let parsed;
+    try{ parsed=JSON.parse(r.text); }catch(e){ rec.reason="Invalid JSON"; state.records.push(rec); return; }
+    const verr=validateDoc(parsed);
+    if(verr){ rec.reason=verr; state.records.push(rec); return; }
+    const fp=docFingerprint(parsed);
+    const dupe=state.records.find(x=>x.status==="ok" && x.fingerprint===fp);
+    if(dupe){ rec.status="duplicate"; rec.reason="Duplicate of "+dupe.filename; rec.doc=parsed; rec.fingerprint=fp; state.records.push(rec); return; }
+    rec.status="ok"; rec.doc=parsed; rec.fingerprint=fp;
+    state.records.push(rec);
+    okInBatch++;
+  });
+  rebuild();
+  if(okInBatch>0) state.importCollapsed=true;
+  renderAll();
+  const okCount=results.length;
+  toast(okCount+" file"+(okCount!==1?"s":"")+" processed");
+}
+
+function removeFile(id){
+  state.records=state.records.filter(r=>r.id!==id);
+  rebuild();
+  if(!state.records.length) state.importCollapsed=false;
+  renderAll();
+}
+
+function rebuild(){
+  const groups={};
+  state.records.filter(r=>r.status==="ok").forEach(r=>{
+    const key=normName(r.doc.meta && r.doc.meta.consultant);
+    if(!groups[key]) groups[key]=[];
+    groups[key].push(r);
+  });
+  const consultants={};
+  Object.keys(groups).forEach(key=>{
+    const recs=groups[key].slice().sort((a,b)=>{
+      const da=(a.doc.meta&&a.doc.meta.date)||""; const db=(b.doc.meta&&b.doc.meta.date)||"";
+      return da.localeCompare(db);
+    });
+    const current=recs[recs.length-1];
+    const prior=recs.length>1?recs[recs.length-2]:null;
+    const displayName=(current.doc.meta&&current.doc.meta.consultant) || "Unnamed";
+    consultants[key]={ key, name:displayName, evals:recs, current, prior,
+      stats:evalStats(current.doc), priorStats:prior?evalStats(prior.doc):null,
+      areas:areaStatsFor(current.doc) };
+  });
+  state.consultants=consultants;
+  if(state.selected && !consultants[state.selected]) state.selected=null;
+  if(state.hmLevel && state.hmLevel!=="all"){
+    const gradeStillExists=Object.values(consultants).some(c=>gradeOf(c.current.doc.meta&&c.current.doc.meta.level)===state.hmLevel);
+    if(!gradeStillExists) state.hmLevel="all";
+  }
+}
+
+function trendFor(cons){
+  if(!cons.prior) return null;
+  const curLevel=cons.current.doc.meta&&cons.current.doc.meta.level;
+  const priorLevel=cons.prior.doc.meta&&cons.prior.doc.meta.level;
+  const levelChanged = curLevel!==priorLevel;
+  const scoreDelta = (cons.stats.n && cons.priorStats.n) ? cons.stats.avgScore-cons.priorStats.avgScore : null;
+  const dDelta = (!levelChanged && cons.stats.n && cons.priorStats.n) ? cons.stats.avgD-cons.priorStats.avgD : null;
+  return {levelChanged, from:priorLevel, to:curLevel, scoreDelta, dDelta};
+}
+
+function teamStats(cons){
+  const consArr=cons || Object.values(state.consultants);
+  const rated=consArr.filter(c=>!c.stats.unknownLevel && c.stats.n>0);
+  const nConsultants=consArr.length;
+  const nEvals=consArr.reduce((a,c)=>a+c.evals.length,0);
+  const avgScore=rated.length ? rated.reduce((a,c)=>a+c.stats.avgScore,0)/rated.length : 0;
+  const avgD=rated.length ? rated.reduce((a,c)=>a+c.stats.avgD,0)/rated.length : 0;
+  const sumMet=rated.reduce((a,c)=>a+c.stats.met,0);
+  const sumN=rated.reduce((a,c)=>a+c.stats.n,0);
+  const pctMet=sumN ? Math.round(sumMet/sumN*100) : 0;
+  const gaps=consArr.reduce((a,c)=>a+(c.stats.gaps?c.stats.gaps.length:0),0);
+  const bands={exceeds:0,meets:0,partial:0,below:0}; let awaiting=0;
+  consArr.forEach(c=>{
+    if(c.stats.n===0){ awaiting++; return; }
+    const b=bandFor(c.stats);
+    if(bands[b.k]!=null) bands[b.k]++;
+  });
+  return {consArr, nConsultants, nEvals, avgScore, avgD, pctMet, gaps, bands, awaiting, rated:rated.length};
+}
+
+// ===== rendering =====
+function renderFileRoster(){
+  const box=$("#fileRoster"); box.innerHTML="";
+  if(!state.records.length) return;
+  state.records.slice().reverse().forEach(r=>{
+    const row=el("div","filerow");
+    const badgeText = r.status==="ok"?"OK":(r.status==="duplicate"?"Duplicate":"Error");
+    const info = r.status==="ok" ? escapeHtml((r.doc.meta&&r.doc.meta.consultant)||"Unnamed") : escapeHtml(r.reason||"");
+    row.innerHTML = `<span class="fn" title="${escapeHtml(r.filename)}">${escapeHtml(r.filename)}</span>
+      <span class="fs ${r.status}">${badgeText}</span>
+      <span class="fr" title="${info}">${info}</span>`;
+    const rm=el("button","fx","&#10005;"); rm.title="Remove"; rm.type="button"; rm.onclick=()=>removeFile(r.id);
+    row.appendChild(rm);
+    box.appendChild(row);
+  });
+}
+
+function renderTeamKPIs(){
+  const badgesBox=$("#teamBadges"); const kpiBox=$("#teamKpis"); const help=$("#kpiHelp");
+  if(!Object.keys(state.consultants).length){
+    badgesBox.innerHTML="";
+    kpiBox.innerHTML="";
+    kpiBox.appendChild(el("div","htr","Import evaluation files above to see team KPIs here."));
+    help.innerHTML="";
+    return;
+  }
+  const cons=filteredConsultants();
+  const ts=teamStats(cons);
+  const hasRated = ts.rated>0;
+  kpiBox.innerHTML="";
+  function kpi(v,k,plain){ return el("div","kpi",`<div class="v ${plain?"plain":""}">${v}</div><div class="k">${k}</div>`); }
+  kpiBox.appendChild(kpi(hasRated?ts.avgScore.toFixed(2):"-", "Team average competency score"));
+  kpiBox.appendChild(kpi(hasRated?((ts.avgD>=0?"+":"")+ts.avgD.toFixed(2)):"-", "Team average delta to level", true));
+  kpiBox.appendChild(kpi(hasRated?ts.pctMet+"%":"-", "At or above expectation (pooled)"));
+  kpiBox.appendChild(kpi(ts.gaps, "Total material gaps", true));
+  kpiBox.appendChild(kpi(ts.nConsultants, "Consultants", true));
+  kpiBox.appendChild(kpi(ts.nEvals, "Evaluations imported", true));
+  badgesBox.innerHTML="";
+  const bandLabels={exceeds:"Exceeds",meets:"Meets",partial:"Partial",below:"Below"};
+  ["exceeds","meets","partial","below"].forEach(k=>{
+    badgesBox.appendChild(el("span","bandchip "+k, `<span class="n">${ts.bands[k]}</span> ${bandLabels[k]}`));
+  });
+  if(ts.awaiting) badgesBox.appendChild(el("span","bandchip", `<span class="n">${ts.awaiting}</span> Awaiting ratings`));
+  help.innerHTML = "<b>How these are computed:</b> team average score and average delta to level are the equal-weight mean across consultants who have at least one rated competency in their most recent evaluation - each consultant counts once, regardless of how many competencies they rated. \"At or above expectation\" is pooled across every rated competency on every consultant, not averaged per consultant. Total material gaps is the sum of each consultant's competencies rated two or more points below their level's expectation. Consultants counts everyone imported, including anyone still awaiting ratings; evaluations imported counts successfully parsed files, excluding duplicates and errors. The grade filter above applies to these tiles, the roster, the heatmap, growth, and the top two insights below; Cohort watch always compares every grade regardless of the filter, and the Export team JSON button always exports the whole team.";
+}
+
+function statTile(label, valueStr, deltaVal, suppressed){
+  let extra="";
+  if(!suppressed && deltaVal!=null){
+    const cls = deltaVal>0?"trend-up":(deltaVal<0?"trend-down":"");
+    const arrow = deltaVal>0?"&#9650;":(deltaVal<0?"&#9660;":"=");
+    extra = `<div class="rtrend ${cls}">${arrow}${deltaVal!==0?" "+(deltaVal>0?"+":"")+deltaVal.toFixed(2):""}</div>`;
+  }
+  return `<div class="rstat"><div class="rv">${valueStr}</div><div class="rk">${label}</div>${extra}</div>`;
+}
+
+function renderRoster(){
+  const grid=$("#rosterGrid"); grid.innerHTML="";
+  const all=Object.values(state.consultants);
+  const arr=filteredConsultants().sort((a,b)=>a.name.localeCompare(b.name));
+  if(!all.length){ grid.appendChild(el("div","htr","No consultants yet - import evaluation files above.")); return; }
+  if(!arr.length){ grid.appendChild(el("div","htr","No consultants at this grade.")); return; }
+  arr.forEach(c=>{
+    const b=bandFor(c.stats);
+    const level=c.current.doc.meta&&c.current.doc.meta.level;
+    const levelLabel = LEVEL_LABEL[level] || (level ? level+" (unrecognised)" : "Unknown level");
+    const date=(c.current.doc.meta&&c.current.doc.meta.date) || "no date";
+    const project=(c.current.doc.meta&&c.current.doc.meta.project) || "-";
+    const lead=(c.current.doc.meta&&c.current.doc.meta.lead) || "-";
+    const trend=trendFor(c);
+    const card=el("div","rcard"+(state.selected===c.key?" sel":""));
+    let chips = `<span class="chip">${c.evals.length} eval${c.evals.length>1?"s":""}</span>`;
+    if(c.stats.unknownLevel) chips += `<span class="chip unknown">Unrecognised level</span>`;
+    if(trend && trend.levelChanged) chips += `<span class="chip levelchange">Level changed ${escapeHtml(trend.from||"?")} &#8594; ${escapeHtml(trend.to||"?")}</span>`;
+    const rstats = statTile("Avg score", c.stats.n?c.stats.avgScore.toFixed(2):"-", trend?trend.scoreDelta:null, false)
+      + statTile("Avg delta", c.stats.n?((c.stats.avgD>=0?"+":"")+c.stats.avgD.toFixed(2)):"-", trend?trend.dDelta:null, !!(trend&&trend.levelChanged))
+      + statTile("At/above", c.stats.n?c.stats.pctMet+"%":"-", null, true)
+      + statTile("Gaps", c.stats.n?c.stats.gaps.length:"-", null, true);
+    card.innerHTML = `<div class="rcard-top"><div><div class="rn">${escapeHtml(c.name)}</div><div class="rl">${escapeHtml(levelLabel)}</div></div>
+      <div class="bandbadge ${b.k}"><span class="dotm"></span>${b.l}</div></div>
+      <div class="rmeta">${escapeHtml(project)} &middot; ${escapeHtml(lead)} &middot; ${escapeHtml(date)}</div>
+      <div class="rstats">${rstats}</div>
+      <div class="chips">${chips}</div>`;
+    card.onclick=()=>selectConsultant(c.key);
+    grid.appendChild(card);
+  });
+}
+
+function renderHeatmapTabs(){
+  const box=$("#hmTabs"); if(!box) return;
+  box.innerHTML="";
+  const allArr=Object.values(state.consultants);
+  if(!allArr.length) return;
+  const counts={};
+  allArr.forEach(c=>{
+    const g=gradeOf(c.current.doc.meta&&c.current.doc.meta.level);
+    if(!g) return;
+    counts[g]=(counts[g]||0)+1;
+  });
+  const grades=Object.keys(counts).sort();
+  function tabBtn(key,label,count){
+    const b=el("button","hmtab"+(state.hmLevel===key?" active":""));
+    b.type="button";
+    b.innerHTML=`${escapeHtml(label)} <span class="hmtabn">${count}</span>`;
+    b.onclick=()=>{ state.hmLevel=key; renderAll(); };
+    box.appendChild(b);
+  }
+  tabBtn("all","All",allArr.length);
+  grades.forEach(g=>tabBtn(g,g,counts[g]));
+}
+
+function renderHeatmap(){
+  const wrap=$("#heatmapWrap"); wrap.innerHTML="";
+  const legend=$("#hmLegend");
+  const allArr=Object.values(state.consultants);
+  const arr=filteredConsultants().sort((a,b)=>a.name.localeCompare(b.name));
+  if(!allArr.length){ wrap.appendChild(el("div","htr","No consultants yet - import evaluation files above.")); legend.innerHTML=""; return; }
+  if(!arr.length){ wrap.appendChild(el("div","htr","No consultants at this level.")); legend.innerHTML=""; return; }
+  const table=el("table","hmtable");
+  const thead=el("thead"); const htr=el("tr");
+  htr.appendChild(el("th","hmname","Consultant"));
+  AREAS.forEach(a=>{ const th=el("th",null,AREA_ABBR[a]||a); th.title=a; htr.appendChild(th); });
+  thead.appendChild(htr); table.appendChild(thead);
+  const tbody=el("tbody");
+  arr.forEach(c=>{
+    const tr=el("tr");
+    const nameTd=el("td","hmname",escapeHtml(c.name));
+    nameTd.onclick=()=>selectConsultant(c.key);
+    tr.appendChild(nameTd);
+    AREAS.forEach(a=>{
+      const st=c.areas[a];
+      const td=el("td","hmcell");
+      td.onclick=()=>selectConsultant(c.key);
+      if(!st){
+        td.classList.add("neutral"); td.textContent="-";
+        td.title=a+": not scoped, not rated, or level not recognised";
+      } else {
+        const d=st.d;
+        const cls = d>=0 ? "good" : (d<=-1 ? "crit" : "warn");
+        td.classList.add(cls);
+        td.textContent=(d>0?"+":"")+d.toFixed(1);
+        td.title=a+": avg "+st.avg.toFixed(1)+" vs exp "+st.expAvg.toFixed(1)+" ("+st.n+" rated)";
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  legend.innerHTML = `<span><span class="sw" style="background:rgba(14,159,110,.5)"></span>At or above expectation</span>
+    <span><span class="sw" style="background:#B45309"></span>Small gap (under 1 point)</span>
+    <span><span class="sw" style="background:rgba(220,38,38,.6)"></span>Material gap (1 point or more)</span>
+    <span><span class="sw" style="background:var(--dim)"></span>Not scoped / not rated / level not recognised</span>`;
+}
+
+// ===== team growth by area =====
+function growthStats(cons){
+  const consArr=cons || Object.values(state.consultants);
+  const totalCount=consArr.length;
+  const repeatArr=consArr.filter(c=>c.evals.length>=2);
+  const repeatCount=repeatArr.length;
+  const pairs=repeatArr.map(c=>({
+    early:areaStatsFor(c.evals[0].doc),
+    late:areaStatsFor(c.evals[c.evals.length-1].doc)
+  }));
+  const areas={};
+  AREAS.forEach(a=>{
+    const earlyVals=[], lateVals=[];
+    pairs.forEach(p=>{
+      const se=p.early[a], sl=p.late[a];
+      if(se && sl && se.n>0 && sl.n>0){ earlyVals.push(se.d); lateVals.push(sl.d); }
+    });
+    if(earlyVals.length){
+      const earlier=earlyVals.reduce((x,y)=>x+y,0)/earlyVals.length;
+      const current=lateVals.reduce((x,y)=>x+y,0)/lateVals.length;
+      areas[a]={earlier, current, change:current-earlier, consultants:earlyVals.length};
+    }
+  });
+  return {areas, repeatCount, totalCount};
+}
+
+function signedFig(v){ return (v>=0?"+":"")+v.toFixed(2); }
+
+// ===== team insights =====
+// cons (defaults to filteredConsultants()) drives insights 1-2 (top areas for improvement,
+// most severe skill gap). Insight 3 (cohort watch) always compares every grade, ignoring cons.
+function insightStats(cons){
+  const filtered = cons || filteredConsultants();
+  const allCons = Object.values(state.consultants);
+
+  // ---- 1: top areas for improvement (equal-weight mean delta per area, across contributors) ----
+  const areaTeamD={};
+  AREAS.forEach(a=>{
+    const contributors=filtered.filter(c=>c.areas[a]);
+    if(contributors.length){
+      areaTeamD[a]={ teamD: contributors.reduce((s,c)=>s+c.areas[a].d,0)/contributors.length, n:contributors.length };
+    }
+  });
+  const rankedAreas = Object.keys(areaTeamD)
+    .sort((a,b)=>areaTeamD[a].teamD-areaTeamD[b].teamD)
+    .slice(0,3)
+    .map(a=>({area:a, teamD:areaTeamD[a].teamD, n:areaTeamD[a].n}));
+
+  // ---- 2: most severe skill gap (competencies rated 2+ points below level expectation) ----
+  const gapMap={};
+  AREAS.forEach(a=>{ gapMap[a]={gapCount:0, affected:new Set()}; });
+  filtered.forEach(c=>{
+    const doc=c.current.doc;
+    const level=doc.meta&&doc.meta.level;
+    if(!LEVELS.includes(level)) return;
+    const scope=resolveScope(doc);
+    COMPS.forEach(comp=>{
+      if(!scope[comp.area]) return;
+      if(doc.na && doc.na[comp.ref]) return;
+      if(!doc.ratings || doc.ratings[comp.ref]==null) return;
+      const e=comp.e[level];
+      if(e===undefined) return;
+      const r=doc.ratings[comp.ref];
+      if(r<=e-2){ gapMap[comp.area].gapCount++; gapMap[comp.area].affected.add(c.key); }
+    });
+  });
+  let severest=null;
+  AREAS.forEach(a=>{
+    const g=gapMap[a];
+    if(!g.gapCount) return;
+    const gTeamD=areaTeamD[a]?areaTeamD[a].teamD:0;
+    const sTeamD=severest?(areaTeamD[severest.area]?areaTeamD[severest.area].teamD:0):0;
+    if(!severest || g.gapCount>severest.gapCount || (g.gapCount===severest.gapCount && gTeamD<sTeamD)){
+      severest={area:a, gapCount:g.gapCount, affected:g.affected.size};
+    }
+  });
+
+  // ---- 3: cohort watch - ALWAYS every grade, regardless of the active filter ----
+  const cohorts={};
+  allCons.filter(c=>c.stats.n>0).forEach(c=>{
+    const g=gradeOf(c.current.doc.meta&&c.current.doc.meta.level);
+    if(!g) return;
+    if(!cohorts[g]) cohorts[g]={sum:0, n:0};
+    cohorts[g].sum+=c.stats.avgD; cohorts[g].n++;
+  });
+  const cohortAvgs=Object.keys(cohorts).map(g=>({grade:g, avgD:cohorts[g].sum/cohorts[g].n, n:cohorts[g].n}))
+    .sort((a,b)=>a.avgD-b.avgD);
+  const worstCohort=cohortAvgs.length ? cohortAvgs[0] : null;
+
+  return {rankedAreas, severest, cohortAvgs, worstCohort};
+}
+
+function renderInsights(){
+  const box=$("#teamInsights"); if(!box) return;
+  box.innerHTML="";
+  if(!Object.keys(state.consultants).length) return;
+  const ins=insightStats();
+
+  const c1=el("div","inscard ac-blue");
+  let body1;
+  if(!ins.rankedAreas.length){
+    body1=`<div class="ins-muted">No rated areas yet</div>`;
+  } else {
+    body1=`<ol class="ins-ranklist">`+ins.rankedAreas.map((r,i)=>{
+      const cls=signColorClass(r.teamD);
+      return `<li title="${escapeHtml(r.area)}"><span class="ins-rank">${i+1}.</span><span class="ins-arealbl">${escapeHtml(r.area)}</span><span class="ins-figure ${cls}">${signedFig(r.teamD)}</span><span class="ins-n">n ${r.n}</span></li>`;
+    }).join("")+`</ol>`;
+  }
+  c1.innerHTML=`<div class="ins-label">Top areas for improvement</div>${body1}`;
+  box.appendChild(c1);
+
+  const c2=el("div","inscard ac-critical");
+  let body2;
+  if(!ins.severest){
+    body2=`<div class="ins-good">&#10003; No material gaps</div>`;
+  } else {
+    body2=`<div class="ins-sub-lead">${escapeHtml(ins.severest.area)}</div>
+      <div class="ins-bigfig crit">${ins.severest.gapCount} material gap${ins.severest.gapCount===1?"":"s"}</div>
+      <div class="ins-sub">across ${ins.severest.affected} consultant${ins.severest.affected===1?"":"s"}</div>`;
+  }
+  c2.innerHTML=`<div class="ins-label">Most severe skill gap</div>${body2}`;
+  box.appendChild(c2);
+
+  const c3=el("div","inscard ac-warn");
+  let body3;
+  if(!ins.worstCohort){
+    body3=`<div class="ins-muted">No rated consultants yet</div>`;
+  } else {
+    const tip=ins.cohortAvgs.map(x=>`${x.grade}: ${signedFig(x.avgD)}`).join(" · ");
+    const cls=signColorClass(ins.worstCohort.avgD);
+    body3=`<div class="ins-sub-lead" title="${escapeHtml(tip)}">${escapeHtml(ins.worstCohort.grade)} carries the largest gap to level</div>
+      <div class="ins-bigfig ${cls}" title="${escapeHtml(tip)}">${signedFig(ins.worstCohort.avgD)}</div>
+      <div class="ins-sub">across ${ins.worstCohort.n} consultant${ins.worstCohort.n===1?"":"s"}</div>`;
+  }
+  c3.innerHTML=`<div class="ins-label">Cohort watch</div>${body3}`;
+  box.appendChild(c3);
+}
+
+function renderGradeChips(){
+  const label = state.hmLevel!=="all" ? state.hmLevel+" cohort" : "";
+  ["kpisGradeChip","rosterGradeChip","heatmapGradeChip","growthGradeChip"].forEach(id=>{
+    const chip=$("#"+id); if(!chip) return;
+    if(label){ chip.textContent=label; chip.style.display=""; } else chip.style.display="none";
+  });
+}
+
+// ===== import section collapse =====
+function setImportCollapsed(collapsed){
+  state.importCollapsed=collapsed;
+  renderImportSection();
+}
+function renderImportSection(){
+  const body=$("#importBody"); const header=$("#importHeader"); const chip=$("#importChip");
+  if(body) body.style.display = state.importCollapsed ? "none" : "";
+  if(header){
+    header.setAttribute("aria-expanded", String(!state.importCollapsed));
+    header.classList.toggle("collapsed", state.importCollapsed);
+  }
+  if(chip){
+    const nFiles=state.records.filter(r=>r.status==="ok").length;
+    const nCons=Object.keys(state.consultants).length;
+    if(state.importCollapsed && nFiles){
+      chip.textContent=`${nFiles} file${nFiles!==1?"s":""} · ${nCons} consultant${nCons!==1?"s":""}`;
+      chip.style.display="";
+    } else {
+      chip.style.display="none";
+    }
+  }
+}
+
+function renderGrowth(){
+  const summary=$("#growthSummary"); const chart=$("#growthChart");
+  summary.innerHTML=""; chart.innerHTML="";
+  const g=growthStats(filteredConsultants());
+  if(!g.repeatCount){
+    chart.appendChild(el("div","htr","Growth needs at least two evaluations for the same consultant - import evaluations from different dates to see movement."));
+    return;
+  }
+  summary.appendChild(el("span","growthchip", `${g.repeatCount} of ${g.totalCount} consultant${g.totalCount===1?"":"s"} have repeat evaluations`));
+  const areaEntries=Object.entries(g.areas);
+  let best=null, worst=null;
+  areaEntries.forEach(([a,st])=>{
+    if(st.change>0.05 && (!best || st.change>best[1].change)) best=[a,st];
+    if(st.change<-0.05 && (!worst || st.change<worst[1].change)) worst=[a,st];
+  });
+  if(best) summary.appendChild(el("span","growthchip good", `Fastest improving: ${escapeHtml(AREA_ABBR[best[0]]||best[0])} ${signedFig(best[1].change)}`));
+  if(worst) summary.appendChild(el("span","growthchip critical", `Steepest decline: ${escapeHtml(AREA_ABBR[worst[0]]||worst[0])} ${signedFig(worst[1].change)}`));
+
+  if(!areaEntries.length){
+    chart.appendChild(el("div","htr","No area-level trend data available for the repeat evaluations imported."));
+    return;
+  }
+
+  let maxAbs=0;
+  areaEntries.forEach(([,st])=>{ maxAbs=Math.max(maxAbs, Math.abs(st.earlier), Math.abs(st.current)); });
+  const R=Math.min(3, Math.max(1, Math.ceil(maxAbs)));
+  function posPct(v){ return Math.max(2, Math.min(98, (v+R)/(2*R)*100)); }
+
+  const scaleRow=el("div","growthscale");
+  scaleRow.innerHTML = `<div class="gslbl"></div><div class="gstrack"><span>-${R}</span><span>0</span><span>+${R}</span></div><div class="gstrail"></div>`;
+  chart.appendChild(scaleRow);
+
+  const rows=el("div","growthrows");
+  const sorted=areaEntries.slice().sort((a,b)=>a[1].change-b[1].change);
+  sorted.forEach(([area,st])=>{
+    const color = st.change>0.05 ? "var(--good)" : (st.change<-0.05 ? "var(--critical)" : "var(--dim)");
+    const pEarly=posPct(st.earlier), pLate=posPct(st.current);
+    const left=Math.min(pEarly,pLate), width=Math.abs(pLate-pEarly);
+    const row=el("div","growthrow");
+    row.title=`${area}: earlier ${signedFig(st.earlier)} -> current ${signedFig(st.current)} (change ${signedFig(st.change)}, ${st.consultants} consultant${st.consultants===1?"":"s"})`;
+    row.innerHTML = `<div class="glbl">${escapeHtml(area)}</div>
+      <div class="gtrack">
+        <div class="gbaseline"></div>
+        <div class="gzero"></div>
+        <div class="gconnector" style="left:${left}%;width:${width}%;background:${color}"></div>
+        <div class="gdot early" style="left:${pEarly}%"></div>
+        <div class="gdot late" style="left:${pLate}%;background:${color}"></div>
+      </div>
+      <div class="gfig" style="color:${color}">${signedFig(st.change)}</div>
+      <div class="gcount" title="${st.consultants} consultant${st.consultants===1?"":"s"} with repeat evaluations in this area">${st.consultants}</div>`;
+    rows.appendChild(row);
+  });
+  chart.appendChild(rows);
+
+  const noData=AREAS.filter(a=>!g.areas[a]);
+  if(noData.length) chart.appendChild(el("div","growthmuted", "No trend data: "+escapeHtml(noData.join(", "))));
+}
+
+function renderDetail(){
+  const empty=$("#dEmpty"); const content=$("#dContent");
+  if(!state.selected || !state.consultants[state.selected]){
+    empty.style.display=""; content.style.display="none"; return;
+  }
+  empty.style.display="none"; content.style.display="";
+  const c=state.consultants[state.selected];
+  const doc=c.current.doc;
+  const level=doc.meta&&doc.meta.level;
+  const levelLabel=LEVEL_LABEL[level] || (level ? level+" (unrecognised)" : "Unknown level");
+  $("#dName").textContent=c.name;
+  $("#dMeta").textContent=levelLabel+" · "+((doc.meta&&doc.meta.project)||"-")+" · "+((doc.meta&&doc.meta.lead)||"-")+" · "+((doc.meta&&doc.meta.date)||"no date")+" · "+c.evals.length+" eval"+(c.evals.length>1?"s":"");
+  const b=bandFor(c.stats);
+  $("#dBand").innerHTML = `<div class="bandbadge ${b.k}"><span class="dotm"></span>${b.l}</div>`;
+
+  const bw=$("#dBarWrap"); bw.innerHTML="";
+  const areaKeys=AREAS.filter(a=>c.areas[a]);
+  if(!areaKeys.length){ bw.appendChild(el("div","htr", c.stats.unknownLevel ? "This evaluation's level is not recognised, so per-area detail can't be computed - the figures above come from the file's own saved summary." : "No scored areas available for this evaluation.")); }
+  areaKeys.forEach(a=>{
+    const st=c.areas[a];
+    const d=st.d;
+    const fillCol = d>=0 ? "linear-gradient(90deg,#0E9F6E,#3FCB98)" : (d<=-1 ? "linear-gradient(90deg,#DC2626,#F87171)" : "linear-gradient(120deg,#365EB9,#5B30EE)");
+    const bar=el("div","bar");
+    bar.innerHTML = `<div class="lbl">${escapeHtml(a)}</div><div class="track"><div class="fill" style="background:${fillCol}"></div><div class="exp-mark" style="left:${(st.expAvg/5*100)}%"></div><div class="val">${st.avg.toFixed(1)} / exp ${st.expAvg.toFixed(1)}</div></div>`;
+    bw.appendChild(bar);
+    requestAnimationFrame(()=>{ const f=bar.querySelector(".fill"); if(f) f.style.width=(st.avg/5*100)+"%"; });
+  });
+
+  const gapsBox=$("#dGaps"); gapsBox.innerHTML="";
+  if(c.stats.unknownLevel || !c.stats.gaps || !c.stats.gaps.length){
+    gapsBox.appendChild(el("div","htr", c.stats.unknownLevel ? "This evaluation's level is not recognised, so gaps can't be recomputed against expectations." : "No material gaps against level."));
+  } else {
+    c.stats.gaps.forEach(g=>{
+      const r=doc.ratings[g.ref]; const e=expForLevel(g,level);
+      const row=el("div","gaprow");
+      row.innerHTML = `<span class="gref">${escapeHtml(g.ref)}</span><span class="gt">${escapeHtml(g.t)}</span><span class="gv">${r} vs exp ${e}</span>`;
+      gapsBox.appendChild(row);
+    });
+  }
+
+  const fb=doc.feedback||{};
+  const classification = fb.classification || fb.band || "";
+  const recommendation = fb.recommendation || fb.reco || "";
+  const fbox=$("#dFeedback"); fbox.innerHTML="";
+  function fblock(k,v){ return el("div","fbblock", `<div class="fbh">${k}</div><div class="fbv">${v?escapeHtml(v):"-"}</div>`); }
+  fbox.appendChild(fblock("Classification", classification));
+  fbox.appendChild(fblock("Recommendation", recommendation));
+  fbox.appendChild(fblock("Project rating", fb.projectRating));
+  fbox.appendChild(fblock("Strengths", fb.strengths));
+  fbox.appendChild(fblock("Development areas", fb.development));
+  fbox.appendChild(fblock("Project feedback", fb.projectFeedback));
+
+  const planBox=$("#dPlan"); planBox.innerHTML="";
+  const plan = Array.isArray(doc.learningPlan) ? doc.learningPlan : [];
+  if(!plan.length){ planBox.appendChild(el("div","htr","No development plan items recorded in this evaluation.")); }
+  else{
+    plan.forEach(p=>{
+      const provKey=String(p.provider||"").toLowerCase();
+      const provName = provKey==="linkedin"?"LinkedIn":(provKey==="coursera"?"Coursera":(provKey==="degreed"?"Degreed":(p.provider||"Source")));
+      const title = p.title || p.t || "";
+      const openLink = p.url ? `<a class="popen" href="${escapeHtml(p.url)}" target="_blank" rel="noopener">Open</a>` : "";
+      const chip=el("div","planchip", `<span class="prov ${escapeHtml(provKey)}">${escapeHtml(provName)}</span><span>${escapeHtml(title)}</span>${openLink}`);
+      planBox.appendChild(chip);
+    });
+  }
+}
+
+function selectConsultant(key){
+  state.selected=key;
+  renderRoster();
+  renderDetail();
+  const target=document.getElementById("sec-detail");
+  if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderAll(){
+  renderImportSection();
+  renderFileRoster();
+  renderHeatmapTabs();
+  renderGradeChips();
+  renderTeamKPIs();
+  renderInsights();
+  renderRoster();
+  renderHeatmap();
+  renderGrowth();
+  renderDetail();
+  const nc=Object.keys(state.consultants).length;
+  const ne=state.records.filter(r=>r.status==="ok").length;
+  $("#footMeta").textContent = state.records.length
+    ? (nc+" consultant"+(nc===1?"":"s")+" · "+ne+" evaluation"+(ne===1?"":"s")+" imported")
+    : "No evaluations imported yet";
+}
+
+function exportTeam(){
+  const ts=teamStats();
+  const gs=growthStats();
+  const growthOut={};
+  Object.keys(gs.areas).forEach(a=>{
+    const st=gs.areas[a];
+    growthOut[a]={earlier:+st.earlier.toFixed(3), current:+st.current.toFixed(3), change:+st.change.toFixed(3), consultants:st.consultants};
+  });
+  const data = {
+    schema:"syniti-team-summary", version:1,
+    generated:new Date().toISOString(),
+    team:{ consultants:ts.nConsultants, evaluations:ts.nEvals,
+      avgScore:+ts.avgScore.toFixed(3), avgD:+ts.avgD.toFixed(3), pctMet:ts.pctMet, gaps:ts.gaps,
+      bands:{exceeds:ts.bands.exceeds, meets:ts.bands.meets, partial:ts.bands.partial, below:ts.bands.below, awaiting:ts.awaiting} },
+    growth: growthOut,
+    repeatEvalConsultants: gs.repeatCount,
+    consultants: ts.consArr.map(c=>{
+      const b=bandFor(c.stats);
+      const trend=trendFor(c);
+      const level=c.current.doc.meta&&c.current.doc.meta.level;
+      return {
+        name:c.name, level:level||null, date:(c.current.doc.meta&&c.current.doc.meta.date)||null,
+        project:(c.current.doc.meta&&c.current.doc.meta.project)||null, lead:(c.current.doc.meta&&c.current.doc.meta.lead)||null,
+        band:b.k, avgScore:+c.stats.avgScore.toFixed(3), avgD:+c.stats.avgD.toFixed(3), pctMet:c.stats.pctMet,
+        gaps:c.stats.gaps.length, n:c.stats.n,
+        trend: trend ? { levelChanged:trend.levelChanged, from:trend.from||null, to:trend.to||null,
+          avgScoreDelta: trend.scoreDelta!=null?+trend.scoreDelta.toFixed(3):null,
+          avgDDelta: trend.dDelta!=null?+trend.dDelta.toFixed(3):null } : null,
+        areas: c.areas,
+        files: c.evals.map(e=>e.filename)
+      };
+    })
+  };
+  const todayStr = new Date().toISOString().slice(0,10);
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob); const a=document.createElement("a");
+  a.href=url; a.download=`Team_Summary_${todayStr}.json`; a.click(); URL.revokeObjectURL(url);
+  toast("Team summary downloaded");
+}
+
+// ===== UI wiring =====
+const importHeaderEl=$("#importHeader");
+if(importHeaderEl){
+  importHeaderEl.addEventListener("click", ()=>setImportCollapsed(!state.importCollapsed));
+  importHeaderEl.addEventListener("keydown", e=>{
+    if(e.key==="Enter" || e.key===" " || e.key==="Spacebar"){ e.preventDefault(); setImportCollapsed(!state.importCollapsed); }
+  });
+}
+$("#importBtn").onclick=()=>$("#fileInput").click();
+$("#fileInput").onchange=e=>{ if(e.target.files && e.target.files.length) addFiles(e.target.files); e.target.value=""; };
+$("#printBtn").onclick=()=>window.print();
+$("#exportTeamBtn").onclick=exportTeam;
+
+const dz=$("#dropZone");
+["dragenter","dragover"].forEach(evt=>dz.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); dz.classList.add("drag"); }));
+["dragleave","drop"].forEach(evt=>dz.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); dz.classList.remove("drag"); }));
+dz.addEventListener("drop", e=>{ const files=e.dataTransfer && e.dataTransfer.files; if(files && files.length) addFiles(files); });
+dz.addEventListener("click", ()=>$("#fileInput").click());
+
+// side nav
+const body=document.body;
+function setNav(o){ body.classList.toggle("nav-open", o); }
+if($("#navToggle")) $("#navToggle").onclick=()=>setNav(!body.classList.contains("nav-open"));
+if($("#navBackdrop")) $("#navBackdrop").onclick=()=>setNav(false);
+document.querySelectorAll(".navlink").forEach(a=>a.addEventListener("click",()=>{ if(window.innerWidth<1180) setNav(false); }));
+if(window.innerWidth>=1180) setNav(true);
+try{
+  const secIds=["sec-import","sec-kpis","sec-roster","sec-heatmap","sec-growth","sec-detail"];
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id; document.querySelectorAll(".navlink").forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+id)); }});},{rootMargin:"-45% 0px -50% 0px",threshold:0});
+  secIds.forEach(id=>{const el2=document.getElementById(id); if(el2) io.observe(el2);});
+}catch(e){}
+
+renderAll();
+</script>
+</body>
+</html>

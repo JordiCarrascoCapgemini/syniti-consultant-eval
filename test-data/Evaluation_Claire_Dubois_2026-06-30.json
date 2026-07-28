@@ -1,0 +1,97 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Claire Dubois",
+  "project": "Orion Supply Chain DQ",
+  "lead": "S. Ferreira",
+  "level": "C5-M",
+  "type": "Regular",
+  "date": "2026-06-30",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": true,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": false,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": true,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 2,
+  "C2": 2,
+  "C3": 2,
+  "C4": 2,
+  "C5": 2,
+  "D1": 4,
+  "D2": 4,
+  "D3": 4,
+  "D4": 3,
+  "D5": 4,
+  "E1": 4,
+  "E2": 2,
+  "E3": 4,
+  "E4": 2,
+  "E5": 2,
+  "F1": 4,
+  "F2": 3,
+  "F3": 5,
+  "F4": 4,
+  "F5": 4,
+  "F6": 4,
+  "F7": 4,
+  "F8": 4,
+  "F9": 3,
+  "F10": 3,
+  "G6": 2,
+  "G7": 3,
+  "G8": 4,
+  "G9": 3,
+  "G10": 3,
+  "G26": 1,
+  "G27": 3,
+  "G28": 2,
+  "G29": 2,
+  "G30": 1
+ },
+ "na": {},
+ "feedback": {
+  "classification": "below",
+  "recommendation": "Formal improvement plan",
+  "projectRating": "Amber",
+  "strengths": "Willing attitude and improving domain vocabulary.",
+  "development": "Structured development plan - pair with a senior on all deliverables.",
+  "projectFeedback": "Captured during the regular review on Orion Supply Chain DQ."
+ },
+ "learningPlan": [
+  {
+   "area": "SAP Data Functional",
+   "provider": "coursera",
+   "title": "SAP Master Data Essentials",
+   "meta": "Course \u00b7 5h \u00b7 Intermediate",
+   "url": ""
+  },
+  {
+   "area": "Delivery & Consulting",
+   "provider": "degreed",
+   "title": "Facilitating Effective Workshops",
+   "meta": "Pathway \u00b7 2h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 3.0,
+  "avgD": -1.371,
+  "pctMet": 9,
+  "gaps": 12,
+  "n": 35
+ }
+}

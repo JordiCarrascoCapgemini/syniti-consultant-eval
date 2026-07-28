@@ -1,0 +1,95 @@
+{
+ "schema": "syniti-skills-eval",
+ "version": 3,
+ "meta": {
+  "consultant": "Tomas Silva",
+  "project": "Nimbus Cloud DQ",
+  "lead": "T. Gordon",
+  "level": "C2",
+  "type": "Mid-project",
+  "date": "2026-01-28",
+  "learningSource": "both"
+ },
+ "scope": {
+  "Syniti Platform: Technical (ADM)": false,
+  "Syniti Platform: Technical (ADM-M)": false,
+  "DQ-Specific Technical": true,
+  "DQ-Specific Functional": true,
+  "SAP Data Functional": true,
+  "Delivery & Consulting": true,
+  "Squad-Delivery Excellence": false,
+  "Squad-dqOps": false,
+  "Squad-Harmonization": false,
+  "Squad-Source Cleansing": true,
+  "Squad-Cloud Data Quality": false,
+  "Squad-Dashboarding & Analytics": false,
+  "AI Enablement": false
+ },
+ "ratings": {
+  "C1": 1,
+  "C2": 2,
+  "C3": 1,
+  "C4": 1,
+  "C5": 1,
+  "D1": 1,
+  "D2": 0,
+  "D3": 1,
+  "D4": 0,
+  "D5": 0,
+  "E1": 2,
+  "E2": 2,
+  "E3": 1,
+  "E4": 2,
+  "E5": 2,
+  "F1": 1,
+  "F2": 0,
+  "F3": 1,
+  "F4": 1,
+  "F5": 1,
+  "F6": 1,
+  "F7": 1,
+  "F8": 1,
+  "F9": 2,
+  "F10": 1,
+  "G16": 1,
+  "G17": 0,
+  "G18": 0,
+  "G19": 1,
+  "G20": 1
+ },
+ "na": {
+  "G17": true,
+  "G18": true
+ },
+ "feedback": {
+  "classification": "partial",
+  "recommendation": "Targeted development plan",
+  "projectRating": "Green",
+  "strengths": "Good technical foundation; strongest inside the core DQ tooling.",
+  "development": "Close the flagged gaps with targeted learning and shadowing.",
+  "projectFeedback": "Captured during the mid-project review on Nimbus Cloud DQ."
+ },
+ "learningPlan": [
+  {
+   "area": "Squad-dqOps",
+   "provider": "linkedin",
+   "title": "Quality Assurance Fundamentals",
+   "meta": "Course \u00b7 1h 10m \u00b7 Beginner",
+   "url": ""
+  },
+  {
+   "area": "SAP Data Functional",
+   "provider": "coursera",
+   "title": "SAP Master Data Essentials",
+   "meta": "Course \u00b7 5h \u00b7 Intermediate",
+   "url": ""
+  }
+ ],
+ "summary": {
+  "avgScore": 1.071,
+  "avgD": -0.929,
+  "pctMet": 21,
+  "gaps": 4,
+  "n": 28
+ }
+}
