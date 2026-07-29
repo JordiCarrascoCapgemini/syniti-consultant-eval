@@ -373,8 +373,51 @@ Every line must pass before you start `DEPLOY-POCDAPP314.md`.
 | 11 | Clock synchronised | `timedatectl` | `System clock synchronized: yes` |
 | 12 | Reboot survival | reboot, then re-run 1 and 9 | both return by themselves |
 
-Check 12 is worth the reboot. `restart: unless-stopped` only helps if the Docker
-service is itself enabled at boot, and finding that out later is unpleasant.
+### Row 12 in full: the reboot test
+
+Four things configured during host prep only survive a reboot if they were made
+persistent: the netfilter kernel modules, the two sysctls, the SELinux boolean,
+and the services being `enabled` rather than merely started. A reboot is the only
+honest way to confirm all four, and it is far cheaper to discover a problem now
+than during a demo.
+
+Tell anyone else using the host first, then:
+
+    sudo systemctl reboot
+
+The SSH session drops. Reconnect after a minute or two and run this one block:
+
+    echo "== services =="; systemctl is-active docker nginx; systemctl is-enabled docker nginx
+    echo "== modules =="; lsmod | grep -E 'iptable_nat|iptable_filter|br_netfilter|overlay' | awk '{print $1}'
+    echo "== sysctl =="; sysctl -n net.ipv4.ip_forward net.bridge.bridge-nf-call-iptables
+    echo "== selinux =="; getenforce; getsebool httpd_can_network_connect
+    echo "== firewall =="; sudo firewall-cmd --list-services
+    echo "== portainer =="; sudo docker ps --filter name=portainer --format '{{.Status}} | {{.Ports}}'
+    echo "== loopback =="; curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:9000/
+
+Expected:
+
+| Section | Expected |
+|---|---|
+| services | `active` twice, then `enabled` twice |
+| modules | all four names listed |
+| sysctl | `1` and `1` |
+| selinux | `Enforcing` or `Permissive`, then `httpd_can_network_connect --> on` |
+| firewall | includes `http https` |
+| portainer | `Up ...` and `127.0.0.1:9000->9000/tcp` |
+| loopback | HTTP 200 or a 300-range redirect |
+
+**`docker` returning `active` unaided is the critical result.** It proves the
+kernel-module persistence held. If `/etc/modules-load.d/docker.conf` were missing
+or wrong, dockerd would fail on boot with the same
+`RULE_APPEND failed ... chain PREROUTING` as on first install.
+
+Where to fix each failure: modules and sysctls in section 4.4, the SELinux boolean
+in 6.1, firewall services in 6.2, and `enabled` state with
+`sudo systemctl enable <unit>`.
+
+Note that `restart: unless-stopped` on a container only helps if the Docker
+service itself is enabled at boot.
 
 ---
 
