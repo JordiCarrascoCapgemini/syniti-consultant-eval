@@ -507,6 +507,48 @@ the foreground - the fatal line prints on screen and needs no journal navigation
 
     sudo dockerd --debug        # read the last line, then Ctrl+C
 
+### Portainer: "Your Portainer instance timed out for security purposes"
+
+Portainer disables initial setup if no admin account is created within a few
+minutes of first start. Hit on POCDAPP314 during install, because reaching the UI
+needed an SSH tunnel to be worked out first. It is a deliberate security
+behaviour, not a fault, and the only recovery is a container restart.
+
+Have the password generated and to hand BEFORE restarting, then do not step away
+between the restart and the browser:
+
+    openssl rand -base64 24          # Portainer requires 12+ characters
+    sudo docker restart $(sudo docker ps -aq --filter name=portainer)
+
+Refresh the UI immediately and create the account. That password is equivalent to
+root on this host; store it in a password manager, not a ticket.
+
+To remove the race on future hosts, set the password at startup instead of
+interactively, using Portainer's `--admin-password-file`. Prefer that on any host
+where reaching the UI is not instant.
+
+### Reaching the Portainer UI when the host is not directly routable
+
+POCDAPP314 is not reachable from a laptop; access is RDP to a POCLAB box and then
+PuTTY from there. Two consequences that cost time on first install:
+
+- **A tunnel lives on the machine running the SSH client.** Confirm where that is
+  with `echo $SSH_CLIENT` inside the session - it prints the client IP. The
+  browser must run on that same machine, not on your laptop.
+- **The forward must be Local (`-L`), not Remote.** In PuTTY the entry has to read
+  `L9000` in the forwarded-ports list. A Remote forward connects without error and
+  silently does nothing on the client side.
+
+    ssh -L 9000:127.0.0.1:9000 -L 8001:127.0.0.1:8001 USER@10.21.12.62
+
+Tunnels attach only at connection time, so reopen the session after adding one.
+In PuTTY, load a saved profile rather than retyping the hostname, or the tunnels
+are not applied.
+
+This is a stopgap for the window before ingress exists. Once nginx, DNS and the
+certificates are in place, Portainer is reached at `https://portainer.<zone>` from
+anywhere that can resolve the name, and no tunnel is needed.
+
 ### 502 on every request once nginx is running
 
 SELinux. See section 6.1: `sudo setsebool -P httpd_can_network_connect 1`. The
