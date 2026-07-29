@@ -3,3 +3,14 @@
 
 # Local Claude Code overrides — never commit (machine-specific, may hold tokens)
 .claude/settings.local.json
+
+# Real secrets for docker compose. Only .env.example is committed.
+.env
+
+# Generated knowledge graph. Holds machine-specific absolute paths
+# (.graphify_python, .graphify_root) and 1.4MB of regenerable output.
+graphify-out/
+
+__pycache__/
+*.pyc
+.pytest_cache/

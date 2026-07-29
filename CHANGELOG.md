@@ -3,6 +3,55 @@
 Concise version history. Full decisions and rationale live in
 [notes/Change log & decisions.md](notes/Change%20log%20&%20decisions.md).
 
+## v7.1 (2026-07-28)
+- **Hosting and ingress design added** for POCDAPP314 (10.21.12.62): host-level nginx as a
+  shared reverse proxy, one hostname and one internal-CA certificate per application on the
+  shared IP, routed by Host header and TLS SNI. `deploy/DEPLOY-POCDAPP314.md` is the runbook,
+  `deploy/architecture.html` the architecture document, `deploy/nginx/` the configuration.
+- **The app now publishes on loopback only.** `docker-compose.yml` binds
+  `127.0.0.1:8001:8000`, so nginx is the only route in and the app is not reachable from the
+  lab network. Previously it published on all interfaces.
+- **uvicorn runs with `--proxy-headers`** so the app sees the client's real scheme and address
+  through the proxy hop.
+- Added a catch-all nginx default server, so the bare IP and unknown hostnames return 404
+  rather than falling through to whichever vhost loaded first.
+- **Portainer CE added as the deployment mechanism and management plane.** Application stacks
+  are deployed from git through Portainer, so deploying does not require shell access and
+  secrets live as stack environment variables rather than an on-disk `.env`. Portainer itself
+  is CLI-deployed (`deploy/portainer/docker-compose.yml`) and reached through nginx on its own
+  FQDN, published on loopback only. It mounts the Docker socket and is root-equivalent on the
+  host, so its vhost carries an IP allow-list and a pinned image.
+- Split the nginx header snippet into `security-baseline.conf` and `csp-apps.conf`: the app
+  content-security-policy breaks Portainer's bundled UI, so only our own vhosts include it.
+- Added `snippets/proxy-ws.conf` for WebSocket upstreams. `proxy-app.conf` sets
+  `Connection ""` for upstream keepalive, which silently breaks the upgrade handshake that
+  Portainer needs for container consoles and live logs.
+- **Added `deploy/HOST-PREP-POCDAPP314.md`**: the RHEL 10.2 host-preparation runbook - Docker
+  Engine from Docker's repo (with the dnf5 syntax difference and the Podman shim conflict
+  called out), daemon log rotation, the `httpd_can_network_connect` SELinux boolean, firewalld,
+  nginx, and Portainer, ending in a 12-point checklist including reboot survival.
+- DEC-9 records the hosting decisions, DEC-10 the deployment mechanism. Nothing in this release
+  has been executed on the server.
+
+## v7.0 (2026-07-28)
+- **Dockerized, deployable server** (`server/`, `db/schema.sql`, `Dockerfile`,
+  `docker-compose.yml`): FastAPI plus Postgres, serving the two existing apps and adding
+  optional save/load. Basic authentication for leads (server-side sessions, argon2 hashes,
+  first admin from a mandatory env var). Evaluations stored as JSONB, append-only, read
+  latest per consultant and date. All scoring stays in the apps' JS - none is reimplemented
+  server-side.
+- **Additive, not replacing.** Opened from `file://` both apps behave exactly as before and
+  make no network call; the server-only controls appear only when an API answers.
+- **The team app is now generated** from `build/template-team.html`, so `build.py` emits both
+  apps from `data/competencies.json`. This closes LIM-5.
+- **New:** `refdata.py` (one shared loader for the reference data), `GET /api/reference`,
+  an evaluation restore path in the eval app (the file importer only ever compared),
+  `python -m server.seed`, and a pytest suite including an end-to-end check against
+  `test-data/EXPECTED_RESULTS.md`.
+- **Fixed:** `build.py` read and wrote without an explicit encoding or newline policy, so it
+  produced different bytes on Windows and Linux. Both are now explicit.
+- DEC-7 decided: this repo is canonical again (see issues.md). DEC-8 records the design.
+
 ## v6.2 (2026-07-17)
 - **Maturity phase: the skill <-> C-level <-> Career Framework relationship made explicit.**
   Section 01 now renders a linkage sentence (framework role + headline -> matrix expectations) and

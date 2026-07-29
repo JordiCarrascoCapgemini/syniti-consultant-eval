@@ -1,0 +1,19 @@
+# Build inputs the image does not need. sources/ alone is 1.4MB of PDF and xlsm.
+sources/
+graphify-out/
+build/build-scripts/
+build/legacy/
+notes/
+prompts/
+# Hosting config and runbook - needed on the host, not inside the image.
+deploy/
+*.xlsx
+*.xlsm
+
+.git/
+.gitignore
+.env
+.claude/
+__pycache__/
+*.pyc
+.pytest_cache/

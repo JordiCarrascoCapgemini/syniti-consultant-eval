@@ -247,6 +247,28 @@
     transition:.3s;box-shadow:0 18px 50px -18px rgba(35,47,99,.5);opacity:0;font-weight:500}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
+  /* Overlay for the server sign-in and load picker. Only reachable in served
+     mode; the portable file never shows it. */
+  .ovl{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;
+    background:rgba(25,0,51,.34);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+  .ovl.show{display:flex}
+  .ovlcard{background:var(--glass-fill);border:1px solid var(--glass-hairline);border-radius:var(--r-card);
+    box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+    padding:24px;width:min(560px,100%);max-height:78vh;overflow:auto}
+  .ovlcard h3{margin:0 0 4px;font-size:16px;font-weight:650;color:var(--ink)}
+  .ovlcard .sub{margin:0 0 16px;font-size:12px;color:var(--muted)}
+  .ovlin{width:100%;box-sizing:border-box;font-family:var(--font);font-size:13px;color:var(--ink);background:#fff;
+    border:1px solid var(--line);border-radius:var(--r-control);padding:9px 11px;margin-bottom:10px}
+  .ovlin:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+  .ovlrow{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:18px}
+  .ovlerr{color:var(--critical);font-size:12px;margin-top:6px;min-height:16px}
+  .pick{display:flex;flex-direction:column;gap:6px}
+  .pickitem{text-align:left;cursor:pointer;font-family:var(--font);font-size:12.5px;font-weight:600;color:var(--ink);
+    background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:var(--r-control);padding:9px 11px}
+  .pickitem:hover{background:#fff;border-color:var(--violet)}
+  .pickitem:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+  .pickitem .pmeta{display:block;color:var(--muted);font-size:11px;font-weight:500;margin-top:2px}
+
   .toprow{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:start;margin-top:22px}
   .toprow > .card{margin-top:0}
   @media(max-width:1080px){ .toprow{grid-template-columns:1fr} }
@@ -378,6 +400,10 @@
       <button class="btn" id="importBtn"><span class="ic">&#8681;</span> Import previous</button>
       <button class="btn" id="printBtn"><span class="ic">&#128424;</span> Save / Print</button>
       <button class="btn primary" id="exportBtn"><span class="ic">&#8682;</span> Download form (.json)</button>
+      <!-- Server-only. Revealed by srvInit() when an API answers; stays hidden
+           in the portable file, which never probes. -->
+      <button class="btn" id="serverLoadBtn" style="display:none"><span class="ic">&#8681;</span> Open from server</button>
+      <button class="btn primary" id="serverSaveBtn" style="display:none"><span class="ic">&#8682;</span> Save to server</button>
     </div>
     <input type="file" id="importFile" accept="application/json,.json" style="display:none">
   </div>
@@ -525,6 +551,7 @@
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="ovl" id="ovl"><div class="ovlcard" id="ovlcard"></div></div>
 
 <script>
 const COMPS = __COMPS__;
@@ -951,6 +978,152 @@ try{
 }catch(e){}
 
 renderScope(); renderMatrix(); renderPlan(); renderFramework(); renderLadder(); recompute();
+
+/* ---- optional server mode -------------------------------------------------
+   Everything below is inert unless an API answers. Opened from file:// the tool
+   makes no network call at all and behaves exactly as it always has, so the
+   portable single-file distribution is unaffected. */
+let srvOn=false, srvUser=null;
+const srvEsc = s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const srvFetch = (p,o)=>fetch(p,Object.assign({credentials:"same-origin"},o||{}));
+const srvSend = (p,method,body)=>srvFetch(p,{method:method,headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+
+function ovlClose(){ $("#ovl").classList.remove("show"); $("#ovlcard").innerHTML=""; }
+function ovlOpen(html){ $("#ovlcard").innerHTML=html; $("#ovl").classList.add("show"); }
+$("#ovl").onclick=e=>{ if(e.target===$("#ovl")) ovlClose(); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") ovlClose(); });
+
+async function srvInit(){
+  if(location.protocol==="file:") return;   // portable file: never probe
+  try{ const r=await srvFetch("/api/health"); if(!r.ok) return; }
+  catch(err){ return; }                     // plain static host: stay offline
+  srvOn=true;
+  try{ const me=await srvFetch("/api/auth/me"); if(me.ok) srvUser=(await me.json()).username; }catch(err){}
+  $("#serverSaveBtn").style.display="";
+  $("#serverLoadBtn").style.display="";
+}
+
+function srvSignIn(){
+  return new Promise(resolve=>{
+    ovlOpen('<h3>Sign in</h3><div class="sub">The shared evaluation store requires a lead account.</div>'+
+      '<input class="ovlin" id="ovlUser" placeholder="Username" autocomplete="username">'+
+      '<input class="ovlin" id="ovlPass" type="password" placeholder="Password" autocomplete="current-password">'+
+      '<div class="ovlerr" id="ovlErr"></div>'+
+      '<div class="ovlrow"><button class="btn" id="ovlCancel">Cancel</button>'+
+      '<button class="btn primary" id="ovlGo">Sign in</button></div>');
+    $("#ovlUser").focus();
+    const done=v=>{ ovlClose(); resolve(v); };
+    $("#ovlCancel").onclick=()=>done(false);
+    const go=async()=>{
+      const u=$("#ovlUser").value.trim(), p=$("#ovlPass").value;
+      if(!u||!p){ $("#ovlErr").textContent="Enter a username and password."; return; }
+      $("#ovlGo").disabled=true;
+      try{
+        const r=await srvSend("/api/auth/login","POST",{username:u,password:p});
+        if(!r.ok){ $("#ovlErr").textContent="Sign-in failed. Check the username and password."; $("#ovlGo").disabled=false; return; }
+        srvUser=(await r.json()).username; done(true);
+      }catch(err){ $("#ovlErr").textContent="Could not reach the server."; $("#ovlGo").disabled=false; }
+    };
+    $("#ovlGo").onclick=go;
+    $("#ovlPass").onkeydown=e=>{ if(e.key==="Enter") go(); };
+  });
+}
+
+async function srvAuthed(){ return srvUser ? true : await srvSignIn(); }
+
+async function srvSave(){
+  if(!await srvAuthed()) return;
+  const doc=collect();
+  if(!(doc.meta.consultant||"").trim()){ toast("Enter the consultant name before saving"); return; }
+  if(!doc.meta.date){ toast("Set the evaluation date before saving"); return; }
+  try{
+    const r=await srvSend("/api/evaluations","POST",doc);
+    if(r.status===401){ srvUser=null; toast("Session expired - sign in again"); return; }
+    if(!r.ok){ let m="Could not save to the server";
+      try{ const b=await r.json(); if(b.detail) m=b.detail; }catch(err){}
+      toast(m); return; }
+    toast("Saved to server");
+  }catch(err){ toast("Could not reach the server"); }
+}
+
+/* Reverse of collect(). state.plan is keyed area + "::" + title, which is
+   exactly what learningPlan entries carry, so the round trip is lossless. */
+function srvApplyDoc(d){
+  const m=d.meta||{}, f=d.feedback||{};
+  $("#f_name").value=m.consultant||"";
+  $("#f_project").value=m.project||"";
+  $("#f_lead").value=m.lead||"";
+  if(m.type) $("#f_type").value=m.type;
+  $("#f_date").value=m.date||"";
+  if(m.level&&LEVELS.includes(m.level)){ state.level=m.level; $("#f_level").value=m.level; }
+
+  state.ratings=Object.assign({},d.ratings||{});
+  state.na=Object.assign({},d.na||{});
+  state.scope=Object.assign({},d.scope||{});
+  state.cmp=null; $("#cmpBanner").classList.remove("show");
+
+  state.prov=m.learningSource||"both";
+  const seg=$("#provSeg");
+  if(seg) seg.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.p===state.prov));
+
+  state.plan={};
+  (d.learningPlan||[]).forEach(it=>{ if(it&&it.area&&it.title) state.plan[it.area+"::"+it.title]=it; });
+
+  $("#f_reco").value=f.recommendation||"";
+  $("#f_proj").value=f.projectRating||"";
+  $("#f_str").value=f.strengths||"";
+  $("#f_dev").value=f.development||"";
+  $("#f_pf").value=f.projectFeedback||"";
+  // Keep the saved classification: recompute() only overwrites an untouched band.
+  if(f.classification){ $("#f_band").value=f.classification; bandTouched=true; }
+
+  renderScope(); renderMatrix(); renderPlan(); renderFramework(); renderLadder(); recompute();
+}
+
+async function srvOpen(){
+  if(!await srvAuthed()) return;
+  let rows;
+  try{
+    const r=await srvFetch("/api/evaluations");
+    if(r.status===401){ srvUser=null; toast("Session expired - sign in again"); return; }
+    if(!r.ok){ toast("Could not list saved evaluations"); return; }
+    rows=await r.json();
+  }catch(err){ toast("Could not reach the server"); return; }
+  if(!rows.length){ toast("No evaluations saved on the server yet"); return; }
+
+  ovlOpen('<h3>Open from server</h3><div class="sub">Newest first. Opening replaces the current form.</div>'+
+    '<input class="ovlin" id="ovlFilter" placeholder="Filter by consultant or date">'+
+    '<div class="pick" id="ovlPick"></div>'+
+    '<div class="ovlrow"><button class="btn" id="ovlCancel">Cancel</button></div>');
+  $("#ovlCancel").onclick=ovlClose;
+
+  const paint=()=>{
+    const q=$("#ovlFilter").value.trim().toLowerCase();
+    const box=$("#ovlPick"); box.innerHTML="";
+    rows.filter(r=>!q||(r.consultant+" "+r.eval_date).toLowerCase().includes(q)).forEach(r=>{
+      const b=el("button","pickitem",
+        srvEsc(r.consultant)+'<span class="pmeta">'+srvEsc(r.eval_date)+
+        (r.level?" &middot; "+srvEsc(r.level):"")+" &middot; saved by "+srvEsc(r.created_by)+"</span>");
+      b.onclick=async()=>{
+        try{
+          const one=await srvFetch("/api/evaluations/"+r.id);
+          if(!one.ok){ toast("Could not open that evaluation"); return; }
+          srvApplyDoc(await one.json()); ovlClose();
+          toast("Loaded "+r.consultant+" ("+r.eval_date+")");
+        }catch(err){ toast("Could not reach the server"); }
+      };
+      box.appendChild(b);
+    });
+    if(!box.children.length) box.appendChild(el("div","panel-sub","Nothing matches that filter."));
+  };
+  $("#ovlFilter").oninput=paint;
+  paint();
+  $("#ovlFilter").focus();
+}
+
+$("#serverSaveBtn").onclick=srvSave;
+$("#serverLoadBtn").onclick=srvOpen;
+srvInit();
 </script>
 </body>
 </html>

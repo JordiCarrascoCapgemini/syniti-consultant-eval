@@ -17,21 +17,50 @@ Works offline, downloads its own JSON form, and can re-import a prior evaluation
   python3 build/build.py
   ```
 
-  This regenerates the runnable `tool/...html`. **Do not hand-edit the tool file** - it is a build
-  artifact. `data/*.json` are the single source of truth.
+  This regenerates **both** runnable apps in `tool/`. **Do not hand-edit either tool file** -
+  they are build artifacts. `data/*.json` are the single source of truth.
+
+- Run the server (optional, adds login and shared storage):
+
+  ```
+  cp .env.example .env    # then fill in POSTGRES_PASSWORD and ADMIN_PASSWORD
+  docker compose up --build
+  ```
+
+  The eval app is served at `/` and the team summary at `/team`. The single files keep
+  working offline exactly as before; the server-only buttons appear only when an API answers.
+  This must not hold real evaluation data until it is fronted with TLS and started with
+  `COOKIE_SECURE=true` - see `CLAUDE.md`.
+
+- Prepare the POCLAB server (RHEL 10.2) before first deployment: install Docker, nginx,
+  SELinux and firewall rules, and Portainer by following
+  **`deploy/HOST-PREP-POCDAPP314.md`**.
+
+- Deploy to the POCLAB server (POCDAPP314 / 10.21.12.62) behind nginx, via Portainer:
+  follow **`deploy/DEPLOY-POCDAPP314.md`**. The architecture, including how users reach the app
+  and how the next application is onboarded, is in **`deploy/architecture.html`** (open in a
+  browser).
 
 ## What is here
 
 | Path | What it is |
 |------|------------|
-| `tool/` | The runnable evaluation web app (single self-contained HTML; a build output). |
-| `build/` | `build.py` (the builder) + `template.html` (the shell). `legacy/` holds the old build chain. |
+| `tool/` | The two runnable web apps (self-contained HTML; both build outputs). |
+| `build/` | `build.py` (the builder) + `template.html` and `template-team.html` (the shells). `legacy/` holds the old build chain. |
+| `refdata.py` | The one loader for `data/*.json`, shared by the builder and the server. |
+| `server/` | FastAPI app: auth, evaluations API, reference data, seed command. |
+| `db/` | `schema.sql` - three tables, applied idempotently at startup. |
+| `tests/` | pytest suite, including an end-to-end check against `test-data/EXPECTED_RESULTS.md`. |
+| `Dockerfile`, `docker-compose.yml`, `.env.example` | The deployable stack (app plus Postgres). |
+| `deploy/` | Hosting: nginx vhosts + snippets, the Portainer stack, host-prep and deployment runbooks, and the architecture document. |
 | `data/` | Source of truth: `competencies.json` / `.csv` and `learning-catalog.json`. |
 | `Competency Matrix (simplified).xlsx` | Clean 78-row matrix + rating-scale sheet, generated from `data/`. |
 | `sources/` | Originals this was built from (Career Framework PDF, competency matrix xlsm, style refs, logo). |
 | `notes/` | Data model & rating scale, learning-catalog how-to, change log & decisions, roadmap. |
 | `prompts/` | The old AI-review prompt (deprecated in v6). |
+| `test-data/` | 34 synthetic evaluations + expected results. Safe to delete. |
 | `HANDOFF.md`, `issues.md` | Entry point + open issues / backlog. |
+| `CLAUDE.md` | Guidance for agents: build invariants and the deployment design decisions. |
 
 ## Current state (v6)
 

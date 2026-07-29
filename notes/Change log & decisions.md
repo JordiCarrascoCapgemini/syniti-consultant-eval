@@ -19,6 +19,15 @@ updated: 2026-07-04
   left nav and section icons; Details + Summary merged into one aligned two-column card;
   Skills + Feedback merged; **Degreed added back** alongside LinkedIn + Coursera; rating
   buttons restyled (shaded, smaller, clearer); competency areas get **collapse/expand all**.
+- **v7.1 (2026-07-28)** - hosting design for POCDAPP314: host-level nginx as shared reverse
+  proxy, one FQDN and internal-CA certificate per app on the shared IP 10.21.12.62, app bound
+  to loopback so nginx is the only route in. Portainer CE added as the deployment mechanism
+  (git-backed stacks) and management plane, itself behind nginx on its own FQDN. DEC-9 and
+  DEC-10. Not yet executed on the server.
+- **v7.0 (2026-07-28)** - dockerized deployable server (FastAPI plus Postgres) added
+  alongside the portable files, which are unchanged offline. Leads-only authentication,
+  JSONB append-only storage, and the team app brought under `build.py` (closes LIM-5).
+  DEC-7 (this repo canonical again) and DEC-8 (design recorded in `CLAUDE.md`).
 - **v6 (current)** - homed in Obsidian under Projects; added `Competency Matrix (simplified).xlsx`.
   **Fixed a foundational problem:** the v5 "tool" was a Python builder with `__COMPS__` placeholders,
   not a runnable HTML - replaced the fragile build chain with one clean `build/build.py` +

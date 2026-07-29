@@ -1,0 +1,46 @@
+# Portainer CE - the management plane for POCDAPP314.
+#
+# This is the ONE stack deployed from the command line, because Portainer cannot
+# deploy itself. Every other stack, including the Skills Evaluation app, is then
+# deployed through Portainer as a git-backed stack.
+#
+# SECURITY: this container mounts the Docker socket, which makes it
+# root-equivalent on the host. It cannot be mounted read-only - Portainer needs
+# write access to create and manage containers, which is the entire point. The
+# consequences:
+#   - the UI is published on LOOPBACK ONLY and reached through nginx
+#     (deploy/nginx/portainer.conf), never directly on the network;
+#   - that vhost should carry an IP allow-list for the admin subnet;
+#   - the admin password is as sensitive as root on this box.
+#
+# Deploy:
+#   cd deploy/portainer && docker compose up -d
+#
+# Then create the admin account IMMEDIATELY. Portainer locks initial setup if no
+# admin is created within a few minutes of first start; recovering means
+# restarting the container.
+
+services:
+  portainer:
+    # Pinned deliberately. ":latest" on a root-equivalent admin plane means an
+    # unreviewed image can arrive on any redeploy. Check for a newer patch
+    # release before first install, then bump this on purpose.
+    image: portainer/portainer-ce:2.21.4
+    ports:
+      # HTTP on loopback only; nginx terminates TLS in front. Portainer's own
+      # 9443 HTTPS listener is deliberately NOT published - one certificate
+      # story, no TLS inside TLS.
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9000/api/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  portainer_data:

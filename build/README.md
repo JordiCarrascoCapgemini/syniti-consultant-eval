@@ -3,12 +3,13 @@ tags: [dq-coe, evaluation, build, reference]
 updated: 2026-07-04
 ---
 
-# build/ - how the tool is produced
+# build/ - how the tools are produced
 
 ## The build (v6, current)
 
-The runnable tool `tool/Syniti_Skills_Evaluation_and_Enablement.html` is **generated** by one clean
-builder. To change the tool:
+Both runnable apps - `tool/Syniti_Skills_Evaluation_and_Enablement.html` and
+`tool/Syniti_Team_Skills_Summary.html` - are **generated** by one clean builder. To change
+either:
 
 1. Edit content in `../data/competencies.json` and/or `../data/learning-catalog.json`, and/or the
    shell in `template.html`.
@@ -17,14 +18,21 @@ builder. To change the tool:
        python3 build/build.py        # from the project root
 
 `build.py` reads:
-- `../data/competencies.json`  -> `const COMPS` (converted to short keys `ref, area, t, d, e`)
+- `../data/competencies.json` -> `const COMPS`, via `../refdata.py` (short keys
+  `ref, area, t, d, e`). `refdata.py` is shared with the server's `/api/reference`, so the
+  conversion exists in exactly one place.
 - `../data/learning-catalog.json` -> `const LEARNING`
-- `template.html` - the HTML/CSS/JS shell (logo already embedded; placeholders `__COMPS__`,
+- `template.html` - the eval app shell (logo embedded; placeholders `__COMPS__`,
   `__LEARNING__`)
+- `template-team.html` - the team summary shell (placeholder `__COMPS__` only, because
+  exports do not carry expectations)
 
-...substitutes, guards against leftover placeholders and the long dash, and writes `../tool/...html`.
-**`../data/*.json` are the single source of truth. Do not hand-edit `../tool/...html`** - it is a
-build artifact and will be overwritten. The `const FRAMEWORK` (Career Framework reference) currently
+...substitutes, guards against leftover placeholders and the long dash, and writes both files
+into `../tool/`. Templates are read and written with `newline=""`, so output line endings
+match the template byte-for-byte on every platform (without that, the same template yields
+CRLF on Windows and LF in the Linux container, and "rebuild and diff" stops being usable).
+**`../data/*.json` are the single source of truth. Do not hand-edit either file in
+`../tool/`** - both are build artifacts and will be overwritten. The `const FRAMEWORK` (Career Framework reference) currently
 lives inline in `template.html`.
 
 If you change competencies, also regenerate `../data/competencies.csv` and the root

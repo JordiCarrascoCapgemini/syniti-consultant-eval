@@ -1,0 +1,51 @@
+# Skills Evaluation: app plus Postgres.
+#
+# The app publishes on LOOPBACK ONLY (127.0.0.1). On POCDAPP314 the host's nginx
+# terminates TLS and reverse-proxies to it, so nginx is the only route in and the
+# app port is never reachable from the network. See deploy/DEPLOY-POCDAPP314.md.
+#
+# Set COOKIE_SECURE=true in .env once TLS is in front. Without it the session
+# cookie is not marked Secure and must not carry real evaluation data.
+#
+# Values come from .env, which is gitignored. The two passwords have no
+# defaults on purpose: compose refuses to start without them.
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-syniti_eval}
+      POSTGRES_USER: ${POSTGRES_USER:-syniti}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env - see .env.example}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-syniti} -d ${POSTGRES_DB:-syniti_eval}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      # Bind the host side to 127.0.0.1 explicitly. Publishing "8001:8000" would
+      # listen on 0.0.0.0 and expose the app unauthenticated-over-HTTP on
+      # 10.21.12.62:8001, bypassing nginx, TLS and the security headers entirely.
+      # APP_BIND is overridable only so a developer laptop can widen it knowingly.
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8001}:8000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-syniti}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-syniti_eval}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env - this creates the first lead account on boot. See .env.example}
+      # Exact string "true", case-sensitive. Leave unset for plain-HTTP local
+      # use; set it once TLS is in front, or session cookies travel in clear.
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      SESSION_MAX_AGE: ${SESSION_MAX_AGE:-43200}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
