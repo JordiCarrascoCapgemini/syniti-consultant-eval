@@ -13,12 +13,26 @@
 #   - that vhost should carry an IP allow-list for the admin subnet;
 #   - the admin password is as sensitive as root on this box.
 #
+# PREREQUISITE - create the admin password file first, or the bind mount below
+# fails and the container will not start:
+#
+#   sudo mkdir -p /etc/portainer
+#   printf '%s' 'YOUR_PASSWORD' | sudo tee /etc/portainer/admin_password >/dev/null
+#   sudo chmod 600 /etc/portainer/admin_password
+#
+# Minimum 12 characters. Generate with: openssl rand -base64 24
+#
 # Deploy:
 #   cd deploy/portainer && docker compose up -d
 #
-# Then create the admin account IMMEDIATELY. Portainer locks initial setup if no
-# admin is created within a few minutes of first start; recovering means
-# restarting the container.
+# The admin account is created at startup from that file, so there is no
+# interactive setup window to beat. Portainer otherwise disables initial setup a
+# few minutes after first start, which is easy to hit when reaching the UI needs
+# an SSH tunnel; recovery would mean restarting the container.
+#
+# Portainer reads the file only when initialising. Once you have logged in
+# successfully, delete it - it holds a root-equivalent secret in plaintext:
+#   sudo rm -f /etc/portainer/admin_password
 
 services:
   portainer:
@@ -26,6 +40,9 @@ services:
     # unreviewed image can arrive on any redeploy. Check for a newer patch
     # release before first install, then bump this on purpose.
     image: portainer/portainer-ce:2.21.4
+    # Creates the admin account non-interactively at first start. Ignored on
+    # later starts once an admin exists, so it is safe to leave in place.
+    command: --admin-password-file /run/secrets/portainer_admin
     ports:
       # HTTP on loopback only; nginx terminates TLS in front. Portainer's own
       # 9443 HTTPS listener is deliberately NOT published - one certificate
@@ -34,6 +51,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+      # Read-only bind of the password file. Must exist before first up, or
+      # Docker creates a DIRECTORY at that path and Portainer fails to start.
+      - /etc/portainer/admin_password:/run/secrets/portainer_admin:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9000/api/status"]
