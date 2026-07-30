@@ -164,8 +164,9 @@ ol.steps b{ color:var(--ink); }
   <div class="eyebrow">Syniti &middot; EMEA Data Quality &middot; deployment architecture</div>
   <h1>Skills Evaluation on POCDAPP314<br><span class="grad">one server, one ingress, a hostname per app.</span></h1>
   <p class="lede">How the Skills Evaluation &amp; Enablement application is hosted, how nginx exposes it
-    under its own domain name and certificate, and how users reach it. The same pattern is intended to
-    carry the next applications, starting with dq-studio, by adding one configuration file each.</p>
+    under its own domain name and certificate, and how users reach it. Sections 1 to 7 describe
+    <b>phase 1</b>, deployed and commissioned on a single host. Section 8 describes the <b>phase 2</b>
+    two-tier target following IT guidance, which is what makes the application usable by Capgemini staff.</p>
 
   <div class="row">
     <span class="ev-chip">verified in repo</span>
@@ -174,10 +175,16 @@ ol.steps b{ color:var(--ink); }
     <span class="fine">not yet confirmed on the server</span>
   </div>
 
-  <div class="note"><b>Status.</b> This architecture is designed and the configuration is written, but
-    <b>nothing has been executed against POCDAPP314</b>. The container image has never been built and no
-    SQL has reached a Postgres server. Treat every infrastructure statement below as a plan to be
-    validated, not an as-built record.</div>
+  <div class="note"><b>Status, 2026-07-28.</b> <b>Phase 1 is deployed and commissioned</b> on
+    POCDAPP314. Docker, nginx, Portainer and the application stack are installed; both apps serve;
+    authentication, storage and the synthetic test set were exercised end to end, and the host survives a
+    reboot unaided. Evidence is in <code>deploy/EVIDENCE-POCDAPP314.md</code>, reproducible with
+    <code>deploy/verify-deployment.sh</code>.
+    <br><br>
+    Two things are deliberately <b>not</b> done. The application is reachable only from the host itself:
+    there is no DNS, no certificate and no ingress yet, so nginx is installed but not serving. And it holds
+    <b>synthetic data only</b> - real evaluations need TLS with <code>COOKIE_SECURE=true</code> and the
+    data privacy review first. <b>Section 8 (phase 2) has not been started.</b></div>
 
   <!-- ============================================ USER ACCESS PATH -->
   <section>
@@ -632,6 +639,151 @@ ol.steps b{ color:var(--ink); }
         <li><b>Validate and reload</b>: <code>nginx -t</code>, then <code>systemctl reload nginx</code>. The
           reload is graceful and does not drop existing connections.</li>
       </ol>
+    </div>
+  </section>
+
+  <!-- ============================================ PHASE 2 -->
+  <section>
+    <div class="sec-h">
+      <h2>8. Phase 2: two-tier target, following IT guidance</h2>
+      <span class="dir-tag">not started</span>
+    </div>
+
+    <div class="card pad-lg">
+      <p class="fine" style="margin-bottom:var(--sp-4)">IT has asked for the reverse proxy to move to its
+        own host, and for containers built on approved hardened base images. Both are reasonable and both
+        are accepted. Phase 1 is not superseded: it stays as the demonstration environment, and the
+        application, stack, git-backed deployment and vhost configuration all carry forward. The full
+        specification is <code>deploy/PHASE2-TARGET-ARCHITECTURE.md</code>; the asks of IT are in
+        <code>deploy/IT-ENGAGEMENT-BRIEF.md</code>.</p>
+
+      <div class="svgwrap">
+        <svg viewBox="0 0 1000 300" role="img"
+             aria-label="Phase 2 two-tier architecture. Corporate users reach a dedicated proxy host over HTTPS 443. The proxy reaches the application host on port 8001, restricted by firewall to the proxy address only. The application reaches Postgres on the container network.">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#365EB9"></path>
+            </marker>
+          </defs>
+
+          <!-- proxy host -->
+          <rect x="228" y="40" width="236" height="200" rx="14" fill="rgba(91,48,238,.05)"
+                stroke="#5B30EE" stroke-dasharray="6 5" stroke-width="1.4"></rect>
+          <text x="246" y="62" font-size="10.5" font-weight="700" letter-spacing=".8" fill="#232F63">
+            PROXY HOST (new)
+          </text>
+          <text x="246" y="78" font-size="9.5" fill="#6B7492">owner: IT or us - undecided</text>
+
+          <!-- app host -->
+          <rect x="520" y="40" width="446" height="200" rx="14" fill="rgba(54,94,185,.04)"
+                stroke="#6F8BD9" stroke-dasharray="6 5" stroke-width="1.4"></rect>
+          <text x="538" y="62" font-size="10.5" font-weight="700" letter-spacing=".8" fill="#232F63">
+            POCDAPP314 &middot; 10.21.12.62
+          </text>
+          <text x="538" y="78" font-size="9.5" fill="#6B7492">no TLS keys on this host</text>
+
+          <!-- corporate user -->
+          <rect x="14" y="112" width="172" height="86" rx="12" fill="#ffffff" stroke="#E1E8F2"></rect>
+          <text x="100" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#20242E">Capgemini staff</text>
+          <text x="100" y="165" text-anchor="middle" font-size="10.5" fill="#6B7492">corporate network</text>
+          <text x="100" y="180" text-anchor="middle" font-size="10.5" fill="#6B7492">or VPN</text>
+
+          <!-- nginx -->
+          <rect x="252" y="112" width="188" height="86" rx="12" fill="#ffffff" stroke="#E1E8F2"></rect>
+          <rect x="252" y="112" width="188" height="3" rx="1.5" fill="#5B30EE"></rect>
+          <text x="346" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#20242E">nginx</text>
+          <text x="346" y="162" text-anchor="middle" font-size="10.5" fill="#6B7492">TLS terminate &middot; :443</text>
+          <text x="346" y="177" text-anchor="middle" font-size="10.5" fill="#6B7492">holds the certificates</text>
+          <text x="346" y="192" text-anchor="middle" font-size="10.5" fill="#6B7492">security headers</text>
+
+          <!-- app -->
+          <rect x="544" y="112" width="188" height="86" rx="12" fill="#ffffff" stroke="#E1E8F2"></rect>
+          <text x="638" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#20242E">app container</text>
+          <text x="638" y="162" text-anchor="middle" font-size="10.5" fill="#6B7492">hardened base image</text>
+          <text x="638" y="177" text-anchor="middle" font-size="10.5" fill="#6B7492">read-only rootfs</text>
+          <text x="638" y="192" text-anchor="middle" font-size="10.5" fill="#B45309">LAN-bound, not loopback</text>
+
+          <!-- db -->
+          <rect x="778" y="112" width="172" height="86" rx="12" fill="#ffffff" stroke="#E1E8F2"></rect>
+          <text x="864" y="144" text-anchor="middle" font-size="13" font-weight="700" fill="#20242E">Postgres 16</text>
+          <text x="864" y="162" text-anchor="middle" font-size="10.5" fill="#6B7492">no published port</text>
+          <text x="864" y="177" text-anchor="middle" font-size="10.5" fill="#6B7492">container network</text>
+          <text x="864" y="192" text-anchor="middle" font-size="10.5" fill="#6B7492">volume: pgdata</text>
+
+          <!-- arrows -->
+          <line x1="190" y1="155" x2="246" y2="155" stroke="#365EB9" stroke-width="1.8" marker-end="url(#ar2)"></line>
+          <text x="218" y="143" text-anchor="middle" font-size="10" font-weight="700" fill="#365EB9">HTTPS</text>
+          <text x="218" y="176" text-anchor="middle" font-size="9.5" fill="#6B7492">443</text>
+
+          <line x1="444" y1="155" x2="538" y2="155" stroke="#B45309" stroke-width="2" marker-end="url(#ar2)"></line>
+          <text x="491" y="143" text-anchor="middle" font-size="10" font-weight="700" fill="#B45309">8001</text>
+          <text x="491" y="176" text-anchor="middle" font-size="9" fill="#B45309">firewall: proxy IP only</text>
+
+          <line x1="736" y1="155" x2="772" y2="155" stroke="#365EB9" stroke-width="1.8" marker-end="url(#ar2)"></line>
+          <text x="754" y="143" text-anchor="middle" font-size="9.5" font-weight="700" fill="#365EB9">5432</text>
+
+          <text x="491" y="262" text-anchor="middle" font-size="10" fill="#B45309">this hop is plaintext unless encrypted - IT decision</text>
+        </svg>
+      </div>
+
+      <div class="note"><b>The amber arrow is the whole risk of phase 2.</b> Phase 1's primary network
+        control is that the application is bound to <code>127.0.0.1</code> and therefore unreachable from
+        anywhere but its own host. Moving the proxy to a separate host <b>removes that control by
+        definition</b>, because the proxy must reach the application over the network. The replacement is a
+        firewall rich rule permitting only the proxy's address - not an open port.</div>
+
+      <div class="note" style="margin-top:var(--sp-3)"><b>A second change must ship in the same release.</b>
+        The container runs uvicorn with <code>--forwarded-allow-ips=*</code>, which is safe today only
+        because the port is loopback-bound. Once the app is network-reachable, that setting lets any client
+        able to reach it spoof <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code>. It must
+        become the proxy's address at the same moment the bind address changes. If only one of the two
+        lands, the deployment is worse than phase 1.</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:var(--sp-5)">
+      <div class="card pad-lg">
+        <h3>What changes</h3>
+        <table class="ph-tbl" style="margin-top:var(--sp-3)">
+          <colgroup><col style="width:34%"><col style="width:33%"><col style="width:33%"></colgroup>
+          <thead><tr><th></th><th>Phase 1</th><th>Phase 2</th></tr></thead>
+          <tbody>
+            <tr><td>Proxy</td><td>same host</td><td>own host</td></tr>
+            <tr><td>App exposure</td><td><code>127.0.0.1</code></td><td>LAN, firewalled</td></tr>
+            <tr><td>Boundary</td><td>loopback bind</td><td>firewall source rule</td></tr>
+            <tr><td>TLS keys</td><td>app host</td><td>proxy only</td></tr>
+            <tr><td>Base images</td><td>slim / alpine</td><td>approved hardened</td></tr>
+            <tr><td>Image refs</td><td>tags</td><td>pinned digests</td></tr>
+            <tr><td>Rootfs</td><td>writable</td><td>read-only + tmpfs</td></tr>
+            <tr><td>Capabilities</td><td>default</td><td><code>cap_drop: ALL</code></td></tr>
+            <tr><td>Audience</td><td>the host itself</td><td>Capgemini staff</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card pad-lg stack">
+        <h3>Two findings worth knowing before you plan</h3>
+        <div>
+          <div class="row"><span class="dir-tag">not a tag change</span></div>
+          <p class="fine" style="margin-top:var(--sp-2)"><b>Swapping the Postgres image is a data
+            migration.</b> Red Hat's <code>rhel9/postgresql-16</code> uses different environment variable
+            names and a different data directory from <code>postgres:16-alpine</code>, so an existing
+            <code>pgdata</code> volume is not compatible. It needs a dump and restore, planned separately.
+            The application image, by contrast, ports cleanly to UBI.</p>
+        </div>
+        <div>
+          <div class="row"><span class="dir-tag">decision needed</span></div>
+          <p class="fine" style="margin-top:var(--sp-2)"><b>Is Portainer acceptable to IT?</b> It holds the
+            Docker socket and is root-equivalent on the host, which may not pass an enterprise review. It is
+            how we deploy without shell access. Worth raising with IT rather than waiting to be asked; the
+            fallback is CLI deployment, already documented.</p>
+        </div>
+        <div>
+          <div class="row"><span class="ev-chip">verification changes too</span></div>
+          <p class="fine" style="margin-top:var(--sp-2)"><code>verify-deployment.sh</code> currently asserts
+            the app does <b>not</b> answer on the LAN address. In phase 2 it must answer from the proxy and
+            nowhere else, so those assertions are rewritten in the same release, not afterwards.</p>
+        </div>
+      </div>
     </div>
   </section>
 
