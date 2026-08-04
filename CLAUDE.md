@@ -115,6 +115,8 @@ Deployed to one POCLAB host, **POCDAPP314 / 10.21.12.62**, running **RHEL 10.2**
 **host-level nginx** as shared reverse proxy. Host preparation:
 `deploy/HOST-PREP-POCDAPP314.md`. Deployment: `deploy/DEPLOY-POCDAPP314.md`. Architecture:
 `deploy/architecture.html`. Config: `deploy/nginx/`.
+**Before widening access, read `deploy/EXPOSURE-READINESS.md`** - it holds the testable definition
+of done, the sixteen constraints still unanswered, and which steps need nobody's permission.
 
 **RHEL ships Podman, not Docker.** Docker Engine comes from Docker's own repo and an `el10`
 build must be confirmed to exist. If it does not, do not improvise a Podman deployment: that

@@ -52,7 +52,7 @@ Works offline, downloads its own JSON form, and can re-import a prior evaluation
 | `db/` | `schema.sql` - three tables, applied idempotently at startup. |
 | `tests/` | pytest suite, including an end-to-end check against `test-data/EXPECTED_RESULTS.md`. |
 | `Dockerfile`, `docker-compose.yml`, `.env.example` | The deployable stack (app plus Postgres). |
-| `deploy/` | Hosting: nginx vhosts + snippets, the Portainer stack, host-prep and deployment runbooks, and the architecture document. |
+| `deploy/` | Hosting: nginx vhosts + snippets, the Portainer stack, host-prep and deployment runbooks, the architecture document, and `EXPOSURE-READINESS.md` (what must be true before this leaves POCLAB). |
 | `data/` | Source of truth: `competencies.json` / `.csv` and `learning-catalog.json`. |
 | `Competency Matrix (simplified).xlsx` | Clean 78-row matrix + rating-scale sheet, generated from `data/`. |
 | `sources/` | Originals this was built from (Career Framework PDF, competency matrix xlsm, style refs, logo). |
